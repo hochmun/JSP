@@ -19,4 +19,24 @@
 		<param-name>INIT_PAEAM</param-name>
 		<param-value>web.xml에 저장한 초기화 매개변수</param-value>
 	</context-param>
+	
+	<!-- 
+	날짜 : 2022/10/07
+	이름 : 심규영
+	내용 : web.xml에 에러별 출력 페이지 설정
+	 -->
+	 <!-- 
+	 <error-page>
+	 	<error-code>404</error-code>
+	 	<location>/Ch02/Exception.jsp</location>
+	 </error-page>
+	 <error-page>
+	 	<error-code>405</error-code>
+	 	<location>/Ch02/Exception.jsp</location>
+	 </error-page>
+	 <error-page>
+	 	<error-code>500</error-code>
+	 	<location>/Ch02/Exception.jsp</location>
+	 </error-page>
+	  -->
 </web-app>
