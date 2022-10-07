@@ -15,3 +15,7 @@
 	- sub2. JSP response 내장객체 실습
 	- sub3. JSP out 내장객체 실습
 	- sub4. JSP pageContext 내장객체 실습
+	- sub5. JSP application 내장객체 실습
+	- sub6. JSP session 내장객체 실습
+	- sub7. JSP exception 내장객체 실습
+	- sub8. JSP 내장객체 영역 실습
