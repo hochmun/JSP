@@ -19,3 +19,8 @@
 	- sub6. JSP session 내장객체 실습
 	- sub7. JSP exception 내장객체 실습
 	- sub8. JSP 내장객체 영역 실습
+	
+## Ch04. JSP 액션태그
+	- sub1. JSP forward 액션태그 실습
+	- sub2. JSP include 액션태그 실습
+	- sub3. JSP useBean 액션태그 실습
