@@ -24,3 +24,7 @@
 	- sub1. JSP forward 액션태그 실습
 	- sub2. JSP include 액션태그 실습
 	- sub3. JSP useBean 액션태그 실습
+	
+## Ch05. JSP 쿠키와 세션
+	- sub1. JSP Cookie 실습
+	- sub2. JSP Session 실습
