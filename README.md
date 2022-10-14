@@ -28,3 +28,8 @@
 ## Ch05. JSP 쿠키와 세션
 	- sub1. JSP Cookie 실습
 	- sub2. JSP Session 실습
+	
+## Ch06. JSP 데이터베이스
+	- sub1. JSP JDBC 데이터베이스 실습
+	- sub2. JSP DBCP 실습
+	
