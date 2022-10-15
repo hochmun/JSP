@@ -39,4 +39,26 @@
 	 	<location>/Ch02/Exception.jsp</location>
 	 </error-page>
 	  -->
+	  
+	<!-- 
+		날짜 : 2022/10/15
+	  	이름 : 심규영
+	  	내용 : web.xml에 mysql 접속 정보 입력
+	-->
+	<context-param>
+		<param-name>MysqlDriver</param-name>
+		<param-value>com.mysql.cj.jdbc.Driver</param-value>
+	</context-param>
+	<context-param>
+		<param-name>MysqlURL</param-name>
+		<param-value>jdbc:mysql://localhost:3306/jsptest</param-value>
+	</context-param>
+	<context-param>
+		<param-name>MysqlId</param-name>
+		<param-value>root</param-value>
+	</context-param>
+	<context-param>
+		<param-name>MysqlPwd</param-name>
+		<param-value>1234</param-value>
+	</context-param>
 </web-app>
