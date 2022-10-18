@@ -61,4 +61,15 @@
 		<param-name>MysqlPwd</param-name>
 		<param-value>1234</param-value>
 	</context-param>
+	
+	<!-- 
+		날짜 : 2022/10/18
+		이름 : 심규영
+		내용 : 세션 유지 시간 설정, p211
+		
+		- 유지 시간 단위는 분 단위 (20분)
+	 -->
+	<session-config>
+		<session-timeout>20</session-timeout>
+	</session-config>
 </web-app>
