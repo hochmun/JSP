@@ -1,3 +1,4 @@
+<%@page import="user5.User5DAO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="config.DBCP"%>
@@ -9,32 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	// 데이터 리스트 준비
-	List<User5Bean> users5 = null;
-
-	try {
-		Connection conn = DBCP.getConnection();
-		
-		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery("select * from `user5`");
-		
-		users5 = new ArrayList<>();
-		while(rs.next()) {
-			User5Bean ub = new User5Bean();
-			ub.setUid(rs.getString(1));
-			ub.setName(rs.getString(2));
-			ub.setBirth(rs.getString(3));
-			ub.setAge(rs.getInt(4));
-			ub.setAddress(rs.getString(5));
-			ub.setHp(rs.getString(6));
-			users5.add(ub);
-		}
-		
-		rs.close();
-		stmt.close();
-		conn.close();
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
+	List<User5Bean> users5 = new User5DAO().GetUsers5DAO();
 %>
 <!DOCTYPE html>
 <html>
