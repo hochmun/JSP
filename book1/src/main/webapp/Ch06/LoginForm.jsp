@@ -11,6 +11,12 @@
 		 -->
 	</head>
 	<body>
+		<!-- 
+			날짜 : 2022/10/20
+			이름 : 심규영
+			내용 : 로그인 폼에 공동 링크 추가, p226
+		 -->
+		<%@ include file="../common/Link.jsp" %>
 		<h2>로그인 페이지</h2>
 		<span style="color: red; font-size: 1.2em;">
 			<%= request.getAttribute("LoginErrMsg") == null ?
