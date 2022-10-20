@@ -32,4 +32,6 @@
 ## Ch06. JSP 데이터베이스
 	- sub1. JSP JDBC 데이터베이스 실습
 	- sub2. JSP DBCP 실습
+	- sub3. JSP JSON 실습
+	- sub4. JSP XML 실습
 	

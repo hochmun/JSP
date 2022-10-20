@@ -1,5 +1,5 @@
 <%@page import="DAO.BoardTermsDAO"%>
-<%@page import="bean.Board_Terms_Bean"%>
+<%@page import="bean.BoardTermsBean"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
@@ -17,7 +17,9 @@
 	});
 </script>
 <%
-	Board_Terms_Bean btb = new BoardTermsDAO().GetBoardTermsDAO();
+	BoardTermsDAO btdao = new BoardTermsDAO();
+	BoardTermsBean btb = btdao.GetBoardTermsDAO();
+	btdao.close();
 %>
 <main id="user">
     <section class="terms">

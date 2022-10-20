@@ -49,3 +49,7 @@ board_termsCREATE TABLE `board_file` (
 	`oriName`	VARCHAR(255) NOT NULL,
 	`download` 	INT DEFAULT 0
 );
+
+SELECT MD5('1234');
+SELECT SHA1('1234');
+SELECT SHA2('1234', 256);

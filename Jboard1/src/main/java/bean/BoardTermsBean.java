@@ -1,6 +1,6 @@
 package bean;
 
-public class Board_Terms_Bean {
+public class BoardTermsBean {
 	private String terms;
 	private String privacy;
 	
