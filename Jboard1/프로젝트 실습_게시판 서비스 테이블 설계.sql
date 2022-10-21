@@ -51,5 +51,5 @@ board_termsCREATE TABLE `board_file` (
 );
 
 SELECT MD5('1234');
-SELECT SHA1('1234');
+SELECT SHA1('1234');java2db
 SELECT SHA2('1234', 256);

@@ -15,7 +15,8 @@
 	String regip = request.getRemoteAddr();
 	
 	BoardUserDAO user = new BoardUserDAO();
-	user.RegisterBoardUser(uid, pass, name, nick, email, hp, regip);
+	user.RegisterBoardUser
+	(uid, pass, name, nick, email, hp, zip, addr1, addr2, regip);
 	user.close();
 	
 	// 리다이렉트
