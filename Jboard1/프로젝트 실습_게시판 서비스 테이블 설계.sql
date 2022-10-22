@@ -3,7 +3,7 @@
 #내용 : 프로젝트 실습_게시판 서비스 테이블 설계
 
 #데이터베이스 생성
-CREATE DATABASE `java2_board`;
+CREATE DATABASE `java2_board`;java2_board
 CREATE USER 'java2_board'@'%' IDENTIFIED BY '1234';
 GRANT ALL PRIVILEGES ON `java2_board`.* TO 'java2_board'@'%';
 FLUSH PRIVILEGES;
@@ -42,7 +42,7 @@ CREATE TABLE `board_article` (
 	`rdate`		DATETIME NOT NULL
 );
 #파일 테이블 생성
-board_termsCREATE TABLE `board_file` (
+CREATE TABLE `board_file` (
 	`fno`			INT AUTO_INCREMENT PRIMARY KEY,
 	`parent`		INT NOT NULL,
 	`newName`	VARCHAR(255) NOT NULL,

@@ -17,10 +17,10 @@ import config.DBCP;
  * 유저 DAO
  * @date 2022/10/20
  * @author 심규영
- * @method 	BoardUserDAO() - 데이터베이스 연결
- * 		   	RegisterBoardUser(String) - 회원 가입
- * 		  	CheckId(uid) - 아이디 중복 체크
- * 			CheckNick(nick) - 별명 중복 체크
+ * @method 	BoardUserDAO() - 데이터베이스 연결 <br>
+ * 		   	RegisterBoardUser(String) - 회원 가입<br>
+ * 		  	CheckId(uid) - 아이디 중복 체크<br>
+ * 			CheckNick(nick) - 별명 중복 체크<br>
  * 			Close() - 닫기
  */
 public class BoardUserDAO {

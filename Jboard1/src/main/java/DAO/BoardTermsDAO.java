@@ -10,7 +10,7 @@ import config.DBCP;
  * java2_board 의 board_terms DAO
  * @date 2022/10/19
  * @author 심규영
- * @category GetBoardTermsDAO() - Read
+ * @category GetBoardTermsDAO() - Read<br>
  * 			 Close() - close
  */
 public class BoardTermsDAO {

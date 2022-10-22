@@ -20,5 +20,14 @@
 			<li>출생 : <%= request.getParameter("param2") %> </li>
 			<li>특징 : <%= request.getParameter("param3") %> </li>
 		</ul>
+		<!-- 
+			날짜 : 2022/10/22
+			이름 : 심규영
+			내용 : 인클루드하는 페이지로 매개변수 전달, p252
+		 -->
+		<jsp:include page="inc/ParamInclude.jsp">
+			<jsp:param name="loc1" value="강원도 영월"/>
+			<jsp:param name="loc2" value="김삿갓면"/>
+		</jsp:include>
 	</body>
 </html>
