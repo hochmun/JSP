@@ -25,8 +25,8 @@
 								+"<td>"+user.hp+"</td>"
 								+"<td>"+user.age+"</td>"
 								+"<td>"
-									+"<a href='#'>수정</a>"
-									+"<a href='#'>삭제</a>"
+									+"<a href='#' class='userModify'>수정</a>"
+									+"<a href='#' class='userDelete'>삭제</a>"
 								+"</td>"
 							+"</tr>";
 				$('table').append(tr);
