@@ -1,4 +1,4 @@
-package bean;
+package kr.co.Jboard1.bean;
 /**
  * 유저 DTO
  * @date 2022/10/20
@@ -12,10 +12,12 @@ public class BoardUserBean {
 	private String nick;
 	private String email;
 	private String hp;
+	private int grade;
 	private String zip;
 	private String addr1;
 	private String addr2;
 	private String regip;
+	private String rdate;
 	
 	public String getUid() {
 		return uid;
@@ -53,6 +55,12 @@ public class BoardUserBean {
 	public void setHp(String hp) {
 		this.hp = hp;
 	}
+	public int getGrade() {
+		return grade;
+	}
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
 	public String getZip() {
 		return zip;
 	}
@@ -76,5 +84,11 @@ public class BoardUserBean {
 	}
 	public void setRegip(String regip) {
 		this.regip = regip;
+	}
+	public String getRdate() {
+		return rdate;
+	}
+	public void setRdate(String rdate) {
+		this.rdate = rdate;
 	}
 }

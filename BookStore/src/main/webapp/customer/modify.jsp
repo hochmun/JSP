@@ -1,8 +1,8 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
-<%@page import="config.DBCP"%>
+<%@page import="kr.co.Jboard1.config.DBCP"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="bean.CustomerBean"%>
+<%@page import="kr.co.Jboard1.bean.CustomerBean"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	//데이터 수신

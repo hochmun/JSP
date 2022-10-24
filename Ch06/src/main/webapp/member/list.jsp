@@ -1,5 +1,5 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="bean.MemberBean"%>
+<%@page import="kr.co.Jboard1.bean.MemberBean"%>
 <%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>

@@ -1,4 +1,4 @@
-<%@page import="DAO.BoardUserDAO"%>
+<%@page import="kr.co.Jboard1.DAO.BoardUserDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
 <script src="/Jboard1/js/validation.js"></script>

@@ -1,5 +1,5 @@
 <%@page import="com.google.gson.JsonObject"%>
-<%@page import="DAO.BoardUserDAO"%>
+<%@page import="kr.co.Jboard1.DAO.BoardUserDAO"%>
 <%@ page contentType="application/json;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	// 전송 데이터 수신

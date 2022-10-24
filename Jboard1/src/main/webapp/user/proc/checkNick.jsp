@@ -1,9 +1,9 @@
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="config.DBCP"%>
+<%@page import="kr.co.Jboard1.config.DBCP"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.PreparedStatement"%>
-<%@page import="DAO.BoardUserDAO"%>
+<%@page import="kr.co.Jboard1.DAO.BoardUserDAO"%>
 <%@ page contentType="application/json;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	// 전송 데이터 수신

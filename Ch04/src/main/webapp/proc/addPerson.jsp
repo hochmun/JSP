@@ -9,7 +9,7 @@
 %>
 
 <!-- Bean을 활용해서 데이터 수신 -->
-<jsp:useBean id="pb" class="bean.PersonBean">
+<jsp:useBean id="pb" class="kr.co.Jboard1.bean.PersonBean">
 	<jsp:setProperty property="*" name="pb"/>
 <!--
 	<jsp:setProperty property="name" name="pb"/>

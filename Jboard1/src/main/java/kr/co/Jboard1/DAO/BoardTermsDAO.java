@@ -1,11 +1,12 @@
-package DAO;
+package kr.co.Jboard1.DAO;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import bean.BoardTermsBean;
-import config.DBCP;
+import kr.co.Jboard1.bean.BoardTermsBean;
+import kr.co.Jboard1.config.DBCP;
+import kr.co.Jboard1.config.Sql;
 /**
  * java2_board 의 board_terms DAO
  * @date 2022/10/19
@@ -35,7 +36,7 @@ public class BoardTermsDAO {
 		BoardTermsBean btb = null;
 		try {
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select * from `board_terms`");
+			rs = stmt.executeQuery(Sql.SELECT_TERMS);
 
 			while(rs.next()) {
 				btb = new BoardTermsBean();

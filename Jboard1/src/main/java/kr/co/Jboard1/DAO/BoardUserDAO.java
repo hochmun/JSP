@@ -1,4 +1,4 @@
-package DAO;
+package kr.co.Jboard1.DAO;
 /* CRUD
  * 만들 기능 
  *  - 회원가입 기능
@@ -12,7 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import config.DBCP;
+import kr.co.Jboard1.bean.BoardUserBean;
+import kr.co.Jboard1.config.DBCP;
+import kr.co.Jboard1.config.Sql;
 /**
  * 유저 DAO
  * @date 2022/10/20
@@ -36,10 +38,10 @@ public class BoardUserDAO {
 		try {
 			conn = DBCP.getConnection();
 		} catch (Exception e) {
+			System.out.println("데이터 베이스 연결 오류");
 			e.printStackTrace();
 		}
 	}
-	
 	
 	/**
 	 * 회원가입
@@ -49,12 +51,7 @@ public class BoardUserDAO {
 			String nick, String email, String hp, String zip, 
 			String addr1, String addr2, String regip) {
 		try {
-			String sql = "insert into `board_user` set"
-					+ "`uid`=?, `pass`=SHA2(?, 256), `name`=?, `nick`=?, "
-					+ "`email`=?, `hp`=?, `zip`=?, `addr1`=?, "
-					+ "`addr2`=?, `regip`=?, `rdate`=NOW()";
-			
-			psmt = conn.prepareStatement(sql);
+			psmt = conn.prepareStatement(Sql.INSERT_USER);
 			psmt.setString(1, uid);
 			psmt.setString(2, pass);
 			psmt.setString(3, name);
@@ -68,6 +65,7 @@ public class BoardUserDAO {
 			
 			psmt.executeUpdate();
 		} catch (Exception e) {
+			System.out.println("회원가입 오류");
 			e.printStackTrace();
 		}
 	}
@@ -79,14 +77,14 @@ public class BoardUserDAO {
 	public int CheckUid(String uid) {
 		int result = -1;
 		try {
-			psmt = conn.prepareStatement(
-				"select count(`uid`) from `board_user` where `uid`=?");
+			psmt = conn.prepareStatement(Sql.SELECT_COUNT_UID);
 			psmt.setString(1, uid);
 			rs = psmt.executeQuery();
 			if(rs.next()) {
 				result = rs.getInt(1);
 			}
 		} catch (Exception e) {
+			System.out.println("중복 아이디 체크 오류");
 			e.printStackTrace();
 		}
 		return result;
@@ -99,17 +97,56 @@ public class BoardUserDAO {
 	public int CheckNick(String nick) {
 		int result = -1;
 		try {
-			psmt = conn.prepareStatement(
-					"select count(`nick`) from `board_user` where `nick`=?");
+			psmt = conn.prepareStatement(Sql.SELECT_COUNT_NICK);
 			psmt.setString(1, nick);
 			rs = psmt.executeQuery();
 			if(rs.next()) {
 				result = rs.getInt(1);
 			}
 		} catch(Exception e) {
+			System.out.println("중복 별명 체크 오류");
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	/**
+	 * 로그인 처리
+	 * @author 심규영
+	 * @since 2022/10/24
+	 * @param uid
+	 * @param pass
+	 * @return BoardUserBean
+	 */
+	public BoardUserBean Login(String uid, String pass) {
+		BoardUserBean bub = null;
+		
+		try {
+			psmt = conn.prepareStatement(Sql.SELECT_USER);
+			psmt.setString(1, uid);
+			psmt.setString(2, pass);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				bub = new BoardUserBean();
+				bub.setUid(rs.getString(1));
+				bub.setPass(rs.getString(2));
+				bub.setName(rs.getString(3));
+				bub.setNick(rs.getString(4));
+				bub.setEmail(rs.getString(5));
+				bub.setHp(rs.getString(6));
+				bub.setGrade(rs.getInt(7));
+				bub.setZip(rs.getString(8));
+				bub.setAddr1(rs.getString(9));
+				bub.setAddr2(rs.getString(10));
+				bub.setRegip(rs.getString(11));
+				bub.setRdate(rs.getString(12));
+			}
+		} catch(Exception e) {
+			System.out.println("로그인 오류");
+			e.printStackTrace();
+		}
+		
+		return bub;
 	}
 	
 	/**
@@ -122,6 +159,7 @@ public class BoardUserDAO {
 			if(stmt!=null) stmt.close();
 			if(conn!=null) conn.close();
 		} catch (Exception e) {
+			System.out.println("클래스 닫기 오류");
 			e.printStackTrace();
 		}
 	}

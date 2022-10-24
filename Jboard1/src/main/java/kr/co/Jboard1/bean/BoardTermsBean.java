@@ -1,4 +1,4 @@
-package bean;
+package kr.co.Jboard1.bean;
 
 public class BoardTermsBean {
 	private String terms;

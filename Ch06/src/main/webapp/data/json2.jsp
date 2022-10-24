@@ -1,11 +1,11 @@
 <%@page import="com.google.gson.Gson"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page import="bean.UserBean"%>
+<%@page import="kr.co.Jboard1.bean.UserBean"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="config.DBCP"%>
+<%@page import="kr.co.Jboard1.config.DBCP"%>
 <%@ page contentType="application/json;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	List<UserBean> users = new ArrayList<>();
