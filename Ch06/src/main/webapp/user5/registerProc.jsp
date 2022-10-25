@@ -1,4 +1,4 @@
-<%@page import="kr.co.Jboard1.config.DBCP"%>
+<%@page import="config.DBCP"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="javax.sql.DataSource"%>
 <%@page import="javax.naming.InitialContext"%>

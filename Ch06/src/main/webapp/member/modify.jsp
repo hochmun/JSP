@@ -1,5 +1,4 @@
-<%@page import="kr.co.Jboard1.bean.MemberBean"%>
-<%@page import="kr.co.Jboard1.bean.UserBean"%>
+<%@page import="bean.MemberBean"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>

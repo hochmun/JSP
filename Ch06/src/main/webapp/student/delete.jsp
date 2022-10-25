@@ -1,5 +1,5 @@
+<%@page import="config.DB"%>
 <%@page import="java.sql.PreparedStatement"%>
-<%@page import="kr.co.Jboard1.config.DB"%>
 <%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%

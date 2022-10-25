@@ -1,10 +1,10 @@
+<%@page import="bean.BookBean"%>
+<%@page import="config.DBCP"%>
 <%@page import="org.apache.el.parser.BooleanNode"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Statement"%>
-<%@page import="kr.co.Jboard1.config.DBCP"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="kr.co.Jboard1.bean.BookBean"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	//데이터 수신

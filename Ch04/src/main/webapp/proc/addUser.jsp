@@ -3,7 +3,7 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 
-<jsp:useBean id="ub" class="kr.co.Jboard1.bean.UserBean">
+<jsp:useBean id="ub" class="bean.UserBean">
 	<jsp:setProperty property="*" name="ub"/>
 </jsp:useBean>
 <!DOCTYPE html>
