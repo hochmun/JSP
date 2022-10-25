@@ -182,4 +182,67 @@ public class BoardDAO extends JDBConnect {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * DAO에 수정하기 메서드 추가
+	 * @author 심규영
+	 * @since 2022/10/25
+	 * @param dto
+	 * @return either (1) the row count for SQL Data Manipulation 
+	 * Language (DML) statementsor (2) 0 for SQL statements that 
+	 * return nothing
+	 */
+	public int updateEdit(BoardDTO dto) {
+		int result = 0;
+		
+		try {
+			// 쿼리문 템플릿
+			String query = "UPDATE `board` SET"
+						 + " `title`=?, `content`=? "
+						 + "WHERE `num`=?";
+			// 쿼리문 완성
+			psmt = conn.prepareStatement(query);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getNum());
+			
+			// 쿼리문 실행
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("게시물 수정 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return result; // 결과 반환
+	}
+
+	/**
+	 * DAO에 삭제하기 메서드 추가
+	 * @author 심규영
+	 * @since 2022/10/25
+	 * @param dto
+	 * @return either (1) the row count for SQL Data Manipulation 
+	 * Language (DML) statementsor (2) 0 for SQL statements that 
+	 * return nothing
+	 */
+	public int deletePost(BoardDTO dto) {
+		int result = 0;
+		
+		try {
+			// 쿼리문 템플릿
+			String query = "DELETE FROM `board` WHERE `num`=?";
+			
+			// 쿼리문 완성
+			psmt = conn.prepareStatement(query);
+			psmt.setString(1, dto.getNum());
+			
+			// 쿼리문 실행
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("게시물 삭제 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }

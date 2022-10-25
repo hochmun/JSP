@@ -20,8 +20,19 @@ dao.close();
 		<meta charset="UTF-8">
 		<title>회원제 게시판</title>
 		<script>
+			/*
+				날짜 : 2022/10/25
+				이름 : 심규영
+				내용 : View.jsp에 삭제하기 자바스크립트 코드 추가, p301
+			*/
 			function deletePost(){
-				
+				const confirmed = confirm("정말로 삭제하겠습니까?");
+				if (confirmed) {
+					const form = document.writeFrm;
+					form.method = "post";
+					form.action = "DeleteProcess.jsp";
+					form.submit();
+				}
 			}
 		</script>
 	</head>
