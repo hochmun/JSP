@@ -1,9 +1,5 @@
 package kr.co.Jboard1.DAO;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
 import kr.co.Jboard1.bean.BoardTermsBean;
 import kr.co.Jboard1.config.DBCP;
 import kr.co.Jboard1.config.Sql;
@@ -14,16 +10,13 @@ import kr.co.Jboard1.config.Sql;
  * @category GetBoardTermsDAO() - Read<br>
  * 			 Close() - close
  */
-public class BoardTermsDAO {
-	private Connection conn;
-	private Statement stmt;
-	private ResultSet rs;
+public class BoardTermsDAO extends DBCP {
 	/**
 	 * BoardTermsDAO 생성자
 	 */
 	public BoardTermsDAO() {
 		try {
-			conn = DBCP.getConnection();
+			conn = getConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,18 +40,5 @@ public class BoardTermsDAO {
 			e.printStackTrace();
 		}
 		return btb;
-	}
-	
-	/**
-	 * 클래스 종료
-	 */
-	public void close() {
-		try {
-			if(rs!=null) rs.close();
-			if(stmt!=null) stmt.close();
-			if(conn!=null) conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

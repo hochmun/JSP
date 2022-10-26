@@ -1,16 +1,4 @@
 package kr.co.Jboard1.DAO;
-/* CRUD
- * 만들 기능 
- *  - 회원가입 기능
- *  - 아이디 중복 체크
- *  - 별명 중복 체크
- */
-
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 import kr.co.Jboard1.bean.BoardUserBean;
 import kr.co.Jboard1.config.DBCP;
@@ -25,18 +13,13 @@ import kr.co.Jboard1.config.Sql;
  * 			CheckNick(nick) - 별명 중복 체크<br>
  * 			Close() - 닫기
  */
-public class BoardUserDAO {
-	private Connection conn;
-	private PreparedStatement psmt;
-	private Statement stmt;
-	private ResultSet rs;
-	
+public class BoardUserDAO extends DBCP {
 	/**
 	 * 데이터베이스 연결
 	 */
 	public BoardUserDAO() {
 		try {
-			conn = DBCP.getConnection();
+			conn = getConnection();
 		} catch (Exception e) {
 			System.out.println("데이터 베이스 연결 오류");
 			e.printStackTrace();
@@ -147,20 +130,5 @@ public class BoardUserDAO {
 		}
 		
 		return bub;
-	}
-	
-	/**
-	 * 클래스 닫기
-	 */
-	public void close() {
-		try {
-			if(rs!=null) rs.close();
-			if(psmt!=null) psmt.close();
-			if(stmt!=null) stmt.close();
-			if(conn!=null) conn.close();
-		} catch (Exception e) {
-			System.out.println("클래스 닫기 오류");
-			e.printStackTrace();
-		}
 	}
 }
