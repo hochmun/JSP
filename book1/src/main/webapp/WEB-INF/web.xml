@@ -90,4 +90,18 @@
 		<filter-name>SetCharEncoding</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+	<!-- 
+		날짜 : 2022/10/26
+		이름 : 심규영
+		내용 : 페이징 설정값 추가, p322
+	 -->
+	<context-param>
+		<param-name>POSTS_PER_PAGE</param-name>
+		<param-value>10</param-value>
+	</context-param>
+	<context-param>
+		<param-name>PAGES_PER_BLOCK</param-name>
+		<param-value>5</param-value>
+	</context-param>
 </web-app>

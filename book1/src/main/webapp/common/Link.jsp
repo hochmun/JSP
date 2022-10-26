@@ -17,7 +17,7 @@
 			&nbsp;&nbsp;&nbsp;
 			<a href="../Ch08Board/List.jsp">게시판(페이징x)</a>
 			&nbsp;&nbsp;&nbsp;
-			<a href="../Ch09/List.jsp">게시판(페이징O)</a>
+			<a href="../Ch09PagingBoard/List.jsp">게시판(페이징O)</a>
 		</td>
 	</tr>
 </table>
