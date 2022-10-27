@@ -16,7 +16,14 @@ public class BoardArticleBean {
 	private String uid;
 	private String regip;
 	private String rdate;
+	private String nick; // board_user - nick
 	
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
 	public int getNo() {
 		return no;
 	}

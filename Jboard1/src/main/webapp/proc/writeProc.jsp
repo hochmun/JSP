@@ -20,7 +20,7 @@
 	System.out.println("fname : "+fname);
 	
 	// 데이터 베이스 처리
-	BoardArticleDAO badao = new BoardArticleDAO();
+	BoardArticleDAO badao = BoardArticleDAO.getInstance();
 	badao.InsertBoardArticleDAO(title, content, fname, 
 			uid, regip, savePath);
 	badao.close();

@@ -11,7 +11,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class DBCP {
-	protected Connection conn;
+	protected static Connection conn;
 	protected Statement stmt;
 	protected PreparedStatement psmt;
 	protected ResultSet rs;

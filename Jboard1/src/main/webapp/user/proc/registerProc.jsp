@@ -14,7 +14,7 @@
 	String addr2 = request.getParameter("addr2");
 	String regip = request.getRemoteAddr();
 	
-	BoardUserDAO user = new BoardUserDAO();
+	BoardUserDAO user = BoardUserDAO.getInstance();
 	user.RegisterBoardUser
 	(uid, pass, name, nick, email, hp, zip, addr1, addr2, regip);
 	user.close();

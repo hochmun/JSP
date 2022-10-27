@@ -53,3 +53,8 @@ CREATE TABLE `board_file` (
 SELECT MD5('1234');
 SELECT SHA1('1234');java2db
 SELECT SHA2('1234', 256);
+
+# 조회수 증가 구문
+UPDATE `board_article` set hit = hit+1 WHERE `no`=?
+
+SELECT COUNT(`no`) FROM `board_article`;

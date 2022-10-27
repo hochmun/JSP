@@ -41,4 +41,17 @@ public class Sql {
 			+ "`oriName`=?";
 	public static final String SELECT_MAX_NO =
 			"SELECT MAX(`no`) FROM `board_article`";
+	public static final String SELECT_ARTICLE =
+			"SELECT "
+			+ "a.*,"
+			+ "b.`nick`"
+			+ " FROM `board_article` as a "
+			+ "JOIN `board_user` as b ON a.`uid` = b.`uid` "
+			+ "ORDER BY a.`no` DESC "
+			+ "LIMIT ?, 10";
+	public static final String SELECT_COUNT_TOTAL_ARTICLE =
+			"SELECT COUNT(`no`) FROM `board_article`";
+	public static final String UPDATE_ARTICLE_HIT =
+			"UPDATE `board_article` set hit = hit+1"
+			+ " WHERE `no`=?";
 }

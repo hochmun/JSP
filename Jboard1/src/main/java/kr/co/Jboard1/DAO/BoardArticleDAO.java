@@ -2,23 +2,27 @@ package kr.co.Jboard1.DAO;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import kr.co.Jboard1.bean.BoardArticleBean;
 import kr.co.Jboard1.config.DBCP;
 import kr.co.Jboard1.config.Sql;
 
 public class BoardArticleDAO extends DBCP {
-	/**
-	 * 데이터 베이스 연결
-	 */
-	public BoardArticleDAO() {
+	private static BoardArticleDAO instance = new BoardArticleDAO();
+	public static BoardArticleDAO getInstance() {
 		try {
 			conn = getConnection();
 		} catch (Exception e) {
 			System.out.println("데이터 베이스 연결 오류");
 			e.printStackTrace();
 		}
+		return instance;
 	}
+	private BoardArticleDAO() {}
+	
 	/**
 	 * 게시물 등록
 	 * @author 심규영
@@ -70,13 +74,88 @@ public class BoardArticleDAO extends DBCP {
 				f1.renameTo(f2);
 				
 				// 파일 테이블 Insert
-				BoardFileDAO bfdao = new BoardFileDAO();
+				BoardFileDAO bfdao = BoardFileDAO.getInstance();
 				bfdao.BoardFileInsert(parent, newName, fname);
 				bfdao.close();
 			}
 			
 		} catch (Exception e) {
 			System.out.println("아티클 인설트 오류");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * BoardArticle list view
+	 * <p>게시물 리스트 보기 메소드<p>
+	 * @author 심규영
+	 * @since 2022/10/27
+	 * @return List<BoardArticleBean>
+	 */
+	public List<BoardArticleBean> ViewBoardArticleDAO(int limitStart) {
+		List<BoardArticleBean> babs = new ArrayList<BoardArticleBean>();
+		
+		try {
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
+			psmt.setInt(1, limitStart);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardArticleBean bab = new BoardArticleBean();
+				bab.setNo(rs.getInt(1));
+				bab.setParent(rs.getInt(2));
+				bab.setComment(rs.getInt(3));
+				bab.setCate(rs.getString(4));
+				bab.setTitle(rs.getString(5));
+				bab.setContent(rs.getString(6));
+				bab.setFile(rs.getInt(7));
+				bab.setHit(rs.getInt(8));
+				bab.setUid(rs.getString(9));
+				bab.setRegip(rs.getString(10));
+				bab.setRdate(rs.getString(11));
+				bab.setNick(rs.getString(12));
+				babs.add(bab);
+			}
+		} catch (Exception e) {
+			System.out.println("게시물 보기 오류");
+			e.printStackTrace();
+		}
+		
+		return babs;
+	}
+	
+	/**
+	 * 총 게시물 갯수 찾는 메소드
+	 * @author 심규영
+	 * @since 2022/10/27
+	 * @return totalCount - 총 게시물 갯수
+	 */
+	public int SelectCountTotalBoardArticleDao() {
+		int totalCount = 0;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL_ARTICLE);
+			if(rs.next()) { totalCount = rs.getInt(1); }
+		} catch (Exception e) {
+			System.out.println("게시물 총갯수 찾기 오류");
+			e.printStackTrace();
+		}
+		
+		return totalCount;
+	}
+	
+	/**
+	 * 게시물 조회수 증가 메소드
+	 * @param no - 게시물 번호, 해당 게시물의 조회수를 증가하기위해 필요
+	 */
+	public void UpdateHitCount(String no) {
+		try {
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("게시물 조회 카운트 업데이트 오류");
 			e.printStackTrace();
 		}
 	}

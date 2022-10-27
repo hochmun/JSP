@@ -14,17 +14,17 @@ import kr.co.Jboard1.config.Sql;
  * 			Close() - 닫기
  */
 public class BoardUserDAO extends DBCP {
-	/**
-	 * 데이터베이스 연결
-	 */
-	public BoardUserDAO() {
+	private static BoardUserDAO instance = new BoardUserDAO();
+	public static BoardUserDAO getInstance () {
 		try {
 			conn = getConnection();
 		} catch (Exception e) {
-			System.out.println("데이터 베이스 연결 오류");
+			System.out.println("BoardUserDAO 데이터 베이스 연결 오류");
 			e.printStackTrace();
 		}
+		return instance;
 	}
+	private BoardUserDAO() {}
 	
 	/**
 	 * 회원가입

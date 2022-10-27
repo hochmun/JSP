@@ -17,7 +17,7 @@
 	});
 </script>
 <%
-	BoardTermsDAO btdao = new BoardTermsDAO();
+	BoardTermsDAO btdao = BoardTermsDAO.getInstance();
 	BoardTermsBean btb = btdao.GetBoardTermsDAO();
 	btdao.close();
 %>
