@@ -62,7 +62,7 @@ public class BoardDAO extends JDBConnect {
 		
 		// 쿼리문 템플릿
 		String query = "SELECT * FROM ("
-				+ "SELECT Tb.*, ROWNUM rNum FROM ("
+				+ "SELECT Tb.*, @ROWNUM:=@ROWNUM+1 AS rNum FROM ("
 				+ "SELECT * FROM `board`";
 		
 		// 검색 조건 추가
@@ -71,10 +71,11 @@ public class BoardDAO extends JDBConnect {
 				   + " LIKE '%'" + map.get("searchWord") + "%'";
 		}
 		
-		query += " ORDER BY num DESC"
-				+ ") Tb"
-				+ ")"
-				+ " WHERE rNum BETWEEN ? AND ?";
+		query += " ORDER BY `num` DESC"
+				+ ") AS Tb, "
+				+ "(SELECT @ROWNUM:=0) R"
+				+ ") A"
+				+ " WHERE `rNum` BETWEEN ? AND ?";
 		
 		try {
 			// 쿼리문 완성
