@@ -1,13 +1,6 @@
 <%@page import="kr.co.Jboard1.bean.BoardUserBean"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
-	/*
-	if(session.getAttribute("sessUser")==null){
-		response.sendRedirect("/Jboard1/user/login.jsp");
-		return;
-	}
-	*/
-
 	BoardUserBean bub = (BoardUserBean) session.getAttribute("sessUser");
 	
 	if(bub == null) {

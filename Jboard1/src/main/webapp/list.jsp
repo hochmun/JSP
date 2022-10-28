@@ -47,7 +47,7 @@
 	pageStartNum = total - limitStart;
 	
 	// 전체 페이지 게시물 가져오기
-	List<BoardArticleBean> babs = badao.ViewBoardArticleDAO(limitStart);
+	List<BoardArticleBean> babs = badao.ViewAllListBoardArticleDAO(limitStart);
 	// 클래스 닫기
 	badao.close();
 %>
@@ -66,7 +66,7 @@
             <tr>
                 <td><%= pageStartNum-- %></td>
                 <td>
-                    <a href="/Jboard1/view.jsp?no=<%=bab.getNo()%>"><%= bab.getTitle() %>
+                    <a href="/Jboard1/view.jsp?no=<%=bab.getNo()%>&pg=<%=currentPage%>"><%= bab.getTitle() %>
                     </a>&nbsp;[<%= bab.getComment() %>]
                 </td>
                 <td><%= bab.getNick() %></td>

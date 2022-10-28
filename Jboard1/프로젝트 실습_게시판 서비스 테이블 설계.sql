@@ -54,7 +54,19 @@ SELECT MD5('1234');
 SELECT SHA1('1234');java2db
 SELECT SHA2('1234', 256);
 
+INSERT INTO `board_article` (`title`, `content`, `uid`, `regip`, `rdate`)
+SELECT `title`, `content`, `uid`, `regip`, `rdate` FROM `board_article`;
+
 # 조회수 증가 구문
 UPDATE `board_article` set hit = hit+1 WHERE `no`=?
 
 SELECT COUNT(`no`) FROM `board_article`;
+
+SELECT 
+	*
+FROM 
+	`board_article` AS a
+	LEFT JOIN `board_file` AS b ON a.parent = b.parent 
+	WHERE a.`no` = 1;
+	
+SELECT MAX(`no`) FROM `board_article`

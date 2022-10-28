@@ -17,8 +17,6 @@
 	String fname 	= mr.getFilesystemName("fname");
 	String regip 	= request.getRemoteAddr();
 	
-	System.out.println("fname : "+fname);
-	
 	// 데이터 베이스 처리
 	BoardArticleDAO badao = BoardArticleDAO.getInstance();
 	badao.InsertBoardArticleDAO(title, content, fname, 

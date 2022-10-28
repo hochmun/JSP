@@ -34,14 +34,20 @@ public class Sql {
 			+ "`uid`=?, "
 			+ "`regip`=?, "
 			+ "`rdate`=NOW()";
+	public static final String READ_FILE =
+			"SELECT * FROM `board_file` "
+			+ " WHERE `parent`=?";
 	public static final String INSERT_FILE = 
 			"insert into `board_file` set"
 			+ "`parent`=?, "
 			+ "`newName`=?, "
 			+ "`oriName`=?";
+	public static final String UPDATE_FILE_DOWNLOAD =
+			"UPDATE `board_file` set download = download+1"
+			+ " WHERE `fno`=?";
 	public static final String SELECT_MAX_NO =
 			"SELECT MAX(`no`) FROM `board_article`";
-	public static final String SELECT_ARTICLE =
+	public static final String SELECT_ARTICLE_LIST =
 			"SELECT "
 			+ "a.*,"
 			+ "b.`nick`"
@@ -49,6 +55,9 @@ public class Sql {
 			+ "JOIN `board_user` as b ON a.`uid` = b.`uid` "
 			+ "ORDER BY a.`no` DESC "
 			+ "LIMIT ?, 10";
+	public static final String SELECT_ARTICLE =
+			"SELECT * FROM `board_article` "
+			+ " WHERE `no`=?";
 	public static final String SELECT_COUNT_TOTAL_ARTICLE =
 			"SELECT COUNT(`no`) FROM `board_article`";
 	public static final String UPDATE_ARTICLE_HIT =

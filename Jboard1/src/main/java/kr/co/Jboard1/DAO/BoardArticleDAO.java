@@ -78,7 +78,6 @@ public class BoardArticleDAO extends DBCP {
 				bfdao.BoardFileInsert(parent, newName, fname);
 				bfdao.close();
 			}
-			
 		} catch (Exception e) {
 			System.out.println("아티클 인설트 오류");
 			e.printStackTrace();
@@ -87,16 +86,16 @@ public class BoardArticleDAO extends DBCP {
 
 	/**
 	 * BoardArticle list view
-	 * <p>게시물 리스트 보기 메소드<p>
+	 * <p>게시물 모든 리스트 보기 메소드<p>
 	 * @author 심규영
 	 * @since 2022/10/27
 	 * @return List<BoardArticleBean>
 	 */
-	public List<BoardArticleBean> ViewBoardArticleDAO(int limitStart) {
+	public List<BoardArticleBean> ViewAllListBoardArticleDAO(int limitStart) {
 		List<BoardArticleBean> babs = new ArrayList<BoardArticleBean>();
 		
 		try {
-			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE_LIST);
 			psmt.setInt(1, limitStart);
 			rs = psmt.executeQuery();
 			
@@ -117,11 +116,46 @@ public class BoardArticleDAO extends DBCP {
 				babs.add(bab);
 			}
 		} catch (Exception e) {
-			System.out.println("게시물 보기 오류");
+			System.out.println("모든 게시물 리스트 보기 오류");
 			e.printStackTrace();
 		}
 		
 		return babs;
+	}
+	
+	/**
+	 * 해당 게시물 보기
+	 * @author 심규영
+	 * @since 2022/10/28
+	 * @param no
+	 * @return BoardArticleBean
+	 */
+	public BoardArticleBean ViewBoardArticleDAO (String no) {
+		BoardArticleBean bab = new BoardArticleBean();
+		try {
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
+			psmt.setString(1, no);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				bab.setNo(rs.getInt(1));
+				bab.setParent(rs.getInt(2));
+				bab.setComment(rs.getInt(3));
+				bab.setCate(rs.getString(4));
+				bab.setTitle(rs.getString(5));
+				bab.setContent(rs.getString(6));
+				bab.setFile(rs.getInt(7));
+				bab.setHit(rs.getInt(8));
+				bab.setUid(rs.getString(9));
+				bab.setRegip(rs.getString(10));
+				bab.setRdate(rs.getString(11));
+			}
+		} catch (Exception e) {
+			System.out.println("게시물 보기 오류");
+			e.printStackTrace();
+		}
+		
+		return bab;
 	}
 	
 	/**
@@ -147,6 +181,8 @@ public class BoardArticleDAO extends DBCP {
 	
 	/**
 	 * 게시물 조회수 증가 메소드
+	 * @author 심규영
+	 * @since 2022/10/27
 	 * @param no - 게시물 번호, 해당 게시물의 조회수를 증가하기위해 필요
 	 */
 	public void UpdateHitCount(String no) {
