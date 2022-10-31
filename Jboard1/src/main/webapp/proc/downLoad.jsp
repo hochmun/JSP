@@ -42,6 +42,7 @@
 	while(true) {
 		int data = bis.read();
 		
+		// 해당 파일이 없을 경우 종료
 		if (data == -1) {
 			break;
 		}

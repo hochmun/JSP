@@ -50,6 +50,17 @@ CREATE TABLE `board_file` (
 	`download` 	INT DEFAULT 0
 );
 
+#댓글 테이블 생성
+CREATE TABLE `board_comment` (
+	`cno`			INT AUTO_INCREMENT PRIMARY KEY,
+	`parent`		INT NOT NULL,
+	`uid`			VARCHAR(20) NOT NULL,
+	`nick`		VARCHAR(20) NOT NULL,
+	`content` 	TEXT NOT NULL,
+	`regip`	VARCHAR(100) NOT NULL,
+	`rdate`		DATETIME NOT NULL
+)
+
 SELECT MD5('1234');
 SELECT SHA1('1234');java2db
 SELECT SHA2('1234', 256);
@@ -63,10 +74,18 @@ UPDATE `board_article` set hit = hit+1 WHERE `no`=?
 SELECT COUNT(`no`) FROM `board_article`;
 
 SELECT 
-	*
+	a.`no`,
+	a.title,
+	a.content,
+	f.oriName,
+	f.download,
+	
 FROM 
 	`board_article` AS a
-	LEFT JOIN `board_file` AS b ON a.parent = b.parent 
-	WHERE a.`no` = 1;
+	LEFT JOIN `board_file` AS f ON a.`no` = f.parent 
+	LEFT JOIN `board_comment` AS c ON a.`no` = c.parent
+	WHERE a.`no` = 2;
 	
 SELECT MAX(`no`) FROM `board_article`
+
+UPDATE `board_article` SET `comment` = `comment`+1 WHERE `no`=?;

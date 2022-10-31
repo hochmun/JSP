@@ -56,11 +56,15 @@ public class Sql {
 			+ "ORDER BY a.`no` DESC "
 			+ "LIMIT ?, 10";
 	public static final String SELECT_ARTICLE =
-			"SELECT * FROM `board_article` "
+			"SELECT * "
+			+ " FROM `board_article` AS a "
+			+ " LEFT JOIN `board_file` AS b ON a.no = b.parent"
 			+ " WHERE `no`=?";
 	public static final String SELECT_COUNT_TOTAL_ARTICLE =
 			"SELECT COUNT(`no`) FROM `board_article`";
 	public static final String UPDATE_ARTICLE_HIT =
 			"UPDATE `board_article` set hit = hit+1"
 			+ " WHERE `no`=?";
+	public static final String INSERT_COMMENT = "INSERT INTO `board_comment` SET `parent`=?, `uid`=?, `nick`=?, `content`=?, `regip`=?, `rdate`=NOW()";
+	public static final String UPDATE_COMMENT_NUMBER = "UPDATE `board_article` SET `comment` = `comment`+1 WHERE `no`=?";
 }

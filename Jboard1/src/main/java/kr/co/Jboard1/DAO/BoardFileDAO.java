@@ -44,6 +44,12 @@ public class BoardFileDAO extends DBCP {
 		return bfb;
 	}
 	
+	/**
+	 * 파일 다운로드 횟수 증가
+	 * @author 심규영
+	 * @date 2022/10/28
+	 * @param fno
+	 */
 	public void UpdateDownloadCount(int fno) {
 		try {
 			psmt = conn.prepareStatement(Sql.UPDATE_FILE_DOWNLOAD);

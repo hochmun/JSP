@@ -4,9 +4,12 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kr.co.Jboard1.bean.BoardArticleBean;
+import kr.co.Jboard1.bean.BoardFileBean;
 import kr.co.Jboard1.config.DBCP;
 import kr.co.Jboard1.config.Sql;
 
@@ -16,7 +19,7 @@ public class BoardArticleDAO extends DBCP {
 		try {
 			conn = getConnection();
 		} catch (Exception e) {
-			System.out.println("데이터 베이스 연결 오류");
+			System.out.println("아티클 데이터 베이스 연결 오류");
 			e.printStackTrace();
 		}
 		return instance;
@@ -125,13 +128,17 @@ public class BoardArticleDAO extends DBCP {
 	
 	/**
 	 * 해당 게시물 보기
+	 * @date 2022/10/28 <br> 2022/10/31 수정
 	 * @author 심규영
-	 * @since 2022/10/28
+	 * @since 1.1
 	 * @param no
-	 * @return BoardArticleBean
+	 * @return Map<Object, Object> - (BoardArticleBean - bab, BoardFileBean - bfb) 
 	 */
-	public BoardArticleBean ViewBoardArticleDAO (String no) {
+	public Map<Object, Object> ViewBoardArticleDAO (String no) {
+		Map<Object, Object> beans = new HashMap<>();
 		BoardArticleBean bab = new BoardArticleBean();
+		BoardFileBean bfb = new BoardFileBean();
+		
 		try {
 			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
 			psmt.setString(1, no);
@@ -149,13 +156,19 @@ public class BoardArticleDAO extends DBCP {
 				bab.setUid(rs.getString(9));
 				bab.setRegip(rs.getString(10));
 				bab.setRdate(rs.getString(11));
+				bfb.setFno(rs.getInt(12));
+				bfb.setParent(rs.getInt(13));
+				bfb.setNewName(rs.getString(14));
+				bfb.setOriName(rs.getString(15));
+				bfb.setDownload(rs.getInt(16));
 			}
 		} catch (Exception e) {
 			System.out.println("게시물 보기 오류");
 			e.printStackTrace();
 		}
-		
-		return bab;
+		beans.put("bab", bab);
+		beans.put("bfb", bfb);
+		return beans;
 	}
 	
 	/**

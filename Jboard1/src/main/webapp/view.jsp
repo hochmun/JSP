@@ -1,3 +1,4 @@
+<%@page import="java.util.Map"%>
 <%@page import="kr.co.Jboard1.bean.BoardFileBean"%>
 <%@page import="kr.co.Jboard1.DAO.BoardFileDAO"%>
 <%@page import="kr.co.Jboard1.bean.BoardArticleBean"%>
@@ -9,19 +10,13 @@
 	String pg = request.getParameter("pg"); // 현제 게시물이 존재했던 페이지 번호
 	
 	BoardArticleDAO badao = BoardArticleDAO.getInstance(); // 데이터 베이스 연결
-	BoardArticleBean bab = badao.ViewBoardArticleDAO(no); // 게시물 불러오기
+	Map<Object, Object> beans = badao.ViewBoardArticleDAO(no); // 게시물 불러오기
+	BoardArticleBean bab = (BoardArticleBean) beans.get("bab");
+	BoardFileBean bfb = (BoardFileBean) beans.get("bfb");
 	
 	// 로그인한 아이디와 게시글의 글쓴이의 아이디가 같지 않을때
 	if (!bub.getUid().equals(bab.getUid())) {
 		badao.UpdateHitCount(no); // 게시물 조회수 증가
-	}
-	
-	// 첨부 파일이 있을 경우 파일 데이터베이스 불러옴
-	BoardFileBean bfb = null;
-	if (bab.getFile() > 0) {
-		BoardFileDAO bfdao = BoardFileDAO.getInstance(); // 데이터 베이스 연결
-		bfb = bfdao.ReadFileData(no); // 해당 게시물의 파일 데이터 받기
-		bfdao.close(); // 클래스 종료
 	}
 	
 	badao.close(); // 클래스 종료
@@ -72,7 +67,7 @@
         <!-- 댓글쓰기 -->
         <section class="commentForm">
             <h3>댓글쓰기</h3>
-            <form action="#">
+            <form action="/Jboard1/proc/commentWriteProc.jsp?parent=<%= no %>&&pg=<%=pg %>" method="post">
                 <textarea name="content">댓글내용 입력</textarea>
                 <div>
                     <a href="#" class="btn btnCancel">취소</a>
