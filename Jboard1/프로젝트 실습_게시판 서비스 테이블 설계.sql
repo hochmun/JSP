@@ -74,18 +74,19 @@ UPDATE `board_article` set hit = hit+1 WHERE `no`=?
 SELECT COUNT(`no`) FROM `board_article`;
 
 SELECT 
-	a.`no`,
-	a.title,
-	a.content,
-	f.oriName,
-	f.download,
-	
+	*
 FROM 
 	`board_article` AS a
 	LEFT JOIN `board_file` AS f ON a.`no` = f.parent 
 	LEFT JOIN `board_comment` AS c ON a.`no` = c.parent
-	WHERE a.`no` = 2;
+	WHERE a.`no` = 25;
 	
 SELECT MAX(`no`) FROM `board_article`
 
 UPDATE `board_article` SET `comment` = `comment`+1 WHERE `no`=?;
+
+SELECT `parent`, `uid`, `nick`, `content`, `regip`, `rdate` FROM `board_comment` WHERE `parent`=?
+
+SHOW STATUS LIKE '%conn%'
+
+SELECT `rdate` FROM `board_comment` ORDER BY `rdate` DESC LIMIT 1;

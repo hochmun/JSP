@@ -10,7 +10,7 @@
 	String uid = request.getParameter("uid");
 	String pass = request.getParameter("pass");
 	// 데이터베이스 처리
-	BoardUserDAO budao = BoardUserDAO.getInstance();	
+	BoardUserDAO budao = new BoardUserDAO(); //BoardUserDAO.getInstance();	
 	BoardUserBean bub = budao.Login(uid, pass);
 	budao.close();
 	// 아이디 일치 불일치

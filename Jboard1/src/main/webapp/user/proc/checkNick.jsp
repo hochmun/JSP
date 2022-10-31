@@ -10,7 +10,7 @@
 	String nick = request.getParameter("nick");
 
 	// 데이터베이스 처리
-	BoardUserDAO checkNick = BoardUserDAO.getInstance();
+	BoardUserDAO checkNick = new BoardUserDAO();//BoardUserDAO.getInstance();
 	int result = checkNick.CheckNick(nick);
 	checkNick.close();
 	

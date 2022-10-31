@@ -18,7 +18,7 @@
 	String regip 	= request.getRemoteAddr();
 	
 	// 데이터 베이스 처리
-	BoardArticleDAO badao = BoardArticleDAO.getInstance();
+	BoardArticleDAO badao = new BoardArticleDAO(); //BoardArticleDAO.getInstance();
 	badao.InsertBoardArticleDAO(title, content, fname, 
 			uid, regip, savePath);
 	badao.close();

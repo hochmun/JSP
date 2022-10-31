@@ -11,6 +11,7 @@ import kr.co.Jboard1.config.Sql;
  * 			 Close() - close
  */
 public class BoardTermsDAO extends DBCP {
+	/*
 	private static BoardTermsDAO instance = new BoardTermsDAO();
 	public static BoardTermsDAO getInstance () {
 		try {
@@ -21,7 +22,15 @@ public class BoardTermsDAO extends DBCP {
 		}
 		return instance;
 	}
-	private BoardTermsDAO() {}
+	*/
+	public BoardTermsDAO() {
+		try {
+			conn = getConnection();
+		} catch (Exception e) {
+			System.out.println("BoardTermsDAO 데이터베이스 연결 오류");
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * 사이트 이용약관, 개인정보 취급방침 불러오기

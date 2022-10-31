@@ -14,17 +14,26 @@ import kr.co.Jboard1.config.DBCP;
 import kr.co.Jboard1.config.Sql;
 
 public class BoardArticleDAO extends DBCP {
+	/*
 	private static BoardArticleDAO instance = new BoardArticleDAO();
 	public static BoardArticleDAO getInstance() {
 		try {
 			conn = getConnection();
 		} catch (Exception e) {
-			System.out.println("아티클 데이터 베이스 연결 오류");
+			System.out.println("데이터 베이스 연결 오류");
 			e.printStackTrace();
 		}
 		return instance;
 	}
-	private BoardArticleDAO() {}
+	*/
+	public BoardArticleDAO() {
+		try {
+			conn = getConnection();
+		} catch (Exception e) {
+			System.out.println("데이터 베이스 연결 오류");
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * 게시물 등록
@@ -77,7 +86,7 @@ public class BoardArticleDAO extends DBCP {
 				f1.renameTo(f2);
 				
 				// 파일 테이블 Insert
-				BoardFileDAO bfdao = BoardFileDAO.getInstance();
+				BoardFileDAO bfdao = new BoardFileDAO();//BoardFileDAO.getInstance();
 				bfdao.BoardFileInsert(parent, newName, fname);
 				bfdao.close();
 			}
@@ -162,6 +171,7 @@ public class BoardArticleDAO extends DBCP {
 				bfb.setOriName(rs.getString(15));
 				bfb.setDownload(rs.getInt(16));
 			}
+			
 		} catch (Exception e) {
 			System.out.println("게시물 보기 오류");
 			e.printStackTrace();
@@ -184,6 +194,7 @@ public class BoardArticleDAO extends DBCP {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL_ARTICLE);
 			if(rs.next()) { totalCount = rs.getInt(1); }
+			
 		} catch (Exception e) {
 			System.out.println("게시물 총갯수 찾기 오류");
 			e.printStackTrace();

@@ -14,6 +14,7 @@ import kr.co.Jboard1.config.Sql;
  * 			Close() - 닫기
  */
 public class BoardUserDAO extends DBCP {
+	/*
 	private static BoardUserDAO instance = new BoardUserDAO();
 	public static BoardUserDAO getInstance () {
 		try {
@@ -24,7 +25,15 @@ public class BoardUserDAO extends DBCP {
 		}
 		return instance;
 	}
-	private BoardUserDAO() {}
+	*/
+	public BoardUserDAO() {
+		try {
+			conn = getConnection();
+		} catch (Exception e) {
+			System.out.println("BoardUserDAO 데이터 베이스 연결 오류");
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * 회원가입

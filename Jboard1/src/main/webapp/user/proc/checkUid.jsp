@@ -6,7 +6,7 @@
 	String uid = request.getParameter("uid");
 
 	// 데이터베이스 처리
-	BoardUserDAO checkId = BoardUserDAO.getInstance();
+	BoardUserDAO checkId = new BoardUserDAO(); //BoardUserDAO.getInstance();
 	int result = checkId.CheckUid(uid);
 	checkId.close();
 
