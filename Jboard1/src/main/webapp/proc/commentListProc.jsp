@@ -1,3 +1,4 @@
+<%@page import="kr.co.Jboard1.bean.BoardArticleBean"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="kr.co.Jboard1.DAO.BoardCommentDAO"%>
 <%@page import="kr.co.Jboard1.bean.BoardCommentBean"%>
@@ -7,12 +8,12 @@
 <%
 	String parent = request.getParameter("parent");
 
-	BoardCommentDAO bcdao = new BoardCommentDAO();
-	List<BoardCommentBean> bcbs = bcdao.CommentList(parent);
-	bcdao.close();
+	BoardArticleDAO badao = new BoardArticleDAO();
+	List<BoardArticleBean> babs = badao.CommentList(parent);
+	badao.close();
 	
 	Gson gson = new Gson();
-	String jsonData = gson.toJson(bcbs);
+	String jsonData = gson.toJson(babs);
 	
 	out.print(jsonData);
 %>

@@ -14,18 +14,7 @@ import kr.co.Jboard1.config.DBCP;
 import kr.co.Jboard1.config.Sql;
 
 public class BoardArticleDAO extends DBCP {
-	/*
-	private static BoardArticleDAO instance = new BoardArticleDAO();
-	public static BoardArticleDAO getInstance() {
-		try {
-			conn = getConnection();
-		} catch (Exception e) {
-			System.out.println("데이터 베이스 연결 오류");
-			e.printStackTrace();
-		}
-		return instance;
-	}
-	*/
+	
 	public BoardArticleDAO() {
 		try {
 			conn = getConnection();
@@ -34,6 +23,8 @@ public class BoardArticleDAO extends DBCP {
 			e.printStackTrace();
 		}
 	}
+	
+	// Create
 	
 	/**
 	 * 게시물 등록
@@ -96,16 +87,32 @@ public class BoardArticleDAO extends DBCP {
 		}
 	}
 
-	public int insertComment() {
+	/**
+	 * 댓글 작성
+	 * @author 심규영
+	 * @date 2022/11/02
+	 * @param BoardArticleBean bab
+	 * @return either (1) the row count for SQL Data 
+	 * Manipulation Language (DML) statementsor (2) 0 for SQL 
+	 * statements that return nothing
+	 */
+	public int insertComment(BoardArticleBean bab) {
 		int result = 0;
 		try {
 			psmt = conn.prepareStatement(Sql.INSERT_COMMENT);
+			psmt.setInt(1, bab.getParent());
+			psmt.setString(2, bab.getContent());
+			psmt.setString(3, bab.getUid());
+			psmt.setString(4, bab.getRegip());
+			result = psmt.executeUpdate();
 		} catch(Exception e) {
-			System.out.println("댓글 등록 오류");
+			System.out.println("아티클 댓글 등록 오류");
 			e.printStackTrace();
 		}
 		return result;
 	}
+	
+	// Read
 	
 	/**
 	 * BoardArticle list view
@@ -215,6 +222,40 @@ public class BoardArticleDAO extends DBCP {
 	}
 	
 	/**
+	 * 댓글 리스트 요철
+	 * @author 심규영
+	 * @date 2022/11/02
+	 * @param board_article parent
+	 * @return List<BoardArticleBean> babs
+	 */
+	public List<BoardArticleBean> CommentList(String parent) {
+		List<BoardArticleBean> babs = new ArrayList<>();
+		try {
+			psmt = conn.prepareStatement(Sql.COMMENT_LIST);
+			psmt.setString(1, parent);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				BoardArticleBean bab = new BoardArticleBean();
+				bab.setNo(rs.getInt("no"));
+				bab.setParent(rs.getInt("parent"));
+				bab.setCate(rs.getString("cate"));
+				bab.setContent(rs.getString("content"));
+				bab.setUid(rs.getString("uid"));
+				bab.setRegip(rs.getString("regip"));
+				bab.setRdate(rs.getString("rdate"));
+				bab.setNick(rs.getString("nick"));
+				babs.add(bab);
+			}
+		} catch (Exception e) {
+			System.out.println("아티클 댓글 리스트 불러오기 오류");
+			e.printStackTrace();
+		}
+		return babs;
+	}
+	
+	// Update
+	
+	/**
 	 * 게시물 조회수 증가 메소드
 	 * @author 심규영
 	 * @since 2022/10/27
@@ -229,5 +270,97 @@ public class BoardArticleDAO extends DBCP {
 			System.out.println("게시물 조회 카운트 업데이트 오류");
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 댓글 갯수 증가, 마지막 댓글 등록 시간
+	 * @author 심규영
+	 * @date 2022/11/02
+	 * @param Article no
+	 * @return String date
+	 */
+	public String updateCommentNumber(String no) {
+		String date = "";
+		try {
+			conn.setAutoCommit(false);
+			psmt = conn.prepareStatement(Sql.UPDATE_COMMENT_NUMBER);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(Sql.LAST_COMMENT_TIME);
+			if(rs.next()) {
+				date = rs.getString("rdate");
+			}
+			conn.commit();
+		} catch (Exception e) {
+			System.out.println("댓글 갯수 업데이트, 댓글 등록 시간 리턴 오류");
+			e.printStackTrace();
+		}
+		return date;
+	}
+	
+	/**
+	 * 댓글 갯수 갑소
+	 * @author 심규영
+	 * @date 2022/11/02
+	 * @param no
+	 */
+	public void deleteCommentNumber (String no) {
+		try {
+			psmt = conn.prepareStatement(Sql.DELETE_COMMENT_NUMBER);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("아티클 댓글 삭제시 댓글 갯수 감소 오류");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 댓글 수정
+	 * @author 심규영
+	 * @date 2022/11/02
+	 * @param content
+	 * @param no
+	 * @return either (1) the row count for SQL Data 
+	 * Manipulation Language (DML) statementsor (2) 0 for SQL 
+	 * statements that return nothing
+	 */
+ 	public int updateComment(String content, String no) {
+		int result = 0;
+		try {
+			psmt = conn.prepareStatement(Sql.UPDATE_COMMENT);
+			psmt.setString(1, content);
+			psmt.setString(2, no);
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("아티클 댓글 수정 오류");
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	// Delete
+	
+	/**
+	 * 댓글 삭제
+	 * @author 심규영
+	 * @date 2022/11/02
+	 * @param no
+	 * @return either (1) the row count for SQL Data 
+	 * Manipulation Language (DML) statementsor (2) 0 for SQL 
+	 * statements that return nothing
+	 */
+	public int removeComment(String no) {
+		int result = 0;
+		try {
+			psmt = conn.prepareStatement(Sql.REMOVE_COMMENT);
+			psmt.setString(1, no);
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("아티클 댓글 삭제 오류");
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

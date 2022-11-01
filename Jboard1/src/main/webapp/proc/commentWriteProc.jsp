@@ -1,3 +1,5 @@
+<%@page import="kr.co.Jboard1.bean.BoardArticleBean"%>
+<%@page import="kr.co.Jboard1.DAO.BoardArticleDAO"%>
 <%@page import="java.util.Date"%>
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="kr.co.Jboard1.bean.BoardCommentBean"%>
@@ -17,18 +19,17 @@
 		return;
 	}
 	
-	BoardCommentBean bcb = new BoardCommentBean();
-	bcb.setParent(Integer.parseInt(parent));
-	bcb.setUid(bub.getUid());
-	bcb.setNick(bub.getNick());
-	bcb.setContent(content);
-	bcb.setRegip(request.getRemoteAddr());
+	BoardArticleBean bab = new BoardArticleBean();
+	bab.setParent(Integer.parseInt(parent));
+	bab.setContent(content);
+	bab.setRegip(request.getRemoteAddr());
+	bab.setUid(bub.getUid());
 	
 	// 데이터베이스 처리
-	BoardCommentDAO bcdao = new BoardCommentDAO();
-	int result = bcdao.insertComment(bcb); // 댓글 작성
-	String date = bcdao.updateCommentNumber(parent); // 댓글 갯수 증가, 마지막 등록 댓글 날짜 리턴
-	bcdao.close();
+	BoardArticleDAO badao = new BoardArticleDAO();
+	int result = badao.insertComment(bab);
+	String date = badao.updateCommentNumber(parent);
+	badao.close();
 	
 	JsonObject json = new JsonObject();
 	json.addProperty("result", result);

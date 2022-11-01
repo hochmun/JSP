@@ -1,6 +1,4 @@
-<%@page import="kr.co.Jboard1.bean.BoardCommentBean"%>
 <%@page import="java.util.List"%>
-<%@page import="kr.co.Jboard1.DAO.BoardCommentDAO"%>
 <%@page import="java.util.Map"%>
 <%@page import="kr.co.Jboard1.bean.BoardFileBean"%>
 <%@page import="kr.co.Jboard1.DAO.BoardFileDAO"%>
@@ -14,10 +12,9 @@
 	
 	// 데이터 베이스 연결
 	BoardArticleDAO badao = new BoardArticleDAO();
-	BoardCommentDAO bcdao = new BoardCommentDAO();
 	
 	Map<Object, Object> beans = badao.ViewBoardArticleDAO(no); // 게시물 불러오기
-	List<BoardCommentBean> bcbs = bcdao.CommentList(no); // 댓글 불러오기
+	List<BoardArticleBean> babs = badao.CommentList(no); // 댓글 불러오기
 	
 	BoardArticleBean bab = (BoardArticleBean) beans.get("bab");
 	BoardFileBean bfb = (BoardFileBean) beans.get("bfb");
@@ -29,7 +26,6 @@
 	
 	// 클래스 종료
 	badao.close(); 
-	bcdao.close();
 %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
@@ -43,9 +39,11 @@
 			if(isDeleteOk) {
 				const article = $(this).closest('article');
 				const no = $(this).attr('data-no');
+				const parent = $(this).attr('data-parent');
 					
 				const jsonData = {
-						"no": no
+						"no": no,
+						"parent":parent
 				};
 				
 				$.ajax({
@@ -82,7 +80,7 @@
 				const content = p_tag.text();
 				
 				const jsonData = {
-						"cno": no,
+						"no": no,
 						"content": content
 				};
 				
@@ -177,22 +175,22 @@
         <!-- 댓글목록 -->
         <section class="comments">
             <h3>댓글목록</h3>
-             <% for (BoardCommentBean bcb : bcbs) { %>
+             <% for (BoardArticleBean bab2 : babs) { %>
             <article>
-                <span class="nick"><%= bcb.getNick() %></span>
-                <span class="date"><%= bcb.getRdate().substring(2, 10) %></span>
-                <p class="content"><%= bcb.getContent() %></p>
+                <span class="nick"><%= bab2.getNick() %></span>
+                <span class="date"><%= bab2.getRdate().substring(2, 10) %></span>
+                <p class="content"><%= bab2.getContent() %></p>
                 <div>
-                <% 		if (bub.getUid().equals(bcb.getUid())) { %>
-                    <a href="#" class="remove" data-no="<%=bcb.getCno()%>">삭제</a>
-                    <a href="#" class="modify" data-no="<%=bcb.getCno()%>">수정</a>
+                <% 		if (bub.getUid().equals(bab2.getUid())) { %>
+                    <a href="#" class="remove" data-no="<%=bab2.getNo()%>" data-parent="<%=no%>">삭제</a>
+                    <a href="#" class="modify" data-no="<%=bab2.getNo()%>">수정</a>
                 <%		} else { %>
                 	<a>&nbsp;</a>
                 <% 		} %>
                 </div>
   			</article>
                 <% } 
-                if (bcbs.size() == 0) {%>
+                if (babs.size() == 0) {%>
             <article>
                 <p class="empty">등록된 댓글이 없습니다.</p>
             </article>

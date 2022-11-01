@@ -90,3 +90,29 @@ SELECT `parent`, `uid`, `nick`, `content`, `regip`, `rdate` FROM `board_comment`
 SHOW STATUS LIKE '%conn%'
 
 SELECT `rdate` FROM `board_comment` ORDER BY `rdate` DESC LIMIT 1;
+
+SELECT 
+	a.*, b.`nick` 
+	FROM `board_article` as a 
+	JOIN `board_user` as b ON a.`uid` = b.`uid` 
+	WHERE `cate`='free'
+	ORDER BY a.`no` DESC 
+	LIMIT 0, 10
+
+SELECT 
+	a.`no`, 
+	a.`parent`, 
+	a.`cate`, 
+	a.`content`, 
+	a.`uid`, 
+	a.`regip`,
+	a.`rdate`, 
+	u.`nick` 
+	FROM `board_article` as a  
+	JOIN `board_user` as u ON a.uid = u.uid 
+	WHERE `parent`=2 
+	ORDER BY `no` ASC
+
+UPDATE `board_article` 
+SET `comment` = `comment`-1 
+WHERE `no`=2

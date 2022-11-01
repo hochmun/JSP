@@ -53,6 +53,7 @@ public class Sql {
 			+ "b.`nick`"
 			+ " FROM `board_article` as a "
 			+ "JOIN `board_user` as b ON a.`uid` = b.`uid` "
+			+ "WHERE `cate`='free' "
 			+ "ORDER BY a.`no` DESC "
 			+ "LIMIT ?, 10";
 	public static final String SELECT_ARTICLE =
@@ -70,22 +71,30 @@ public class Sql {
 			+ "`parent`=?, "
 			+ "`cate`='comment', "
 			+ "`content`=?, "
+			+ "`uid`=?, "
 			+ "`regip`=?, "
 			+ "`rdate`=NOW()";
 	public static final String UPDATE_COMMENT_NUMBER = 
 			"UPDATE `board_article` SET `comment` = `comment`+1 "
 			+ "WHERE `no`=?";
+	public static final String DELETE_COMMENT_NUMBER =
+			"UPDATE `board_article` SET `comment` = `comment`-1 "
+			+ " WHERE `no`=?";
 	public static final String COMMENT_LIST = 
 			"SELECT "
-			+ "`cno`, `parent`, `uid`, `nick`, `content`, `regip`, "
-			+ "`rdate` FROM `board_comment` WHERE `parent`=?";
+			+ "a.`no`, a.`parent`, a.`cate`, a.`content`, a.`uid`, a.`regip`, "
+			+ "a.`rdate`, u.`nick` "
+			+ " FROM `board_article` as a "
+			+ " JOIN `board_user` as u ON a.uid = u.uid "
+			+ " WHERE `parent`=? "
+			+ " ORDER BY `no` ASC";
 	public static final String LAST_COMMENT_TIME =
-			"SELECT `rdate` FROM `board_comment` ORDER BY `rdate` DESC LIMIT 1;";
+			"SELECT `rdate` FROM `board_article` ORDER BY `rdate` DESC LIMIT 1;";
 	public static final String UPDATE_COMMENT = 
-			"UPDATE `board_comment` SET"
+			"UPDATE `board_article` SET"
 			+ " `content`=?, "
 			+ " `rdate`=NOW() "
-			+ " WHERE `cno`=?";
+			+ " WHERE `no`=?";
 	public static final String REMOVE_COMMENT = 
-			"DELETE FROM `board_comment` where `cno`=?";
+			"DELETE FROM `board_article` where `no`=?";
 }
