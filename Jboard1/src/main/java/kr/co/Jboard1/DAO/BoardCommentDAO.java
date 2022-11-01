@@ -57,6 +57,52 @@ public class BoardCommentDAO extends DBCP {
 	}
 	
 	/**
+	 * 댓글 수정
+	 * @author 심규영
+	 * @date 2022/11/01
+	 * @param content
+	 * @param cno
+	 * @return either (1) the row count for SQL Data 
+	 * Manipulation Language (DML) statementsor (2) 0 for SQL 
+	 * statements that return nothing
+	 */
+	public int updateComment(String content, String cno) {
+		int result = 0;
+		try {
+			psmt = conn.prepareStatement(Sql.UPDATE_COMMENT);
+			psmt.setString(1, content);
+			psmt.setString(2, cno);
+			result = psmt.executeUpdate();
+		} catch(Exception e) {
+			System.out.println("댓글 수정 오류");
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * 댓글 삭제
+	 * @author 심규영
+	 * @date 2022/11/01
+	 * @param cno
+	 * @return either (1) the row count for SQL Data 
+	 * Manipulation Language (DML) statementsor (2) 0 for SQL 
+	 * statements that return nothing
+	 */
+	public int removeComment(String cno) {
+		int result = 0;
+		try {
+			psmt = conn.prepareStatement(Sql.REMOVE_COMMENT);
+			psmt.setString(1, cno);
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("댓글 삭제 오류");
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
 	 * 댓글 리스트 요청
 	 * @author 심규영
 	 * @date 2022/10/31

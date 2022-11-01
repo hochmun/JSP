@@ -392,6 +392,7 @@ footer > p {
 #board > .view > .comments .date {}
 #board > .view > .comments .content {
     padding: 10px;
+    white-space: pre-wrap;
 }
 #board > .view > .comments .empty {
     padding: 20px;

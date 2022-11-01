@@ -13,8 +13,8 @@
 	String pg = request.getParameter("pg"); // 현제 게시물이 존재했던 페이지 번호
 	
 	// 데이터 베이스 연결
-	BoardArticleDAO badao = new BoardArticleDAO();//BoardArticleDAO.getInstance(); 
-	BoardCommentDAO bcdao = new BoardCommentDAO();//.getInstance(); 
+	BoardArticleDAO badao = new BoardArticleDAO();
+	BoardCommentDAO bcdao = new BoardCommentDAO();
 	
 	Map<Object, Object> beans = badao.ViewBoardArticleDAO(no); // 게시물 불러오기
 	List<BoardCommentBean> bcbs = bcdao.CommentList(no); // 댓글 불러오기
@@ -34,9 +34,79 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
+		
+		// 댓글 삭제
+		$(document).on('click', '.remove', function(e){
+			e.preventDefault();
+			const isDeleteOk = confirm('정말 삭제 하시겠습니까?');
+			
+			if(isDeleteOk) {
+				const article = $(this).closest('article');
+				const no = $(this).attr('data-no');
+					
+				const jsonData = {
+						"no": no
+				};
+				
+				$.ajax({
+					url: '/Jboard1/proc/commentRemoveProc.jsp',
+					type: 'POST',
+					data: jsonData,
+					dataType: 'json',
+					success: function(data){
+						if(data.result > 0) {
+							alert('댓글이 삭제 되었습니다.');
+							article.hide();
+						}
+					}
+				});
+			}
+		});
+		
+		// 댓글 수정
+		$(document).on('click', '.modify', function(e){
+			e.preventDefault();
+			
+			const txt = $(this).text();
+			const p_tag = $(this).parent().prev();
+			
+			if(txt == '수정') {
+				// 수정 모드
+				$(this).text('수정완료');
+				p_tag.attr('contentEditable', true).focus();
+			} else {
+				// 수정 완료
+				$(this).text('수정');
+				
+				const no = $(this).attr('data-no');
+				const content = p_tag.text();
+				
+				const jsonData = {
+						"cno": no,
+						"content": content
+				};
+				
+				$.ajax({
+					url: '/Jboard1/proc/commentModifyProc.jsp',
+					type: 'POST',
+					data: jsonData,
+					dataType: 'json',
+					success: function(data) {
+						if(data.result == 1) {
+							alert('댓글이 수정되었습니다.');
+							p_tag.attr('contentEditable', false);
+						}
+					}
+				});
+			}
+		});
+		
+		// 댓글 작성
 		$('.commentForm > form').submit(function(){
-			let content = $(this).children('textarea[name=content]').val();
-			let no		= $(this).children('input[name=no]').val();
+			let content 	= $(this).children('textarea[name=content]').val();
+			let no			= $(this).children('input[name=no]').val();
+			let textarea 	= $(this).children('textarea[name=content]');
+			
 			
 			if(content == '') {
 				alert('댓글을 작성하세요.');
@@ -56,17 +126,18 @@
 				success: function(data){
 					if(data.result > 0) {
 						let article = "<article>"
-									+ "<span class='nick'>"+data.nick+"</span>"
+									+ "<span class='nick'>"+data.nick+"</span>&nbsp;"
 									+ "<span class='date'>"+data.date+"</span>"
 									+ "<p class='content'>"+data.content+"</p>"
 									+ "<div>"
-									+ "<a href='#' class='remove'>삭제</a>"
+									+ "<a href='#' class='remove'>삭제</a>&nbsp;"
 									+ "<a href='#' class='modify'>수정</a>"
 									+ "</div>"
 									+ "</article>";
 						
-						$('.comments > .empty').hide();
+						$('.comments .empty').hide();
 						$('.comments').append(article);
+						textarea.val('');
 					}
 				}
 			});
@@ -106,23 +177,26 @@
         <!-- 댓글목록 -->
         <section class="comments">
             <h3>댓글목록</h3>
+             <% for (BoardCommentBean bcb : bcbs) { %>
             <article>
-            <% if (bcbs.size() != 0) {
-            	for (BoardCommentBean bcb : bcbs) { %>
                 <span class="nick"><%= bcb.getNick() %></span>
                 <span class="date"><%= bcb.getRdate().substring(2, 10) %></span>
                 <p class="content"><%= bcb.getContent() %></p>
-                <% 		if (bub.getUid().equals(bcb.getUid())) { %>
                 <div>
-                    <a href="#" class="remove">삭제</a>
-                    <a href="#" class="modify">수정</a>
+                <% 		if (bub.getUid().equals(bcb.getUid())) { %>
+                    <a href="#" class="remove" data-no="<%=bcb.getCno()%>">삭제</a>
+                    <a href="#" class="modify" data-no="<%=bcb.getCno()%>">수정</a>
+                <%		} else { %>
+                	<a>&nbsp;</a>
+                <% 		} %>
                 </div>
-                <% 		}
-                	}
-            	} else {%>
+  			</article>
+                <% } 
+                if (bcbs.size() == 0) {%>
+            <article>
                 <p class="empty">등록된 댓글이 없습니다.</p>
-                <% } %>
             </article>
+                <% } %>
         </section>
 
         <!-- 댓글쓰기 -->

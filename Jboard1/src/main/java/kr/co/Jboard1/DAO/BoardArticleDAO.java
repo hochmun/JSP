@@ -96,6 +96,17 @@ public class BoardArticleDAO extends DBCP {
 		}
 	}
 
+	public int insertComment() {
+		int result = 0;
+		try {
+			psmt = conn.prepareStatement(Sql.INSERT_COMMENT);
+		} catch(Exception e) {
+			System.out.println("댓글 등록 오류");
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	/**
 	 * BoardArticle list view
 	 * <p>게시물 모든 리스트 보기 메소드<p>

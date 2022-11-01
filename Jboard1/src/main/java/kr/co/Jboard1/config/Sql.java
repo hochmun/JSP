@@ -66,8 +66,12 @@ public class Sql {
 			"UPDATE `board_article` set hit = hit+1"
 			+ " WHERE `no`=?";
 	public static final String INSERT_COMMENT = 
-			"INSERT INTO `board_comment` SET `parent`=?, `uid`=?, "
-			+ "`nick`=?, `content`=?, `regip`=?, `rdate`=NOW()";
+			"INSERT INTO `board_article` SET "
+			+ "`parent`=?, "
+			+ "`cate`='comment', "
+			+ "`content`=?, "
+			+ "`regip`=?, "
+			+ "`rdate`=NOW()";
 	public static final String UPDATE_COMMENT_NUMBER = 
 			"UPDATE `board_article` SET `comment` = `comment`+1 "
 			+ "WHERE `no`=?";
@@ -77,6 +81,11 @@ public class Sql {
 			+ "`rdate` FROM `board_comment` WHERE `parent`=?";
 	public static final String LAST_COMMENT_TIME =
 			"SELECT `rdate` FROM `board_comment` ORDER BY `rdate` DESC LIMIT 1;";
-	public static final String DELETE_COMMENT = 
-			"";
+	public static final String UPDATE_COMMENT = 
+			"UPDATE `board_comment` SET"
+			+ " `content`=?, "
+			+ " `rdate`=NOW() "
+			+ " WHERE `cno`=?";
+	public static final String REMOVE_COMMENT = 
+			"DELETE FROM `board_comment` where `cno`=?";
 }

@@ -25,7 +25,7 @@
 	bcb.setRegip(request.getRemoteAddr());
 	
 	// 데이터베이스 처리
-	BoardCommentDAO bcdao = new BoardCommentDAO(); //BoardCommentDAO.getInstance();
+	BoardCommentDAO bcdao = new BoardCommentDAO();
 	int result = bcdao.insertComment(bcb); // 댓글 작성
 	String date = bcdao.updateCommentNumber(parent); // 댓글 갯수 증가, 마지막 등록 댓글 날짜 리턴
 	bcdao.close();
