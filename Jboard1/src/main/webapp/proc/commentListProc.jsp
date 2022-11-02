@@ -1,7 +1,5 @@
 <%@page import="kr.co.Jboard1.bean.BoardArticleBean"%>
 <%@page import="com.google.gson.Gson"%>
-<%@page import="kr.co.Jboard1.DAO.BoardCommentDAO"%>
-<%@page import="kr.co.Jboard1.bean.BoardCommentBean"%>
 <%@page import="java.util.List"%>
 <%@page import="kr.co.Jboard1.DAO.BoardArticleDAO"%>
 <%@ page contentType="application/json;charset=UTF-8" pageEncoding="UTF-8"%>

@@ -17,7 +17,7 @@
 	int pageStartNum = 0; // 현재 페이지 게시물 시작 번호
 
 	// 게시물 DAO 객체 가져오기
-	BoardArticleDAO badao = new BoardArticleDAO();//BoardArticleDAO.getInstance();
+	BoardArticleDAO badao = new BoardArticleDAO();
 	// 전체 게시물 갯수 구하기
 	total = badao.SelectCountTotalBoardArticleDao();
 	
