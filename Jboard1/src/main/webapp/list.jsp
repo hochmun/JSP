@@ -5,6 +5,7 @@
 <%@ include file="./_header.jsp" %>
 <%
 	String pg = request.getParameter("pg");
+	String delete = request.getParameter("delete");
 
 	// 게시판 번호 관련 선언
 	int limitStart = 0; // 현재 페이지의 시작 게시물 번호

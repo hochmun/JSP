@@ -88,6 +88,8 @@ UPDATE `board_article` SET `comment` = `comment`+1 WHERE `no`=?;
 SELECT `parent`, `uid`, `nick`, `content`, `regip`, `rdate` FROM `board_comment` WHERE `parent`=?
 
 SHOW STATUS LIKE '%conn%'
+show variables like 'thread_cache_size';
+SHOW GLOBAL STATUS LIKE '%threads_%';
 
 SELECT `rdate` FROM `board_comment` ORDER BY `rdate` DESC LIMIT 1;
 
@@ -116,3 +118,11 @@ SELECT
 UPDATE `board_article` 
 SET `comment` = `comment`-1 
 WHERE `no`=2
+
+SELECT COUNT(`no`) FROM `board_article` WHERE `cate`='free';
+
+DELETE FROM a, f  
+	USING `board_article` AS a 
+	LEFT JOIN `board_file` AS f 
+	ON a.`no` = f.`parent`
+	where a.`no`=? or a.`parent`=? or f.`parent`=?

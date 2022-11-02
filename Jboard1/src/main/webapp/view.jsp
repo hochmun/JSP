@@ -27,9 +27,15 @@
 	// 클래스 종료
 	badao.close(); 
 %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
+		
+		// 글 삭제
+		$('.btnRemove').click(function(){
+			const isDelete = confirm('정말 삭제 하시겠습니까?');
+			if(isDelete) return true;
+			else return false;
+		});
 		
 		// 댓글 삭제
 		$(document).on('click', '.remove', function(e){
@@ -143,7 +149,6 @@
 		});
 	});
 </script>
-
 <main id="board">
     <section class="view">
         <table>
@@ -167,8 +172,8 @@
         </table>
         <div>
         	<% if (bub.getUid().equals(bab.getUid())) { // 게시물의 글쓴이가 아닐때 삭제와 수정버튼 제거 %>
-            <a href="#" class="btn btnRemove">삭제</a>
-            <a href="/Jboard1/modify.jsp" class="btn btnModify">수정</a>
+            <a href="/Jboard1/proc/deleteProc.jsp?no=<%=no %>&pg=<%=pg %>&file=<%=bab.getFile() %>" class="btn btnRemove">삭제</a>
+            <a href="/Jboard1/modify.jsp?no=<%=no %>&pg=<%=pg %>" class="btn btnModify">수정</a>
             <% } %>
             <a href="/Jboard1/list.jsp?pg=<%= pg %>" class="btn btnList">목록</a>
         </div>

@@ -273,6 +273,30 @@ public class BoardArticleDAO extends DBCP {
 	}
 	
 	/**
+	 * 게시물 수정 메소드
+	 * @author 심규영
+	 * @date 2022/11/02
+	 * @param bab BoardArticleBean - title, content, no
+	 * @return either (1) the row count for SQL Data 
+	 * Manipulation Language (DML) statementsor (2) 0 for SQL 
+	 * statements that return nothing
+	 */
+	public int ModifyArticle(BoardArticleBean bab) {
+		int result = 0;
+		try {
+			psmt = conn.prepareStatement(Sql.MODIFY_ARTICLE);
+			psmt.setString(1, bab.getTitle());
+			psmt.setString(2, bab.getContent());
+			psmt.setInt(3, bab.getNo());
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("아티클 게시글 수정 오류");
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
 	 * 댓글 갯수 증가, 마지막 댓글 등록 시간
 	 * @author 심규영
 	 * @date 2022/11/02
@@ -341,7 +365,45 @@ public class BoardArticleDAO extends DBCP {
 	}
 	
 	// Delete
-	
+ 	
+ 	/**
+ 	 * 게시물 삭제 및 연결된 파일 및 댓글 삭제
+ 	 * @author 심규영
+ 	 * @date 2022/11/02
+ 	 * @param no
+ 	 */
+	public void deleteArticle (String no, int filecheck, String path) {
+		try {
+			conn.setAutoCommit(false);
+			String fileName = null;
+			
+			if (filecheck > 0) {
+				psmt = conn.prepareStatement(Sql.READ_FILE);
+				psmt.setString(1, no);
+				rs = psmt.executeQuery();
+				if(rs.next()) {
+					fileName = rs.getString("newName");
+				}
+				if(fileName != null) {
+					File file = new File(path, fileName);
+					if(file.exists()) {
+						file.delete();
+					}
+				}
+			}
+			
+			psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			psmt.setString(3, no);
+			psmt.executeUpdate();
+			conn.commit();
+		} catch (Exception e) {
+			System.out.println("아티클 게시물 삭제 오류");
+			e.printStackTrace();
+		}
+	}
+ 	
 	/**
 	 * 댓글 삭제
 	 * @author 심규영

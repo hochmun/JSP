@@ -62,10 +62,22 @@ public class Sql {
 			+ " LEFT JOIN `board_file` AS b ON a.no = b.parent"
 			+ " WHERE `no`=?";
 	public static final String SELECT_COUNT_TOTAL_ARTICLE =
-			"SELECT COUNT(`no`) FROM `board_article`";
+			"SELECT COUNT(`no`) FROM `board_article` WHERE `cate`='free'";
 	public static final String UPDATE_ARTICLE_HIT =
 			"UPDATE `board_article` set hit = hit+1"
 			+ " WHERE `no`=?";
+	public static final String MODIFY_ARTICLE =
+			"UPDATE `board_article` SET "
+			+ " `title`=?, "
+			+ " `content`=?, "
+			+ " `rdate`=NOW() "
+			+ " WHERE `no`=?";
+	public static final String DELETE_ARTICLE =
+			"DELETE FROM a, f "
+			+ " USING `board_article` AS a "
+			+ " LEFT JOIN `board_file` AS f "
+			+ " ON a.`no` = f.`parent`"
+			+ " where a.`no`=? or a.`parent`=? or f.`parent`=?";
 	public static final String INSERT_COMMENT = 
 			"INSERT INTO `board_article` SET "
 			+ "`parent`=?, "
