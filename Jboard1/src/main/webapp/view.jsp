@@ -134,8 +134,8 @@
 									+ "<span class='date'>"+data.date+"</span>"
 									+ "<p class='content'>"+data.content+"</p>"
 									+ "<div>"
-									+ "<a href='#' class='remove'>삭제</a>&nbsp;"
-									+ "<a href='#' class='modify'>수정</a>"
+									+ "<a href='#' class='remove' data-no="+data.no+" data-parent="+data.parent+">삭제</a>&nbsp;"
+									+ "<a href='#' class='modify' data-no="+data.no+">수정</a>"
 									+ "</div>"
 									+ "</article>";
 						

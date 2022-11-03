@@ -21,8 +21,9 @@ public class BoardFileDAO extends DBCP {
 		try {
 			conn = getConnection();
 		} catch (Exception e) {
-			System.out.println("데이터 베이스 연결 오류");
 			e.printStackTrace();
+			logger.error("파일 커넥션 연결 오류");
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -47,8 +48,9 @@ public class BoardFileDAO extends DBCP {
 				bfb.setDownload(rs.getInt(5));
 			}
 		} catch (Exception e) {
-			System.out.println("해당 게시물의 파일 불러오기 오류");
 			e.printStackTrace();
+			logger.error("파일 해당 게시물의 파일 정보 불러오기 오류");
+			logger.error(e.getMessage());
 		}
 		return bfb;
 	}
@@ -65,8 +67,9 @@ public class BoardFileDAO extends DBCP {
 			psmt.setInt(1, fno);
 			psmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("파일 다운로드 카운트 업데이트 오류");
 			e.printStackTrace();
+			logger.error("파일 다운로드 카운트 업데이트 오류");
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -88,8 +91,9 @@ public class BoardFileDAO extends DBCP {
 			
 			psmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("파일 인서트 오류");
 			e.printStackTrace();
+			logger.error("파일 인서트 오류");
+			logger.error(e.getMessage());
 		}
 	}
 }

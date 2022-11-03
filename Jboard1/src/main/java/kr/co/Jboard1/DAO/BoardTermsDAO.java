@@ -27,8 +27,9 @@ public class BoardTermsDAO extends DBCP {
 		try {
 			conn = getConnection();
 		} catch (Exception e) {
-			System.out.println("BoardTermsDAO 데이터베이스 연결 오류");
 			e.printStackTrace();
+			logger.error("Terms 커넥션 연결 오류");
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -49,6 +50,8 @@ public class BoardTermsDAO extends DBCP {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("Terms 이용약관, 개인정보 취급방침 불러오기 오류");
+			logger.error(e.getMessage());
 		}
 		return btb;
 	}

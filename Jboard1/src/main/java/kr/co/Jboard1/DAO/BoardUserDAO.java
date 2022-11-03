@@ -30,8 +30,9 @@ public class BoardUserDAO extends DBCP {
 		try {
 			conn = getConnection();
 		} catch (Exception e) {
-			System.out.println("BoardUserDAO 데이터 베이스 연결 오류");
 			e.printStackTrace();
+			logger.error("유저 커넥션 연결 오류");
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -57,8 +58,9 @@ public class BoardUserDAO extends DBCP {
 			
 			psmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("회원가입 오류");
 			e.printStackTrace();
+			logger.error("유저 회원가입 오류");
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -76,8 +78,9 @@ public class BoardUserDAO extends DBCP {
 				result = rs.getInt(1);
 			}
 		} catch (Exception e) {
-			System.out.println("중복 아이디 체크 오류");
 			e.printStackTrace();
+			logger.error("유저 중복 아이디 체크 오류");
+			logger.error(e.getMessage());
 		}
 		return result;
 	 }
@@ -96,8 +99,9 @@ public class BoardUserDAO extends DBCP {
 				result = rs.getInt(1);
 			}
 		} catch(Exception e) {
-			System.out.println("중복 별명 체크 오류");
 			e.printStackTrace();
+			logger.error("유저 중복 별명 체크 오류");
+			logger.error(e.getMessage());
 		}
 		return result;
 	}
@@ -134,8 +138,9 @@ public class BoardUserDAO extends DBCP {
 				bub.setRdate(rs.getString(12));
 			}
 		} catch(Exception e) {
-			System.out.println("로그인 오류");
 			e.printStackTrace();
+			logger.error("유저 로그인 오류");
+			logger.error(e.getMessage());
 		}
 		
 		return bub;

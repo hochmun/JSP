@@ -26,14 +26,16 @@
 	// 데이터베이스 처리
 	BoardArticleDAO badao = new BoardArticleDAO();
 	int result = badao.insertComment(bab);
-	String date = badao.updateCommentNumber(parent);
+	BoardArticleBean bab2 = badao.updateCommentNumber(parent);
 	badao.close();
 	
 	JsonObject json = new JsonObject();
 	json.addProperty("result", result);
 	json.addProperty("nick", bub.getNick());
-	json.addProperty("date", date.substring(2, 10));
+	json.addProperty("date", bab2.getRdate().substring(2, 10));
 	json.addProperty("content", content);
+	json.addProperty("no", String.valueOf(bab2.getNo()));
+	json.addProperty("parent", parent);
 	
 	String jsonData = json.toString();
 	out.print(jsonData);

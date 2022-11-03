@@ -19,8 +19,9 @@ public class BoardArticleDAO extends DBCP {
 		try {
 			conn = getConnection();
 		} catch (Exception e) {
-			System.out.println("데이터 베이스 연결 오류");
 			e.printStackTrace();
+			logger.error("아티클 커넥션 연결 오류");
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -82,8 +83,9 @@ public class BoardArticleDAO extends DBCP {
 				bfdao.close();
 			}
 		} catch (Exception e) {
-			System.out.println("아티클 인설트 오류");
 			e.printStackTrace();
+			logger.error(e.getMessage());
+			logger.error("아티클 인설트 오류");
 		}
 	}
 
@@ -106,8 +108,9 @@ public class BoardArticleDAO extends DBCP {
 			psmt.setString(4, bab.getRegip());
 			result = psmt.executeUpdate();
 		} catch(Exception e) {
-			System.out.println("아티클 댓글 등록 오류");
 			e.printStackTrace();
+			logger.error(e.getMessage());
+			logger.error("아티클 댓글 등록 오류");
 		}
 		return result;
 	}
@@ -146,8 +149,9 @@ public class BoardArticleDAO extends DBCP {
 				babs.add(bab);
 			}
 		} catch (Exception e) {
-			System.out.println("모든 게시물 리스트 보기 오류");
 			e.printStackTrace();
+			logger.error(e.getMessage());
+			logger.error("아티클 모든 게시물 리스트 보기 오류");
 		}
 		
 		return babs;
@@ -191,8 +195,9 @@ public class BoardArticleDAO extends DBCP {
 			}
 			
 		} catch (Exception e) {
-			System.out.println("게시물 보기 오류");
 			e.printStackTrace();
+			logger.error(e.getMessage());
+			logger.error("아티클 게시물 보기 오류");
 		}
 		beans.put("bab", bab);
 		beans.put("bfb", bfb);
@@ -214,8 +219,9 @@ public class BoardArticleDAO extends DBCP {
 			if(rs.next()) { totalCount = rs.getInt(1); }
 			
 		} catch (Exception e) {
-			System.out.println("게시물 총갯수 찾기 오류");
 			e.printStackTrace();
+			logger.error(e.getMessage());
+			logger.error("아티클 게시물 총갯수 찾기 오류");
 		}
 		
 		return totalCount;
@@ -247,8 +253,9 @@ public class BoardArticleDAO extends DBCP {
 				babs.add(bab);
 			}
 		} catch (Exception e) {
-			System.out.println("아티클 댓글 리스트 불러오기 오류");
 			e.printStackTrace();
+			logger.error(e.getMessage());
+			logger.error("아티클 댓글 리스트 불러오기 오류");
 		}
 		return babs;
 	}
@@ -267,8 +274,9 @@ public class BoardArticleDAO extends DBCP {
 			psmt.setString(1, no);
 			psmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("게시물 조회 카운트 업데이트 오류");
 			e.printStackTrace();
+			logger.error(e.getMessage());
+			logger.error("게시물 조회 카운트 업데이트 오류");
 		}
 	}
 	
@@ -290,21 +298,22 @@ public class BoardArticleDAO extends DBCP {
 			psmt.setInt(3, bab.getNo());
 			result = psmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("아티클 게시글 수정 오류");
 			e.printStackTrace();
+			logger.error("아티클 게시글 수정 오류");
+			logger.error(e.getMessage());
 		}
 		return result;
 	}
 	
 	/**
-	 * 댓글 갯수 증가, 마지막 댓글 등록 시간
+	 * 댓글 갯수 증가, 마지막 댓글 등록 시간, 등록 번호 리턴
 	 * @author 심규영
 	 * @date 2022/11/02
 	 * @param Article no
-	 * @return String date
+	 * @return BoardArticleBean - No, rdate
 	 */
-	public String updateCommentNumber(String no) {
-		String date = "";
+	public BoardArticleBean updateCommentNumber(String no) {
+		BoardArticleBean bab = new BoardArticleBean();
 		try {
 			conn.setAutoCommit(false);
 			psmt = conn.prepareStatement(Sql.UPDATE_COMMENT_NUMBER);
@@ -313,14 +322,16 @@ public class BoardArticleDAO extends DBCP {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(Sql.LAST_COMMENT_TIME);
 			if(rs.next()) {
-				date = rs.getString("rdate");
+				bab.setRdate(rs.getString("rdate"));
+				bab.setNo(rs.getInt("no"));
 			}
 			conn.commit();
 		} catch (Exception e) {
-			System.out.println("댓글 갯수 업데이트, 댓글 등록 시간 리턴 오류");
 			e.printStackTrace();
+			logger.error("아티클 갯수 업데이트, 댓글 등록 시간 리턴 오류");
+			logger.error(e.getMessage());
 		}
-		return date;
+		return bab;
 	}
 	
 	/**
@@ -335,8 +346,9 @@ public class BoardArticleDAO extends DBCP {
 			psmt.setString(1, no);
 			psmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("아티클 댓글 삭제시 댓글 갯수 감소 오류");
 			e.printStackTrace();
+			logger.error("아티클 댓글 삭제시 댓글 갯수 감소 오류");
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -358,8 +370,9 @@ public class BoardArticleDAO extends DBCP {
 			psmt.setString(2, no);
 			result = psmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("아티클 댓글 수정 오류");
 			e.printStackTrace();
+			logger.error("아티클 댓글 수정 오류");
+			logger.error(e.getMessage());
 		}
 		return result;
 	}
@@ -399,8 +412,9 @@ public class BoardArticleDAO extends DBCP {
 			psmt.executeUpdate();
 			conn.commit();
 		} catch (Exception e) {
-			System.out.println("아티클 게시물 삭제 오류");
 			e.printStackTrace();
+			logger.error("아티클 게시물 삭제 오류");
+			logger.error(e.getMessage());
 		}
 	}
  	
@@ -420,8 +434,9 @@ public class BoardArticleDAO extends DBCP {
 			psmt.setString(1, no);
 			result = psmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("아티클 댓글 삭제 오류");
 			e.printStackTrace();
+			logger.error("아티클 댓글 삭제 오류");
+			logger.error(e.getMessage());
 		}
 		return result;
 	}

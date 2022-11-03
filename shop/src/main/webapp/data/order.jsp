@@ -5,12 +5,10 @@
 	request.setCharacterEncoding("utf-8");
 	String orderProduct	= request.getParameter("orderProduct");
 	String orderCount	= request.getParameter("orderCount");
-	String orderId	= request.getParameter("orderId");
-	
-	int result = 0;
+	String orderId		= request.getParameter("orderId");
 	
 	ShopOrderDAO sodao = new ShopOrderDAO();
-	result = sodao.ShopOrderAdd(orderId, orderProduct, orderCount);
+	int result = sodao.ShopOrderAdd(orderId, orderProduct, orderCount);
 	sodao.close();
 	
 	JsonObject json = new JsonObject();

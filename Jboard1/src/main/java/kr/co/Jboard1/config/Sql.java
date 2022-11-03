@@ -101,7 +101,7 @@ public class Sql {
 			+ " WHERE `parent`=? "
 			+ " ORDER BY `no` ASC";
 	public static final String LAST_COMMENT_TIME =
-			"SELECT `rdate` FROM `board_article` ORDER BY `rdate` DESC LIMIT 1;";
+			"SELECT `rdate`, `no` FROM `board_article` ORDER BY `rdate` DESC LIMIT 1;";
 	public static final String UPDATE_COMMENT = 
 			"UPDATE `board_article` SET"
 			+ " `content`=?, "
