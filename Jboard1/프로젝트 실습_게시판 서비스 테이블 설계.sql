@@ -126,3 +126,19 @@ DELETE FROM a, f
 	LEFT JOIN `board_file` AS f 
 	ON a.`no` = f.`parent`
 	where a.`no`=? or a.`parent`=? or f.`parent`=?
+
+
+SELECT 
+	r.`regStdNo`,  
+	s.`stdName`, 
+	l.`lecName`,	
+	r.`regLecNo`,	
+	r.`regMidScore`, 
+	r.`regFinalScore`, 
+	r.`regTotalScore`, 
+	r.`regGrade`
+	from `register` AS r 
+	join `student` as s ON r.regStdNo = s.stdNo 
+	join `lecture` as l ON r.regLecNo = l.lecNo
+	
+	select `lecName` from `lecture`
