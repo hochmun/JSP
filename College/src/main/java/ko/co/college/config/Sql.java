@@ -16,9 +16,16 @@ public class Sql {
 			+ " `lecClass`)"
 			+ " values (?,?,?,?,?)";
 	public static final String SELECT_LECTURE_NAME_LIST =
-			"select `lecName` from `lecture`";
+			"select "
+			+ " `lecName`,"
+			+ " `lecNo`"
+			+ " from `lecture`";
 	
 	// register
+	public static final String INSERT_REGISTER =
+			"insert into `register`"
+			+ "(`regStdNo`, `regLecNo`)"
+			+ "values (?,?)";
 	public static final String SELECT_REGISTER_LIST =
 			"select "
 			+ "	r.`regStdNo`, "
@@ -45,7 +52,7 @@ public class Sql {
 			+ " from `register` as r"
 			+ " join `student` as s ON r.regStdNo = s.stdNo"
 			+ " join `lecture` as l ON r.regLecNo = l.lecNo"
-			+ " WHERE r.`regStdNo`=?";
+			+ " WHERE r.`regStdNo` LIKE ";
 	
 	// student
 	public static final String SELECT_STUDENT_LIST =

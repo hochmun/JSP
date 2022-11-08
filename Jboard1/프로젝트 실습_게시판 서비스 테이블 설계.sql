@@ -140,5 +140,6 @@ SELECT
 	from `register` AS r 
 	join `student` as s ON r.regStdNo = s.stdNo 
 	join `lecture` as l ON r.regLecNo = l.lecNo
+	WHERE r.`regStdNo` LIKE '%1016%';
 	
 	select `lecName` from `lecture`

@@ -78,7 +78,8 @@ public class lectureDAO extends DBCP {
 			rs = stmt.executeQuery(Sql.SELECT_LECTURE_NAME_LIST);
 			while(rs.next()) {
 				lectureBean lb = new lectureBean();
-				lb.setLecName(rs.getString(1));
+				lb.setLecName(rs.getString("lecName"));
+				lb.setLecNo(rs.getInt("lecNo"));
 				lbs.add(lb);
 			}
 		} catch (Exception e) {

@@ -15,6 +15,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 		<script>
 			$(function(){
+				// 강좌 등록 열기 및 강좌 검색
 				$('.btnOpen').click(function(){
 					$('section').show();
 					
@@ -25,19 +26,29 @@
 						success: function(data){
 							for(const lbs of data) {
 								const option = 
-								"<option value="+lbs.lecName+">"
+								"<option value="+lbs.lecNo+">"
 								+ lbs.lecName + "</option>";
 								$('select[name=lecName]').append(option);
 							}
 						}
 					});
 				});
+				// 강좌 닫기
 				$('.btnClose').click(function(){
 					$('section').hide();
 				});
 				
+				// 학생 수강 과목 검색
 				$('.btnSearchRegister').click(function(){
 					const searchRegister = $('.searchRegister').val();
+					// 숫자 체크용
+					const chkStyle = /\d/;
+					
+					// 입력 값이 숫자인지 체크
+					if (!searchRegister.match(chkStyle)) {
+						alert("올바르지 않은 형식");
+						return false;
+					}
 					
 					const jsonData = {
 							"searchRegister"	:searchRegister
@@ -72,7 +83,50 @@
 					});
 				});
 				
-				$
+				// 수강하기
+				$('input[type=submit]').click(function(){
+					const regStdNo 	= $('input[name=regStdNo]').val();
+					const stdName 	= $('input[name=stdName]').val();
+					const lecNo 	= $('#lecName option:selected').val();
+					const lecName 	= $('#lecName option:selected').text();
+					
+					console.log(lecNo);
+					console.log(lecName);
+					
+					const jsonData = {
+							"regStdNo"	:regStdNo,
+							"stdName"	:stdName,
+							"lecNo"		:lecNo,
+							"lecName"	:lecName
+					}
+					
+					$.ajax({
+						url: './proc/registerInsert.jsp',
+						type: 'POST',
+						data: jsonData,
+						dataType: 'json',
+						success: function(data){
+							if(data.result > 0) {
+								alert('수강등록성공!');
+								let tr = "<tr>"
+									   + "<td>"+data.regStdNo+"</td>"
+									   + "<td>"+data.stdName+"</td>"
+									   + "<td>"+data.lecName+"</td>"
+									   + "<td>"+data.lecNo+"</td>"
+									   + "<td></td>"
+									   + "<td></td>"
+									   + "<td></td>"
+									   + "<td></td>"
+									   + "</tr>";
+								
+								$('section').hide();
+								$('.registerList').append(tr);
+							} else {
+								alert("수강등록실패!");
+							}
+						}
+					});
+				});
 			});
 		</script>
 	</head>
@@ -83,7 +137,7 @@
 		<a href="./student.jsp">학생관리</a>
 		
 		<h4>수강현황</h4>
-		<input type="text" class="searchRegister">
+		<input type="text" class="searchRegister" placeholder="학번 검색">
 		<input type="button" class="btnSearchRegister" value="검색">
 		<input type="button" class="btnOpen" value="수강신청">
 		<table border="1" class="registerList">
@@ -119,7 +173,7 @@
 				</tr>
 				<tr>
 					<td>신청강좌</td>
-					<td><select name="lecName">
+					<td><select name="lecName" id="lecName">
 						<option value="none">강좌선택</option>
 					</select></td>
 				</tr>

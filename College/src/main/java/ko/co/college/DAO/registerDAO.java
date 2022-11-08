@@ -19,11 +19,31 @@ public class registerDAO extends DBCP {
 	}
 	
 	// Create
+	/**
+	 * 수강 등록
+	 * @param rb
+	 * @return either (1) the row count for SQL Data Manipulation Language (DML) statementsor (2) 0 for SQL statements that return nothing
+	 */
+	public int registerInsert(registerBean rb) {
+		int result = 0;
+		try {
+			psmt = conn.prepareStatement(Sql.INSERT_REGISTER);
+			psmt.setString(1, rb.getRegStdNo());
+			psmt.setInt(2, rb.getRegLecNo());
+			result = psmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+			logger.error("register 등록 오류");
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	
 	
 	// read
 	/**
 	 * 수강테이블 리스트 읽기
-	 * @return
+	 * @return List<registerBean>
 	 */
 	public List<registerBean> readRegisterList() {
 		List<registerBean> rbs = new ArrayList<registerBean>(); 
@@ -58,9 +78,8 @@ public class registerDAO extends DBCP {
 	public List<registerBean> searchRegisterList(String searchRegister) {
 		List<registerBean> rbs = new ArrayList<registerBean>(); 
 		try {
-			psmt = conn.prepareStatement(Sql.SEARCH_REGISTER_LIST);
-			psmt.setString(1, searchRegister);
-			rs = psmt.executeQuery();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(Sql.SEARCH_REGISTER_LIST+"'%"+searchRegister+"%'");
 			while(rs.next()) {
 				registerBean rb = new registerBean();
 				rb.setRegStdNo(rs.getString(1));
