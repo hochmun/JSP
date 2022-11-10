@@ -104,4 +104,18 @@
 		<param-name>PAGES_PER_BLOCK</param-name>
 		<param-value>5</param-value>
 	</context-param>
+	
+	<!-- 
+		날짜 : 2022/11/10
+		이름 : 심규영
+		내용 : web.xml에 매칭 정보 추가, p452
+	 -->
+	<servlet>
+		<servlet-name>HelloServlet</servlet-name>
+		<servlet-class>servlet.HelloServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HelloServlet</servlet-name>
+		<url-pattern>/Ch13Servlet/HelloServlet.do</url-pattern>
+	</servlet-mapping>
 </web-app>
