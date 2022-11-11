@@ -15,16 +15,20 @@
 			<tr>
 				<th>아이디</th>
 				<th>이름</th>
-				<th>휴대폰</th>
+				<th>생일</th>
 				<th>나이</th>
+				<th>주소</th>
+				<th>휴대폰</th>
 				<th>관리</th>
 			</tr>
 			<c:forEach var="user" items="${ requestScope.users }">
 				<tr>
 					<td>${ user.uid }</td>
 					<td>${ user.name }</td>
-					<td>${ user.hp }</td>
+					<td>${ user.birth }</td>
 					<td>${ user.age }</td>
+					<td>${ user.address }</td>
+					<td>${ user.hp }</td>
 					<td>
 						<a href="/Ch09/user1/modify.do?uid=${ user.uid }">수정</a>
 						<a href="/Ch09/user1/delete.do?uid=${ user.uid }">삭제</a>

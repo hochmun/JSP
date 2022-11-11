@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.CommonService;
-import service.HelloServiceImpl;
-
 @WebServlet("/hello.do")
 public class HelloController extends HttpServlet {
 
@@ -24,23 +21,14 @@ public class HelloController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		requestProc(req, resp);
+		// 주소 위치 받기
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/hello.jsp");
+		// 포워드
+		dispatcher.forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		requestProc(req, resp);
-	}
-	
-	public void requestProc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 특정 주소 받기
-		CommonService service = HelloServiceImpl.getInstance();
-		String view = service.requestProc(req, resp);
-		
-		// 주소 위치 받기
-		RequestDispatcher dispatcher = req.getRequestDispatcher(view);
-		// 포워드
-		dispatcher.forward(req, resp);
 	}
 	
 }

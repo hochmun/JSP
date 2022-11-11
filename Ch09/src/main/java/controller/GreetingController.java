@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.CommonService;
-import service.GreetingServiceImpl;
-
 @WebServlet("/greeting.do")
 public class GreetingController extends HttpServlet {
 
@@ -24,23 +21,13 @@ public class GreetingController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		requestProc(req, resp);
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		requestProc(req, resp);
-	}
-	
-	public void requestProc(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 특정 주소 받기
-		CommonService service = GreetingServiceImpl.getInstance();
-		String view = service.requestProc(req, resp);
-		
 		// 주소 위치 받기
-		RequestDispatcher dispatcher = req.getRequestDispatcher(view);
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/greeting.jsp");
 		// 포워드
 		dispatcher.forward(req, resp);
 	}
 	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	}
 }
