@@ -17,6 +17,7 @@
 		<title>표현 언어(EL) - 연산자</title>
 	</head>
 	<body>
+	<!--  
 		<h3>empty 연산자</h3>
 		emtpy nullStr : ${ empty nullStr } <br>
 		emtpy emptyStr : ${ empty emptyStr } <br>
@@ -30,5 +31,6 @@
 		null + 10 : ${ null + 10 }<br>
 		nullStr + 10 : ${ nullStr + 10 }<br>
 		param.noVar > 10 : ${ param.noVar > 10 }
+	-->
 	</body>
 </html>

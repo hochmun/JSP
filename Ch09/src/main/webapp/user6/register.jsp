@@ -8,9 +8,9 @@
 	<body>
 		<h3>user 등록</h3>
 		<a href="/Ch09/">처음으로</a>
-		<a href="/Ch09/user1/list.do">user 목록</a>
+		<a href="/Ch09/user6/list.do">user 목록</a>
 		
-		<form action="/Ch09/user1/register.do" method="post">
+		<form action="/Ch09/user6/register.do" method="post">
 			<table border="1">
 				<tr>
 					<td>아이디</td>
@@ -21,12 +21,20 @@
 					<td><input type="text" name="name" placeholder="이름 입력"></td>
 				</tr>
 				<tr>
-					<td>휴대폰</td>
-					<td><input type="text" name="hp" placeholder="휴대폰 입력"></td>
+					<td>생년월일</td>
+					<td><input type="text" name="birth" placeholder="0000-00-00"></td>
 				</tr>
 				<tr>
 					<td>나이</td>
 					<td><input type="text" name="age" placeholder="나이 입력"></td>
+				</tr>
+				<tr>
+					<td>주소</td>
+					<td><input type="text" name="address" placeholder="주소 입력"></td>
+				</tr>
+				<tr>
+					<td>전화번호</td>
+					<td><input type="text" name="hp" placeholder="번호 입력"></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="right">

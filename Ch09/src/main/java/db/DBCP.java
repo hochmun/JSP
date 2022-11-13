@@ -10,17 +10,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 public class DBCP {
 	protected Connection conn = null;
 	protected Statement stmt = null;
 	protected PreparedStatement psmt = null;
 	protected ResultSet rs = null;
-	
-	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private static DataSource ds = null;
 	public static Connection getConnection() throws NamingException, SQLException {
@@ -43,8 +37,6 @@ public class DBCP {
 			if(conn!=null) if(!conn.isClosed()) conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			logger.error("클래스 닫기 오류");
-			logger.error(e.getMessage());
 		}
 		// close 후 null로 재생성
 		conn = null;
