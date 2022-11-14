@@ -1,7 +1,6 @@
 package user5;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import config.DBCP;
 public class User5DAO {
 	private Connection conn;
 	private Statement stmt;
-	private PreparedStatement psmt;
+	//private PreparedStatement psmt;
 	private ResultSet rs;
 	
 	// 생성

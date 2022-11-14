@@ -142,8 +142,10 @@
 		<input type="button" class="btnOpen" value="수강신청">
 		<table border="1" class="registerList">
 			<thead>
-				<th>학번</th><th>이름</th><th>강좌명</th><th>강좌코드</th><th>중간시험</th>
-				<th>기말시험</th><th>총점</th><th>등급</th>
+				<tr>
+					<th>학번</th><th>이름</th><th>강좌명</th><th>강좌코드</th><th>중간시험</th>
+					<th>기말시험</th><th>총점</th><th>등급</th>
+				</tr>
 			</thead>
 			<% for (registerBean rb : rbs) { %>
 			<tr>
