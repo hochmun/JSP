@@ -12,6 +12,35 @@ public class BoardUserDAO extends DBCP {
 	private BoardUserDAO() {}
 	
 	// create
+	/**
+	 * 2022/11/16<br/>유저 회원가입
+	 * @author 심규영
+	 * @param budto
+	 * @return 유저 회원가입 성공시 1 값 리턴 실패시 0 리턴<br/>
+	 * either (1) the row count for SQL Data Manipulation Language (DML) statementsor (2) 0 for SQL statements that return nothing
+	 */
+	public int insertUser(BoardUserDTO budto) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.INSERT_USER);
+			psmt.setString(1, budto.getUid());
+			psmt.setString(2, budto.getPass());
+			psmt.setString(3, budto.getName());
+			psmt.setString(4, budto.getNick());
+			psmt.setString(5, budto.getEmail());
+			psmt.setString(6, budto.getHp());
+			psmt.setString(7, budto.getZip());
+			psmt.setString(8, budto.getAddr1());
+			psmt.setString(9, budto.getAddr2());
+			psmt.setString(10, budto.getRegip());
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	// read
 	/**
@@ -53,15 +82,41 @@ public class BoardUserDAO extends DBCP {
 	 * <p>2022/11/15 아이디 중복 체크</p>
 	 * @author 심규영
 	 * @param uid
-	 * @return
+	 * @return 동일한 아이디 갯수 리턴
 	 */
 	public int uidCheck(String uid) {
 		int result = 0;
 		try {
 			conn = getConnection();
-			psmt = conn.prepareStatement(Sql.CHECK_UID);
+			psmt = conn.prepareStatement(Sql.COUNT_UID);
 			psmt.setString(1, uid);
-			result = psmt.executeUpdate();
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * <p>2022/11/16 닉네임 중복 체크</p>
+	 * @author 심규영
+	 * @param nick
+	 * @return 동일한 닉네임 갯수 리턴
+	 */
+	public int nickCheck(String nick) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.COUNT_NICK);
+			psmt.setString(1, nick);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
 			close();
 		} catch (Exception e) {
 			e.printStackTrace();

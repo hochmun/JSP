@@ -1,5 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/_header.jsp" %>
+<%
+	String error = request.getParameter("error");
+%>
+<script>
+	const error = "<%= error %>";
+	
+	if (error == "101") {
+		alert("일치하는 회원이 없습니다.\n아이디, 비밀번호를 다시 확인 하십시오.");
+	} else if (error == "102") {
+		alert("회원가입 성공");
+	} else if (error == "103") {
+		alert("회원가입 실패");
+	}
+</script>
 <main id="user">
     <section class="login">
         <form action="./proc/loginProc.jsp" method="post">

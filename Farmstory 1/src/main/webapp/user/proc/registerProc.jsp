@@ -1,3 +1,4 @@
+<%@page import="kr.co.Farmstory_1.DAO.BoardUserDAO"%>
 <%@page import="kr.co.Farmstory_1.DTO.BoardUserDTO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
@@ -24,5 +25,12 @@
 	budto.setAddr2(addr2);
 	budto.setRegip(regip);
 	
+	int result = BoardUserDAO.getInstance().insertUser(budto);
+	
+	if(result > 0) {
+		response.sendRedirect("/Farmstory_1/user/login.jsp?error=102");
+	} else {
+		response.sendRedirect("/Farmstory_1/user/login.jsp?error=103");
+	}
 	
 %>
