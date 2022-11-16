@@ -5,12 +5,12 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	String uid = request.getParameter("uid");
-	String password = request.getParameter("password");
+	String pass = request.getParameter("pass");
 	
 	// 유저 정보 받기
-	BoardUserDTO budto = BoardUserDAO.getInstance().selectUser(uid, password);
+	BoardUserDTO budto = BoardUserDAO.getInstance().selectUser(uid, pass);
 	
-	// 아이디 일치 또는 불일치
+	// 회원 일치 또는 불일치
 	if (budto != null) {
 		session.setAttribute("Farmstory_1User", budto);
 		response.sendRedirect("/Farmstory_1/");

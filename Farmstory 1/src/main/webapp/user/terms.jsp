@@ -15,7 +15,7 @@
 				alert('동의 체크를 하셔야 합니다.');
 				return false;
 			}
-		})
+		});
 	});
 </script>
 <main id="user">

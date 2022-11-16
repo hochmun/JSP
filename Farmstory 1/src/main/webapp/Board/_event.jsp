@@ -1,12 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	String cate = request.getParameter("cate");
-
-	//직접 접속 막기
-	if(cate == null) {
-	response.sendRedirect("/Farmstory_1/");
-	return;
-	}
 %>
 <div id="sub">
     <div>

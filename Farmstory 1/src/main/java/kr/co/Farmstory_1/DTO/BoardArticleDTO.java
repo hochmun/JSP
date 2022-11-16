@@ -12,6 +12,16 @@ public class BoardArticleDTO {
 	private String uid;
 	private String regip;
 	private String rdate;
+	
+	private String nick;
+	
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+	
 	public int getNo() {
 		return no;
 	}
@@ -92,5 +102,9 @@ public class BoardArticleDTO {
 	}
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
+	}
+	
+	public String toString() {
+		return "no : "+no+"cate : "+cate;
 	}
 }

@@ -17,6 +17,7 @@ public class BoardTermsDAO extends DBCP {
 	public BoardTermsDTO selectTerms() {
 		BoardTermsDTO btdto = new BoardTermsDTO();
 		try {
+			logger.info("selectTerms...");
 			conn = getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(Sql.SELECT_TERMS);
@@ -26,8 +27,9 @@ public class BoardTermsDAO extends DBCP {
 			}
 			close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
+		logger.debug("btdto : "+btdto);
 		return btdto;
 	}
 	

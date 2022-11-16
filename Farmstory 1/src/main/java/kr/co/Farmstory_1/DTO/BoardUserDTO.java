@@ -88,4 +88,9 @@ public class BoardUserDTO {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
+	
+	@Override
+	public String toString() {
+		return "uid : "+uid+", name : "+name;
+	}
 }

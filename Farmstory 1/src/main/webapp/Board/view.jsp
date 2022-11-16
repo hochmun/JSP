@@ -1,8 +1,21 @@
+<%@page import="kr.co.Farmstory_1.DTO.BoardFileDTO"%>
+<%@page import="kr.co.Farmstory_1.DTO.BoardArticleDTO"%>
+<%@page import="java.util.Map"%>
+<%@page import="kr.co.Farmstory_1.DAO.BoardArticleDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/_header.jsp" %>
 <%
 	String group = request.getParameter("group");
 	String cate = request.getParameter("cate");
+	String no = request.getParameter("no");
+	String pg = request.getParameter("pg");
+	
+	Map<String, Object> dtos = BoardArticleDAO.getInstance().selectArticle(no);
+	BoardArticleDTO badto = (BoardArticleDTO)dtos.get("badto");
+	BoardFileDTO bfdto = (BoardFileDTO)dtos.get("bfdto");
+	
+	// 로그인을 하지 않았거나 로그인한 아이디와 게시글의 글쓴이의 아이디가 같지 않을 때 게시물 조회수 증가
+	if(budto == null || !budto.getUid().equals(badto.getUid())) BoardArticleDAO.getInstance().updateHitArticle(no);
 %>
 <main id="board">
     <section class="view">
@@ -10,23 +23,27 @@
             <caption>글보기</caption>
             <tr>
                 <th>제목</th>
-                <td><input type="text" name="title" value="제목입니다." readonly></td>
+                <td><input type="text" name="title" value="<%=badto.getTitle()%>" readonly></td>
             </tr>
-            <tr>
-                <th>첨부파일</th>
-                <td><a href="#">2020년 상반기 매출자료.xls</a>&nbsp;<span>7</span>회 다운로드</td>
-            </tr>
+            <% if(badto.getFile() > 0) { %>
+		        <tr>
+		            <th>첨부파일</th>
+		            <td><a href="#"><%= bfdto.getOriName() %></a>&nbsp;<span><%= bfdto.getDownload() %></span>회 다운로드</td>
+		        </tr>
+            <% } %>
             <tr>
                 <th>내용</th>
                 <td>
-                    <textarea name="content" readonly>내용 생플입니다.</textarea>
+                    <textarea name="content" readonly><%= badto.getContent() %></textarea>
                 </td>
             </tr>
         </table>
         <div>
-            <a href="#" class="btn btnRemove">삭제</a>
-            <a href="./modify.jsp?group=<%= group %>&cate=<%= cate %>" class="btn btnModify">수정</a>
-            <a href="./list.jsp?group=<%= group %>&cate=<%= cate %>" class="btn btnList">목록</a>
+        	<% if(budto != null && budto.getUid().equals(badto.getUid())) { // 게시물의 글쓴이가 아닐때 삭제와 수정버튼 제거 %>
+            	<a href="/Farmstory_1/Board/proc/deleteProc.jsp?group=<%= group %>&cate=<%= cate %>&pg=<%= pg %>&no=<%= no %>&file=<%= badto.getFile() %>" class="btn btnRemove">삭제</a>
+            	<a href="/Farmstory_1/Board/modify.jsp?group=<%= group %>&cate=<%= cate %>&no=<%= no %>&pg=<%= pg %>" class="btn btnModify">수정</a>
+            <% } %>
+            <a href="./list.jsp?group=<%= group %>&cate=<%= cate %>&pg=<%= pg %>" class="btn btnList">목록</a>
         </div>
         <!-- 댓글목록 -->
         <section class="comments">

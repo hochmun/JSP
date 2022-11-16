@@ -39,10 +39,10 @@
                 <a href="/Farmstory_1/">HOME |</a>
                 <% if (budto == null) { %>
                 	<a href="/Farmstory_1/user/login.jsp">로그인 |</a>
+                	<a href="/Farmstory_1/user/terms.jsp">회원가입 |</a>
                 <% } else { %>
                 	<a href="/Farmstory_1/user/proc/LogoutProc.jsp">로그아웃 |</a>
                 <% } %>
-                <a href="/Farmstory_1/user/terms.jsp">회원가입 |</a>
                 <a href="#">고객센터</a>
             </p>
             <img src="/Farmstory_1/img/head_txt_img.png" alt="3만원 이상 무료배송">

@@ -22,6 +22,7 @@ public class BoardUserDAO extends DBCP {
 	public int insertUser(BoardUserDTO budto) {
 		int result = 0;
 		try {
+			logger.info("insertUser...");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.INSERT_USER);
 			psmt.setString(1, budto.getUid());
@@ -37,8 +38,9 @@ public class BoardUserDAO extends DBCP {
 			result = psmt.executeUpdate();
 			close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
+		logger.debug("result : "+result);
 		return result;
 	}
 	
@@ -49,13 +51,14 @@ public class BoardUserDAO extends DBCP {
 	 * @param password
 	 * @return BoardUserDTO
 	 */
-	public BoardUserDTO selectUser(String uid, String password) {
+	public BoardUserDTO selectUser(String uid, String pass) {
 		BoardUserDTO budto = new BoardUserDTO();
 		try {
+			logger.info("selectUser...");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.SELECT_USER);
 			psmt.setString(1, uid);
-			psmt.setString(2, password);
+			psmt.setString(2, pass);
 			rs = psmt.executeQuery();
 			if(rs.next()) {
 				budto.setUid(rs.getString("uid"));
@@ -73,8 +76,9 @@ public class BoardUserDAO extends DBCP {
 			}
 			close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
+		logger.debug("budto : " + budto);
 		return budto;
 	}
 	
@@ -87,6 +91,7 @@ public class BoardUserDAO extends DBCP {
 	public int uidCheck(String uid) {
 		int result = 0;
 		try {
+			logger.info("uidCheck...");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.COUNT_UID);
 			psmt.setString(1, uid);
@@ -96,8 +101,9 @@ public class BoardUserDAO extends DBCP {
 			}
 			close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
+		logger.debug("result : "+result);
 		return result;
 	}
 	
@@ -110,6 +116,7 @@ public class BoardUserDAO extends DBCP {
 	public int nickCheck(String nick) {
 		int result = 0;
 		try {
+			logger.info("nickCheck...");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.COUNT_NICK);
 			psmt.setString(1, nick);
@@ -119,8 +126,9 @@ public class BoardUserDAO extends DBCP {
 			}
 			close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
+		logger.debug("result : "+result);
 		return result;
 	}
 	

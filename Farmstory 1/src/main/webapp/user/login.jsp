@@ -12,6 +12,8 @@
 		alert("회원가입 성공");
 	} else if (error == "103") {
 		alert("회원가입 실패");
+	} else if (error == "104") {
+		alert("로그인 후 게시물을 작성할 수 있습니다.");
 	}
 </script>
 <main id="user">
