@@ -11,6 +11,14 @@ public class Sql {
 		+ "`uid`=?, "
 		+ "`regip`=?, "
 		+ "`rdate`=NOW()";
+	public static final String INSERT_COMMENT = 
+			"INSERT INTO `board_article` SET "
+			+ "`parent`=?, "
+			+ "`cate`='comment', "
+			+ "`content`=?, "
+			+ "`uid`=?, "
+			+ "`regip`=?, "
+			+ "`rdate`=NOW()";
 	
 	public static final String SELECT_MAX_NO = "SELECT MAX(`no`) FROM `board_article`";
 	public static final String SELECT_ARTICLE = "SELECT * FROM `board_article` AS a LEFT JOIN `board_file` AS b ON a.no = b.parent WHERE `no`=?";
@@ -24,9 +32,11 @@ public class Sql {
 			+ "ORDER BY a.`no` DESC "
 			+ "LIMIT ?, 10";
 	public static final String SELECT_COUNT_ARTICLE = "SELECT COUNT(`no`) FROM `board_article` WHERE `parent`=0 AND `cate`=?";
+	public static final String SELECT_LAST_COMMENT_TIME = "SELECT `rdate`, `no` FROM `board_article` ORDER BY `rdate` DESC LIMIT 1;";
 	
 	public static final String UPDATE_ARTICLE = "UPDATE `board_article` SET `title`=?, `content`=?, `rdate`=NOW() WHERE `no`=?";
 	public static final String UPDATE_HIT_ARTICLE = "UPDATE `board_article` SET `hit` = `hit`+1 WHERE `no`=?";
+	public static final String UPDATE_COMMENT_COUNT = "UPDATE `board_article` SET `comment` = `comment`+1 WHERE `no`=?";
 	
 	public static final String DELETE_ARTICLE = 
 			"DELETE FROM a, f "

@@ -83,6 +83,50 @@ public class BoardArticleDAO extends DBCP {
 		}
 	}
 	
+	/**
+	 * 2022/11/17<br/>댓글 작성
+	 * @param badto
+	 * @return Map - int result, {@link BoardArticleDTO}
+	 */
+	public Map<String, Object> insertCommnet(BoardArticleDTO badto) {
+		Map<String, Object> map = new HashMap<>();
+		int result = 0;
+		BoardArticleDTO badto2 = new BoardArticleDTO();
+		try {
+			logger.info("insertCommnet");
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			
+			psmt = conn.prepareStatement(Sql.INSERT_COMMENT);
+			psmt.setInt(1, badto.getParent());
+			psmt.setString(2, badto.getContent());
+			psmt.setString(3, badto.getUid());
+			psmt.setString(4, badto.getRegip());
+			result = psmt.executeUpdate();
+			
+			psmt = conn.prepareStatement(Sql.UPDATE_COMMENT_COUNT);
+			psmt.setInt(1, badto.getParent());
+			psmt.executeUpdate();
+			
+			conn.commit();
+			
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(Sql.SELECT_LAST_COMMENT_TIME);
+			if(rs.next()) {
+				badto2.setRdate(rs.getString("rdate"));
+				badto2.setNo(rs.getInt("no"));
+			}
+			conn.commit();
+			
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		map.put("result", result);
+		map.put("badto", badto2);
+		return map;
+	}
+	
 	// read
 	/**
 	 * 2022/11/16<br/>게시물 보기

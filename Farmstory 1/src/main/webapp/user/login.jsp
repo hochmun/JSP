@@ -14,7 +14,7 @@
 		alert("회원가입 실패");
 	} else if (error == "104") {
 		alert("로그인 후 게시물을 작성할 수 있습니다.");
-	}
+	} else if (error == "105") alert("로그인 후 댓글을 작성할 수 있습니다.");
 </script>
 <main id="user">
     <section class="login">

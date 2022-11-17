@@ -17,6 +17,50 @@
 	// 로그인을 하지 않았거나 로그인한 아이디와 게시글의 글쓴이의 아이디가 같지 않을 때 게시물 조회수 증가
 	if(budto == null || !budto.getUid().equals(badto.getUid())) BoardArticleDAO.getInstance().updateHitArticle(no);
 %>
+<script>
+	$(document).ready(()=>{
+		//댓글 작성
+		$('.commentForm > form').submit(function(){
+			const content = $(this).children('textarea[name=content]').val();
+			const no = $(this).children('input[name=no]').val();
+			const textarea = $(this).children('textarea[name=content]');
+			
+			if (content == '') {
+				alert('댓글을 작성하게요.');
+				return false;
+			}
+			
+			const jsonData = {
+					"no" : no,
+					"content":content
+			};
+			
+			$.ajax({
+				url:'/Farmstory_1/Board/proc/commentWriteProc.jsp',
+				method:'POST',
+				data: jsonData,
+				dataType: 'json',
+				success: function(data){
+					if(data.result > 0) {
+						const article = "<article>"
+										+ "<span class='nick'>"+data.nick+"</span>&nbsp;"
+										+ "<span class='date'>"+data.date+"</span>"
+										+ "<p class='content'>"+data.content+"</p>"
+										+ "<div>"
+										+ "<a herf='#' class='remove' data-no="+data.no+" data-parent="+data.parent+">삭제</a>&nbsp;"
+										+ "<a herf='#' class='modify' data-no="+data.no+">수정</a>"
+										+ "</div>" 
+										+ "</article>";
+						$('.comments .empty').hide();
+						$('.comments').append(article);
+						textarea.val('');
+					}
+				}
+			});
+			return false;
+		});
+	});
+</script>
 <main id="board">
     <section class="view">
         <table>
@@ -63,8 +107,9 @@
         <!-- 댓글쓰기 -->
         <section class="commentForm">
             <h3>댓글쓰기</h3>
-            <form action="#">
-                <textarea name="content">댓글내용 입력</textarea>
+            <form action="#" method="post">
+            	<input type="hidden" name="no" value="<%= no %>">
+                <textarea name="content" placeholder="댓글내용 입력"></textarea>
                 <div>
                     <a href="#" class="btn btnCancel">취소</a>
                     <input type="submit" value="작성완료" class="btn btnComplete">
