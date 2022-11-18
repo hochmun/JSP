@@ -37,6 +37,11 @@ public class BoardFileDAO extends DBCP {
 	}
 	
 	// read
+	/**
+	 * 파일 정보 불러오기, 파일 다운로드 횟수 증가
+	 * @param parent
+	 * @return {@link BoardFileDTO}
+	 */
 	public BoardFileDTO selectFile(String parent) {
 		BoardFileDTO bfdto = new BoardFileDTO();
 		try {

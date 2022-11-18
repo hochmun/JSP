@@ -118,4 +118,36 @@
 		<servlet-name>HelloServlet</servlet-name>
 		<url-pattern>/Ch13Servlet/HelloServlet.do</url-pattern>
 	</servlet-mapping>
+	
+	<!-- 
+		날짜 : 2022/11/18
+		이름 : 심규영
+		내용 : 요청명과 서블릿 매핑하기, p458
+	 -->
+	<servlet>
+		<servlet-name>DirectServletPrint</servlet-name>
+		<servlet-class>servlet.DirectServletPrint</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DirectServletPrint</servlet-name>
+		<url-pattern>/Ch13Servlet/DirectServletPrint.do</url-pattern>
+	</servlet-mapping>
+
+	<!-- 
+		내용 : 서블릿 매핑
+		날짜 : 2022/11/18
+		이름 : 심규영
+	 -->
+	<servlet>
+		<servlet-name>MemberAuth</servlet-name>
+		<servlet-class>servlet.MemberAuth</servlet-class>
+		<init-param>
+			<param-name>admin_id</param-name>
+			<param-value>nakja</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MemberAuth</servlet-name>
+		<url-pattern>/Ch13Servlet/MemberAuth.mvc</url-pattern>
+	</servlet-mapping>
 </web-app>

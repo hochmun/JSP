@@ -63,7 +63,7 @@ public class Sql {
 	// file
 	public static final String INSERT_FILE = "INSERT INTO `board_file` SET `parent`=?, `newName`=?, `oriName`=?";
 	
-	public static final String SELECT_FILE = "SELETE * FROM `board_file` WHERE `parent`=?";
+	public static final String SELECT_FILE = "SELECT * FROM `board_file` WHERE `parent`=?";
 	public static final String SELECT_FILE_NEWNAME = "SELECT `newName` FROM `board_file` WHERE `parent`=?";
 	
 	public static final String UPDATE_FILE_DOWNLOAD = "UPDATE `board_file` SET `download` = `download`+1 WHERE `fno`=?";

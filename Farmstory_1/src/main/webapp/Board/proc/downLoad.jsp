@@ -11,8 +11,8 @@
 	BoardFileDTO bfdto = BoardFileDAO.getInstance().selectFile(no);
 	
 	String fileName = bfdto.getOriName();
-		fileName = URLEncoder.encode(fileName, "UTF-8");
-		fileName = fileName.replaceAll("\\", "%20");
+	fileName = URLEncoder.encode(fileName, "UTF-8");
+	fileName = fileName.replaceAll("\\+", "%20");
 	response.setContentType("application/octet-stream"); // 다운로드
 	response.setHeader("Content-Disposition", "attachment; filename="+fileName+";");
 	response.setHeader("Content-Transfer-Encoding", "binary");
