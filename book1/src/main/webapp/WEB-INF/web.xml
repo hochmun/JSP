@@ -150,4 +150,42 @@
 		<servlet-name>MemberAuth</servlet-name>
 		<url-pattern>/Ch13Servlet/MemberAuth.mvc</url-pattern>
 	</servlet-mapping>
+
+	<!-- 
+		내용 : 요청명과 서블릿 매핑
+		날짜 : 2022/11/19
+		이름 : 심규영
+	 -->
+	<servlet>
+		<servlet-name>MVCBoardList</servlet-name>
+		<servlet-class>model2.mvcboard.ListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardList</servlet-name>
+		<url-pattern>/mvcboard/list.do</url-pattern>
+	</servlet-mapping>
+
+	<!-- 
+		내용 : 요청명/서블릿 매핑
+		날짜 : 2022/11/19
+		이름 : 심규영
+	 -->
+	<servlet>
+		<servlet-name>MVCBoardWrite</servlet-name>
+		<servlet-class>model2.mvcboard.WriteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MVCBoardWrite</servlet-name>
+		<url-pattern>/mvcboard/write.do</url-pattern>
+	</servlet-mapping>
+
+	<!-- 
+		내용 : 첨부 파일 최대 용량 설정, 1mb
+		날짜 : 2022/11/19
+		이름 : 심규영
+	 -->
+	<context-param>
+		<param-name>maxPostSize</param-name>
+		<param-value>1024000</param-value>
+	</context-param>
 </web-app>
