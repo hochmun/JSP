@@ -169,11 +169,11 @@ $(function(){
 			if (emailChecking == true) { // 이메일 체크 중이면 중지
 				alert('이메일 확인중 입니다.');
 				return;
-			} else {
+			} else { // 이메일 인증 시작
 				emailChecking = true;
 				// 이메일 검사중 수정 불가능하게 변경
 				$('input[name=email]').attr('readonly', true);
-			} // 아니면 진행
+			}
 			
 			const email = $('input[name=email]').val();
 			

@@ -2,8 +2,8 @@
 <jsp:include page="./_header.jsp"/>
 <main id="user">
     <section class="login">
-        <form action="../list.jsp">
-            <table border="0">
+        <form action="#">
+            <table>
                 <tr>
                     <td><img src="/Jboard2/img/login_ico_id.png" alt="아이디"/></td>
                     <td><input type="text" name="uid" placeholder="아이디 입력"/></td>

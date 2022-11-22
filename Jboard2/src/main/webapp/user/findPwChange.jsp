@@ -3,7 +3,7 @@
 <main id="user">
     <section class="find findPwChange">
         <form action="#">
-            <table border="0">
+            <table>
                 <caption>비밀번호 변경</caption>                        
                 <tr>
                     <td>아이디</td>
@@ -30,8 +30,8 @@
         </p>
 
         <div>
-            <a href="./login.jsp" class="btn btnCancel">취소</a>
-            <a href="./login.jsp" class="btn btnNext">다음</a>
+            <a href="/Jboard2/user/login.do" class="btn btnCancel">취소</a>
+            <a href="/Jboard2/user/login.do" class="btn btnNext">다음</a>
         </div>
     </section>
 </main>

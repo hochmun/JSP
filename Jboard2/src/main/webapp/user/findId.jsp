@@ -1,9 +1,44 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="./_header.jsp"/>
+<script>
+	$(()=>{
+		let isEmaliAuthOk = false;
+		let emailChecking = false;
+		
+		$('.btnAuth').click(()=>{
+			
+			if (isEmailAuthOk == true) {
+				alert('이미 확인이 완료 되었습니다.');
+				return;
+			}
+			
+			if (emailChecking == true) {
+				alert('이메일 확인중 입니다.');
+				return;
+			} else {
+				emailChecking = true;
+				$('input[name=email]').attr('readonly', true);
+			}
+			
+			const name = $('input[name=name]').val();
+			const email = $('input[name=email]').val();
+			
+			$.ajax({
+				url: '',
+				method: '',
+				data: '',
+				dataType: '',
+				success: (data)=>{
+					
+				}
+			});
+		});
+	});
+</script>
 <main id="user">
     <section class="find findId">
         <form action="#">
-            <table border="0">
+            <table>
                 <caption>아이디 찾기</caption>
                 <tr>
                     <td>이름</td>
@@ -31,8 +66,8 @@
         </p>
 
         <div>
-            <a href="./login.jsp" class="btn btnCancel">취소</a>
-            <a href="./findIdResult.jsp" class="btn btnNext">다음</a>
+            <a href="/Jboard2/user/login.do" class="btn btnCancel">취소</a>
+            <a href="/Jboard2/user/findIdResult.do" class="btn btnNext">다음</a>
         </div>
     </section>
 </main>
