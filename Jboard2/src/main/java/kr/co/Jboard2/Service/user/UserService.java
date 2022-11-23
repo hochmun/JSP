@@ -30,6 +30,7 @@ public enum UserService {
 		dao = new UserDAO();
 	}
 	
+	// 이메일 코드전송
 	public int[] sendEmailCode(String receiver) {
 		
 		// 인증코드 생성
@@ -85,16 +86,30 @@ public enum UserService {
 	}
 	
 	// read
+	// 사이트 이용약관 불러오기
 	public termsVO selectTerms() {
 		return dao.selectTerms();
 	}
 	public void selectUser() {}
 	public void selectUsers() {}
+	// 아이디 중복검색
 	public int selectCountUserUid(String uid) {
 		return dao.selectCountUserUid(uid);
 	}
+	
+	// 닉네임 중복검색
 	public int selectCountUserNick(String nick) {
 		return dao.selectCountUserNick(nick);
+	}
+	
+	// 이름 이메일 검사
+	public int selectCountUserName(String name, String email) {
+		return dao.selectCountUserName(name, email);
+	}
+	
+	// 아이디 이메일 검사
+	public int selectCountUserUid(String uid, String email) {
+		return dao.selectCountUserUid(uid, email);
 	}
 	// upload
 	public void updateUser() {}

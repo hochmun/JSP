@@ -18,7 +18,7 @@
                 <tr>
                     <td>새 비밀번호 확인</td>
                     <td>
-                        <input type="email" name="pass1" placeholder="새 비밀번호 입력"/>
+                        <input type="email" name="pass2" placeholder="새 비밀번호 입력"/>
                     </td>
                 </tr>
             </table>                                        

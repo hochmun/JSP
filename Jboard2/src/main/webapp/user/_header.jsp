@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>아이디 찾기</title>
+    <title>로그인</title>
     <link rel="stylesheet" href="/Jboard2/css/style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>

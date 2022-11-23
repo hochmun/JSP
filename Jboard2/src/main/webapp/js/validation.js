@@ -20,6 +20,7 @@ let isEmailOk 	= false;
 let isEmailAuthOk = false;
 let isHpOk 		= false;
 
+let isEmailCheckSend = false; // 이메일 인증코드를 보냈는가?
 let emailChecking = false; // 이메일 검사중 체크
 let emailCode = 0; // 이메일 인증 코드
 
@@ -147,6 +148,7 @@ $(function(){
 		const email = $(this).val();
 		
 		isEmailAuthOk = false; // 이메일 수정시 이메일 인증 해제
+		isEmailCheckSend = false; // 이메일 수정시 전송된 코드의 유효성 해제
 		$('.auth').hide(); // 이메일 수정시 인증코드 입력 창 숨기기 이메일이 변경 되었는데 인증 받기 방지
 		
 		if (email.match(reEmail)) {
@@ -188,6 +190,7 @@ $(function(){
 					if(data.status == 1) {
 						// 메일 발송 성공
 						emailCode = data.code;
+						isEmailCheckSend = true; // 이메일 코드 전송됨
 						emailChecking = false; // 검사 진행 끝
 						$('input[name=email]').attr('readonly', false); // 이메일 수정 가능
 						$('.emailResult').css('color','green').text('인증코드를 전송 했습니다. 이메일을 확인 하세요.');
@@ -196,7 +199,7 @@ $(function(){
 						// 메일 발송 실패
 						emailChecking = false; // 검사 진행 끝
 						$('input[name=email]').attr('readonly', false); // 이메일 수정 가능
-						$('.emailResult').css('color','red').text('이메일을 전송을 실패했습니다. 이메일을 확인 후 다시 시도 하시기 바랍니다.');
+						$('.emailResult').css('color','red').text('이메일 전송을 실패했습니다. 이메일을 확인 후 다시 시도 하시기 바랍니다.');
 					}
 				}
 			});
@@ -206,7 +209,8 @@ $(function(){
 		$('#btnEmailConfirm').click(function(){
 		 	const code = $('input[name=auth]').val();
 		 	
-		 	if (code == emailCode) {
+		 	// 입력한 코드가 이메일 코드와 맞고 이메일 코드가 전송된 상태일때
+		 	if (code == emailCode && isEmailCheckSend == true) {
 		 		isEmailAuthOk = true; // 이메일 인증 완료
 		 		$('.emailResult').text('이메일이 인증 되었습니다.');
 		 	}

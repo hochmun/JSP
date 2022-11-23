@@ -109,6 +109,56 @@ public class UserDAO extends DBCP {
 		}
 		return result;
 	}
+
+	/**
+	 * 유저 이름 이메일 검사
+	 * @param name
+	 * @param email
+	 * @return result
+	 */
+	public int selectCountUserName(String name, String email) {
+		int result = 0;
+		try {
+			logger.info("selectCountUserUid...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_COUNT_USER_NAME_EMAIL);
+			psmt.setString(1, name);
+			psmt.setString(2, email);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	
+	/**
+	 * 유저 아이디 이메일 검사
+	 * @param uid
+	 * @param email
+	 * @return result
+	 */
+	public int selectCountUserUid(String uid, String email) {
+		int result = 0;
+		try {
+			logger.info("selectCountUserUid...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_COUNT_USER_UID_EMAIL);
+			psmt.setString(1, uid);
+			psmt.setString(2, email);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	
 	// upload
 	
 	// delete

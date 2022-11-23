@@ -28,4 +28,4 @@ SELECT * FROM (
 		ORDER BY `idx` DESC) AS `Tb`, 
 		(SELECT @ROWNUM:=0) R
 		) A
-		 WHERE `rNum` BETWEEN 1 AND 10;
+		 WHERE `rNum` BETWEEN 1 AND 10;java2_board

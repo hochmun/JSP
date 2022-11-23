@@ -22,6 +22,10 @@ public class Sql {
 			"select count(`uid`) from `board_user` where `uid`=?";
 	public static final String SELECT_COUNT_USER_NICK = 
 			"select count(`nick`) from `board_user` where `nick`=?";
+	public static final String SELECT_COUNT_USER_NAME_EMAIL = 
+			"SELECT COUNT(`name`) FROM `board_user` WHERE `name`=? AND `email`=?";
+	public static final String SELECT_COUNT_USER_UID_EMAIL =
+			"SELECT COUNT(`uid`) FROM `board_user` WHERE `uid`=? AND `email`=?";
 	public static final String SELECT_TERMS =
 			"select * from `board_terms`";
 	

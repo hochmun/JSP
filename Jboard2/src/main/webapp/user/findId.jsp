@@ -1,43 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="./_header.jsp"/>
-<script>
-	$(()=>{
-		let isEmaliAuthOk = false;
-		let emailChecking = false;
-		
-		$('.btnAuth').click(()=>{
-			
-			if (isEmailAuthOk == true) {
-				alert('이미 확인이 완료 되었습니다.');
-				return;
-			}
-			
-			if (emailChecking == true) {
-				alert('이메일 확인중 입니다.');
-				return;
-			} else {
-				emailChecking = true;
-				$('input[name=email]').attr('readonly', true);
-			}
-			
-			const name = $('input[name=name]').val();
-			const email = $('input[name=email]').val();
-			
-			$.ajax({
-				url: '',
-				method: '',
-				data: '',
-				dataType: '',
-				success: (data)=>{
-					
-				}
-			});
-		});
-	});
-</script>
+<script src="/Jboard2/js/find.js"></script>
 <main id="user">
     <section class="find findId">
-        <form action="#">
+        <form action="/Jboard2/user/findIdResult.do" method="get">
             <table>
                 <caption>아이디 찾기</caption>
                 <tr>
@@ -47,13 +13,14 @@
                 <tr>
                     <td>이메일</td>
                     <td>
+                    	<span id="message"></span>
                         <div>
                             <input type="email" name="email" placeholder="이메일 입력"/>
                             <button type="button" class="btnAuth">인증번호 받기</button>
                         </div>
                         <div>
                             <input type="text" name="auth" disabled placeholder="인증번호 입력"/>
-                            <button type="button" class="btnConfirm">확인</button>
+                            <button type="submit" class="btnConfirm">확인</button>
                         </div>
                     </td>
                 </tr>                        
@@ -67,7 +34,9 @@
 
         <div>
             <a href="/Jboard2/user/login.do" class="btn btnCancel">취소</a>
+            <!--  
             <a href="/Jboard2/user/findIdResult.do" class="btn btnNext">다음</a>
+            -->
         </div>
     </section>
 </main>
