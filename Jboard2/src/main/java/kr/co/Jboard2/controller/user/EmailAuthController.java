@@ -27,11 +27,19 @@ public class EmailAuthController extends HttpServlet {
 		
 		int result2 = 1;
 		
-		if (name != null) { // 이름 값이 있을경우 중복 검사
+		// 보안 - 이름 값과 아이디 값이 동시에 들어올때 또는 이메일 값이 없을 때
+		if((name != null && uid != null) || receiverEmail == null) {
+			resp.sendRedirect("/Jboard2/");
+			return;
+		}
+		
+		// 이름 값이 있을경우 이름 이메일 중복 검사
+		if (name != null) {  
 			result2 = service.selectCountUserName(name, receiverEmail);
 		}
 		
-		if (uid != null) { // 아이디 값이 있을경우 아이디 이메일 검사
+		// 아이디 값이 있을경우 아이디 이메일 중복 검사
+		if (uid != null) { 
 			result2 = service.selectCountUserUid(uid, receiverEmail);
 		}
 		

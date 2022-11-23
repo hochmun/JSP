@@ -20,7 +20,7 @@
                         </div>
                         <div>
                             <input type="text" name="auth" disabled placeholder="인증번호 입력"/>
-                            <button type="submit" class="btnConfirm">확인</button>
+                            <button type="button" class="btnConfirm">확인</button>
                         </div>
                     </td>
                 </tr>                        
@@ -35,9 +35,7 @@
 
         <div>
             <a href="/Jboard2/user/login.do" class="btn btnCancel">취소</a>
-            <!-- 
             <a href="/Jboard2/user/findPwChange.do" class="btn btnNext">다음</a>
-             -->
         </div>
     </section>
 </main>

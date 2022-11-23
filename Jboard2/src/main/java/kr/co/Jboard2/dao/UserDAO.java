@@ -65,7 +65,73 @@ public class UserDAO extends DBCP {
 		return vo;
 	}
 	
-	public void selectUser() {}
+	/**
+	 * 이메일로 유저 정보 불러오기(아이디 찾기, 비밀번호 찾기 공통 사용)
+	 * @param email
+	 * @return {@link userVO}
+	 */
+	public userVO selectUserEmail(String email) {
+		userVO vo = new userVO();
+		try {
+			logger.info("selectUserEmail...");
+			logger.debug(email);
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_USER_EMAIL);
+			psmt.setString(1, email);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				vo.setUid(rs.getString("uid"));
+				vo.setPass(rs.getString("pass"));
+				vo.setName(rs.getString("name"));
+				vo.setNick(rs.getString("nick"));
+				vo.setEmail(rs.getString("email"));
+				vo.setHp(rs.getString("hp"));
+				vo.setRdate(rs.getString("rdate"));
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		logger.debug("vo : "+vo);
+		return vo;
+	}
+	
+	/**
+	 * 유저 정보 가져오기 (유저 로그인)
+	 * @param uid
+	 * @param pass
+	 * @return
+	 */
+	public userVO selectUser(String uid, String pass) {
+		userVO vo = new userVO();
+		try {
+			logger.info("selectUser...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_USER);
+			psmt.setString(1, uid);
+			psmt.setString(2, pass);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				vo.setUid(rs.getString(1));
+				vo.setPass(rs.getString(2));
+				vo.setName(rs.getString(3));
+				vo.setNick(rs.getString(4));
+				vo.setEmail(rs.getString(5));
+				vo.setHp(rs.getString(6));
+				vo.setGrade(rs.getInt(7));
+				vo.setZip(rs.getString(8));
+				vo.setAddr1(rs.getString(9));
+				vo.setAddr2(rs.getString(10));
+				vo.setRegip(rs.getString(11));
+				vo.setRdate(rs.getString(12));
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		logger.debug("vo : "+vo);
+		return vo;
+	}
 	
 	public void selectUsers() {}
 	
@@ -92,6 +158,11 @@ public class UserDAO extends DBCP {
 		return result;
 	}
 	
+	/**
+	 * 유저 닉네임 중복 검사
+	 * @param nick
+	 * @return
+	 */
 	public int selectCountUserNick(String nick) {
 		int result = 0;
 		try {
@@ -119,7 +190,7 @@ public class UserDAO extends DBCP {
 	public int selectCountUserName(String name, String email) {
 		int result = 0;
 		try {
-			logger.info("selectCountUserUid...");
+			logger.info("selectCountUserName...");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.SELECT_COUNT_USER_NAME_EMAIL);
 			psmt.setString(1, name);
@@ -153,6 +224,7 @@ public class UserDAO extends DBCP {
 			if(rs.next()) {
 				result = rs.getInt(1);
 			}
+			close();
 		} catch(Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -160,6 +232,27 @@ public class UserDAO extends DBCP {
 	}
 	
 	// upload
+	/**
+	 * 유저 비밀번호 변경
+	 * @param uid
+	 * @param pass
+	 * @return
+	 */
+	public int updateUserPass(String uid, String pass) {
+		int result = 0;
+		try {
+			logger.info("updateUserPass...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_USER_PASS);
+			psmt.setString(1, pass);
+			psmt.setString(2, uid);
+			result = psmt.executeUpdate();
+			close();
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
 	
 	// delete
 }

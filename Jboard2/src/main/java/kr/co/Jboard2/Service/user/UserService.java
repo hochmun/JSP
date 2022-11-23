@@ -90,8 +90,18 @@ public enum UserService {
 	public termsVO selectTerms() {
 		return dao.selectTerms();
 	}
-	public void selectUser() {}
+	
+	// 이메일로 아이디 정보 찾기(아이디 찾기, 비밀번호 찾기 공통 사용)
+	public userVO selectUserEmail(String Email) {
+		return dao.selectUserEmail(Email);
+	}
+	
+	public userVO selectUser(String uid, String pass) {
+		return dao.selectUser(uid, pass);
+	}
+	
 	public void selectUsers() {}
+	
 	// 아이디 중복검색
 	public int selectCountUserUid(String uid) {
 		return dao.selectCountUserUid(uid);
@@ -113,6 +123,10 @@ public enum UserService {
 	}
 	// upload
 	public void updateUser() {}
+	
+	public int updateUserPass(String uid, String pass) {
+		return dao.updateUserPass(uid, pass);
+	}
 	
 	// delete
 	public void deleteUser() {}

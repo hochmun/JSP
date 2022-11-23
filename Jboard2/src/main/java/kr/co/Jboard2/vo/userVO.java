@@ -13,6 +13,12 @@ public class userVO {
 	private String addr2;
 	private String regip;
 	private String rdate;
+	
+	@Override
+	public String toString() {
+		return uid;
+	}
+	
 	public String getUid() {
 		return uid;
 	}

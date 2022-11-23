@@ -6,6 +6,8 @@
 
 const reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
+let isEmailOk = false; // 이메일 유효성 확인
+let isEmailAuthOk = false; // 이메일 인증 확인
 let emailChecking = false; // 이메일 체크 확인중
 let isEmailCheckSend = false; // 이메일 인증코드 전송 체크
 let emailCode = 0; // 이메일 인증 코드
@@ -15,6 +17,7 @@ $(()=>{
 	$('input[name=email]').change(function(){
 		const email = $(this).val();
 		
+		isEmailAuthOk = false; // 이메일 수정시 인증 초기화
 		isEmailCheckSend = false; // 이메일 수정시 전송된 코드의 유효성 해제
 		$('input[name=auth]').attr('disabled', true); // 인증 비활성화
 		
@@ -67,16 +70,42 @@ $(()=>{
 	});
 	
 	// 이메일 인증코드 확인
-	$('.find > form').submit(function(){
+	$('.btnConfirm').click(function(){
 	 	const code = $('input[name=auth]').val();
 	 	
 	 	// 입력한 코드가 이메일 코드와 맞고 이메일 코드가 전송된 상태일때
 	 	if (code == emailCode && isEmailCheckSend == true) {
-	 		alert('이메일이 인증 되었습니다.');
-	 		return true;
+			isEmailAuthOk = true;
+			$('#message').css('color','green').text('이메일 인증이 완료되었습니다.');
 	 	} else {
-	 		alert('이메일 인증에 실패하였습니다.');
-	 		return false;
+			isEmailAuthOk = false;
+			$('#message').css('color','red').text('인증코드가 틀렸습니다.');
 	 	}
+	});
+	
+	// 다음 클릭시 인증 확인
+	$('.btnNext').click(()=>{
+		// 이메일 유효성 검증
+		if(!isEmailOk) {
+			alert('이메일이 유효하지 않습니다.');
+			return false;
+		}
+		// 이메일 인증 검증
+		if(!isEmailAuthOk) {
+			alert('이메일을 인증 하셔야 합니다.');
+			return false;
+		}
+		
+		const name = $('input[name=name]').val();
+		const email = $('input[name=email]').val();
+		const uid = $('input[name=uid]').val(); 
+		
+		if (name != null) {
+			location.href = "/Jboard2/user/findIdResult.do?email="+email;
+		} else if (uid != null) {
+			location.href = "/Jboard2/user/findPwChange.do?email="+email;
+		}
+		
+		return false;
 	});
 });

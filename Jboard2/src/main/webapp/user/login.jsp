@@ -1,8 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="./_header.jsp"/>
+<script>
+	let success = "";
+	
+	if (success == 100) {
+		alert("일치하는 회원이 없습니다.\n아이디, 비밀번호를 다시 확인 하십시오.");
+	} else if (success == 200) {
+		alert("로그아웃 되었습니다.");
+	}
+</script>
 <main id="user">
     <section class="login">
-        <form action="#">
+        <form action="/Jboard2/user/login.do" method="post">
             <table>
                 <tr>
                     <td><img src="/Jboard2/img/login_ico_id.png" alt="아이디"/></td>
