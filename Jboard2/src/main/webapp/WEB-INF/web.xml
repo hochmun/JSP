@@ -43,4 +43,10 @@
   		<url-pattern>/index.jsp</url-pattern>
   	</web-resource-collection>
   </security-constraint>
+  
+  <!-- 파일 업로드 용량 설정 - 1MB -->
+  <context-param>
+  	<param-name>maxPostSize</param-name>
+  	<param-value>1024000</param-value>
+  </context-param>
 </web-app>

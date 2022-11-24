@@ -3,7 +3,7 @@
 <main id="board">
     <section class="view">
         
-        <table border="0">
+        <table>
             <caption>글보기</caption>
             <tr>
                 <th>제목</th>
@@ -23,8 +23,8 @@
         
         <div>
             <a href="#" class="btn btnRemove">삭제</a>
-            <a href="./modify.jsp" class="btn btnModify">수정</a>
-            <a href="./list.jsp" class="btn btnList">목록</a>
+            <a href="/Jboard2/modify.do" class="btn btnModify">수정</a>
+            <a href="/Jboard2/list.do" class="btn btnList">목록</a>
         </div>
 
         <!-- 댓글목록 -->

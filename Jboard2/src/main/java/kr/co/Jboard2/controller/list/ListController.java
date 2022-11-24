@@ -8,15 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import kr.co.Jboard2.Service.article.ArticleService;
 
 @WebServlet("/list.do")
 public class ListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ArticleService service = ArticleService.INSTANCE;
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		logger.info("list.do");
 		String pg = req.getParameter("pg");
 		
 		// 게시판 번호 관련 선언

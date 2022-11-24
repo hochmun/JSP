@@ -121,11 +121,29 @@ public enum UserService {
 	public int selectCountUserUid(String uid, String email) {
 		return dao.selectCountUserUid(uid, email);
 	}
+	
+	// 유저 자동 로그인 여부 검사
+	public userVO selectUserBySessId(String sessId) {
+		return dao.selectUserBySessId(sessId);
+	}
+	
 	// upload
 	public void updateUser() {}
 	
 	public int updateUserPass(String uid, String pass) {
 		return dao.updateUserPass(uid, pass);
+	}
+	
+	public void updateUserForSession(String sessId, String uid) {
+		dao.updateUserForSession(sessId, uid);
+	}
+	
+	public void updateUserForSessLimitDate(String sessId) {
+		dao.updateUserForSessLimitDate(sessId);
+	}
+	
+	public void updateUserForSessionOut(String uid) {
+		dao.updateUserForSessionOut(uid);
 	}
 	
 	// delete

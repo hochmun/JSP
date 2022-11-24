@@ -19,8 +19,9 @@
             </tr>
             <c:forEach var="vo" items="${ vos }">
 	            <tr>
-	                <td>${ vo.no }</td>
-	                <td><a href="/Jboard2/view.do">${ vo.title }&nbsp;[${ vo.comment }]</a></td>
+	                <td>${ pageStartNum }</td>
+	                <c:set var="pageStartNum" value="${ pageStartNum - 1 }"/>
+	                <td><a href="/Jboard2/view.do?no=${ vo.no }&pg=${ currentPage }">${ vo.title }&nbsp;[${ vo.comment }]</a></td>
 	                <td>${ vo.nick }</td>
 	                <td>${ vo.rdate }</td>
 	                <td>${ vo.hit }</td>
