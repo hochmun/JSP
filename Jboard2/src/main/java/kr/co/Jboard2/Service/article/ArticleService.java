@@ -26,6 +26,16 @@ public enum ArticleService {
 		return dao.selectarticles(limitStart);
 	}
 	
+	/**
+	 * 게시물 등록
+	 * @param vo
+	 * @param fname
+	 * @param savePath
+	 */
+	public void insertArticle(articleVO vo, String fname, String savePath) {
+		dao.InsertArticle(vo, fname, savePath);
+	}
+	
 	public int selectCountArticles() {
 		return dao.selectCountArticles();
 	}
@@ -38,15 +48,16 @@ public enum ArticleService {
 	public Map<String, Object> selectArticle(String no) {
 		return dao.selectArticle(no);
 	}
+	
+	public List<articleVO> selectArticleComment(String parent) {
+		return dao.selectArticleComment(parent);
+	}
+	
+	
+	
 	// upload
-	/**
-	 * 게시물 등록
-	 * @param vo
-	 * @param fname
-	 * @param savePath
-	 */
-	public void insertArticle(articleVO vo, String fname, String savePath) {
-		dao.InsertArticle(vo, fname, savePath);
+	public void updateHitCount(String no) {
+		dao.updateHitCount(no);
 	}
 	
 	// delete

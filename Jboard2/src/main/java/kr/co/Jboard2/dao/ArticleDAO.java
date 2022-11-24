@@ -142,6 +142,33 @@ public class ArticleDAO extends DBCP {
 		return vos;
 	}
 	
+	public List<articleVO> selectArticleComment(String parent) {
+		List<articleVO> vos = new ArrayList<>();
+		try {
+			logger.info("selectArticleComment...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.COMMENT_LIST);
+			psmt.setString(1, parent);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				articleVO vo = new articleVO();
+				vo.setNo(rs.getInt("no"));
+				vo.setParent(rs.getInt("parent"));
+				vo.setCate(rs.getString("cate"));
+				vo.setContent(rs.getString("content"));
+				vo.setUid(rs.getString("uid"));
+				vo.setRegip(rs.getString("regip"));
+				vo.setRdate(rs.getString("rdate").substring(2, 10));
+				vo.setNick(rs.getString("nick"));
+				vos.add(vo);
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vos;
+	}
+	
 	public int selectCountArticles() {
 		int total = 0;
 		try {
@@ -161,6 +188,19 @@ public class ArticleDAO extends DBCP {
 	}
 	
 	// upload
+	public void updateHitCount(String no) {
+		try {
+			logger.info("updateHitCount...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_HIT);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
 	
 	// delete
 }
