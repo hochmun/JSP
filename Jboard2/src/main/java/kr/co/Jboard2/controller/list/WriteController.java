@@ -1,9 +1,6 @@
 package kr.co.Jboard2.controller.list;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

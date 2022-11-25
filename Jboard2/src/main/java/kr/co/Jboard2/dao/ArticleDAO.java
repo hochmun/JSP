@@ -19,6 +19,12 @@ public class ArticleDAO extends DBCP {
 	FileService service = FileService.INSTANCE;
 	
 	// create
+	/**
+	 * 게시물 등록 및 파일 등록
+	 * @param vo
+	 * @param fname
+	 * @param savePath
+	 */
 	public void InsertArticle(articleVO vo, String fname, String savePath) {
 		try {
 			logger.info("InsertArticle...");
@@ -62,6 +68,29 @@ public class ArticleDAO extends DBCP {
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
+	}
+	
+	/**
+	 * 댓글 등록
+	 * @param vo
+	 * @return
+	 */
+	public int insertComment(articleVO vo) {
+		int result = 0;
+		try {
+			logger.info("insertComment...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.INSERT_COMMENT);
+			psmt.setInt(1, vo.getParent());
+			psmt.setString(2, vo.getContent());
+			psmt.setString(3, vo.getUid());
+			psmt.setString(4, vo.getRegip());
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
 	}
 	
 	// read
@@ -201,6 +230,145 @@ public class ArticleDAO extends DBCP {
 		}
 	}
 	
+	public void updateArticle(articleVO vo) {
+		try {
+			logger.info("updateArticle...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE);
+			psmt.setString(1, vo.getTitle());
+			psmt.setString(2, vo.getContent());
+			psmt.setInt(3, vo.getNo());
+			psmt.executeUpdate();
+			close();
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	/**
+	 * 댓글 갯수 증가, 마지막 댓글 등록 시간, 등록 번호 리턴
+	 * @param no
+	 * @return
+	 */
+	public articleVO updateCommentNumber(String no) {
+		articleVO vo = new articleVO();
+		try {
+			logger.info("updateCommentNumber...");
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			
+			psmt = conn.prepareStatement(Sql.UPDATE_COMMENT_NUMBER);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(Sql.LAST_COMMENT_TIME);
+			if(rs.next()) {
+				vo.setRdate(rs.getString("rdate"));
+				vo.setNo(rs.getInt("no"));
+			}
+			
+			conn.commit();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vo;
+	}
+	
+	/**
+	 * 댓글 수정
+	 * @param content
+	 * @param no
+	 * @return
+	 */
+	public int updateComment(String content, String no) {
+		int result = 0;
+		try {
+			logger.info("updateComment...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_COMMENT);
+			psmt.setString(1, content);
+			psmt.setString(2, no);
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	
+	/**
+	 * 댓글 갯수 감소
+	 * @param parnet
+	 */
+	public void deleteCommentNumber(String parnet){
+		try {
+			logger.info("deleteCommentNumber...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.DELETE_COMMENT_NUMBER);
+			psmt.setString(1, parnet);
+			psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
 	
 	// delete
+	public int removeComment(String no) {
+		int result = 0;
+		try {
+			logger.info("removeComment...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.REMOVE_COMMENT);
+			psmt.setString(1, no);
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	
+	/**
+	 * 게시물 삭제 및 연결된 파일 및 댓글 삭제
+	 * @param no
+	 * @param filecheck
+	 * @param path
+	 */
+	public void deleteArticle(String no, int filecheck, String path){
+		try {
+			logger.info("deleteArticle...");
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			String fileName = null;
+			
+			if (filecheck > 0) {
+				psmt = conn.prepareStatement(Sql.READ_FILE);
+				psmt.setString(1, no);
+				rs = psmt.executeQuery();
+				if(rs.next()) {
+					fileName = rs.getString("newName");
+				}
+				if(fileName != null) {
+					File file = new File(path, fileName);
+					if(file.exists()) {
+						file.delete();
+					}
+				}
+			}
+			
+			psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			psmt.setString(3, no);
+			psmt.executeUpdate();
+			conn.commit();
+			
+			close();
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
 }

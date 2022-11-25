@@ -89,7 +89,7 @@ public class Sql {
 	public static final String UPDATE_ARTICLE_HIT =
 			"UPDATE `board_article` set hit = hit+1"
 			+ " WHERE `no`=?";
-	public static final String MODIFY_ARTICLE =
+	public static final String UPDATE_ARTICLE =
 			"UPDATE `board_article` SET "
 			+ " `title`=?, "
 			+ " `content`=?, "
