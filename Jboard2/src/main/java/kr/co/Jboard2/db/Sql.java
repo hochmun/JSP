@@ -57,7 +57,7 @@ public class Sql {
 			+ "`uid`=?, "
 			+ "`regip`=?, "
 			+ "`rdate`=NOW()";
-	public static final String READ_FILE =
+	public static final String SELECT_FILE =
 			"SELECT * FROM `board_file` "
 			+ " WHERE `parent`=?";
 	public static final String INSERT_FILE = 

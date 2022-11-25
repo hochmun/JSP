@@ -3,7 +3,7 @@
 <jsp:include page="./_header.jsp"/>
 <main id="board">
     <section class="list">                
-        <form action="#">
+        <form method="get">
             <input type="text" name="search" placeholder="제목 키워드, 글쓴이 검색">
             <input type="submit" value="검색">
         </form>

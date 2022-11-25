@@ -113,4 +113,16 @@ public enum ArticleService {
 		return newFileName;
 	}
 
+	public String searchSqlQuery(String search) {
+		String query = "";
+		
+		if(search != null) {
+			
+		} else {
+			query = "SELECT MAX(`no`) FROM `board_article`";
+		}
+		
+		return query;
+	}
+	
 }

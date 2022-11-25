@@ -23,6 +23,7 @@ public class ListController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("list.do");
 		String pg = req.getParameter("pg");
+		String search = req.getParameter("search");
 		
 		// 게시판 번호 관련 선언
 		int currentPage = 1; // 현제 페이지
