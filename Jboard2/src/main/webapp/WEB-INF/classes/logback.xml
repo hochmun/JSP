@@ -26,11 +26,11 @@
 	
 	
 	<appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/var/log/${NAME}/${NAME}.log</file>
+		<file>/logs/${NAME}/${NAME}.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">	    
-			<fileNamePattern>/var/log/${NAME}/${NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<fileNamePattern>/logs/${NAME}/${NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>1MB</maxFileSize>
+				<maxFileSize>100MB</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>
 		<encoder>

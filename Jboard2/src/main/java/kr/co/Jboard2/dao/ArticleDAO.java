@@ -344,7 +344,7 @@ public class ArticleDAO extends DBCP {
 			String fileName = null;
 			
 			if (filecheck > 0) {
-				psmt = conn.prepareStatement(Sql.READ_FILE);
+				psmt = conn.prepareStatement(Sql.SELECT_FILE);
 				psmt.setString(1, no);
 				rs = psmt.executeQuery();
 				if(rs.next()) {
