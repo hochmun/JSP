@@ -54,7 +54,7 @@ public class ListController extends HttpServlet {
 		req.setAttribute("pageGroupStart", pageGroupStart);
 		req.setAttribute("pageGroupEnd", pageGroupEnd);
 		req.setAttribute("pageStartNum", pageStartNum);
-		req.setAttribute("vos", service.selectarticles(limitStart));
+		req.setAttribute("vos", service.selectarticles(limitStart, search));
 		
 		req.getRequestDispatcher("/list.jsp").forward(req, resp);
 	}

@@ -94,12 +94,12 @@ public class ArticleDAO extends DBCP {
 	}
 	
 	// read
-	public List<articleVO> selectarticles(int limitStart) {
+	public List<articleVO> selectarticles(int limitStart, String query) {
 		List<articleVO> lists = new ArrayList<>();
 		try {
 			logger.info("selectarticles...");
 			conn = getConnection();
-			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE_LIST);
+			psmt = conn.prepareStatement(query);
 			psmt.setInt(1, limitStart);
 			rs = psmt.executeQuery();
 			while(rs.next()) {

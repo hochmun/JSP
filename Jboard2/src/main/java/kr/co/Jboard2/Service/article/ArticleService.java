@@ -38,8 +38,9 @@ public enum ArticleService {
 	}
 	
 	// read
-	public List<articleVO> selectarticles(int limitStart) {
-		return dao.selectarticles(limitStart);
+	public List<articleVO> selectarticles(int limitStart, String search) {
+		String query = searchSqlQuery(search);
+		return dao.selectarticles(limitStart, query);
 	}
 	
 	public int selectCountArticles() {
@@ -117,9 +118,26 @@ public enum ArticleService {
 		String query = "";
 		
 		if(search != null) {
-			
+			query += "SELECT "
+					+ "	a.*, "
+					+ "	b.`nick` "
+					+ "	FROM `board_article` AS a"
+					+ "	JOIN `board_user` AS b ON a.`uid` = b.`uid`"
+					+ "	WHERE "
+					+ "	a.`cate` = 'free' "
+					+ " AND (a.`title` LIKE '%"+search+"%'"
+					+ "	OR b.`nick` LIKE '%"+search+"%')"
+					+ "	ORDER BY a.`no` DESC"
+					+ "	LIMIT ?, 10";
 		} else {
-			query = "SELECT MAX(`no`) FROM `board_article`";
+			query = "SELECT "
+					+ "a.*,"
+					+ "b.`nick`"
+					+ " FROM `board_article` as a "
+					+ "JOIN `board_user` as b ON a.`uid` = b.`uid` "
+					+ "WHERE `cate`='free' "
+					+ "ORDER BY a.`no` DESC "
+					+ "LIMIT ?, 10";
 		}
 		
 		return query;
