@@ -39,13 +39,11 @@ public enum ArticleService {
 	
 	// read
 	public List<articleVO> selectarticles(int limitStart, String search) {
-		String query = searchSqlQuery(search);
-		return dao.selectarticles(limitStart, query);
+		return dao.selectarticles(limitStart, search);
 	}
 	
 	public int selectCountArticles(String search) {
-		String query = countSearchSqlQuery(search);
-		return dao.selectCountArticles(query);
+		return dao.selectCountArticles(search);
 	}
 
 	/**
@@ -113,60 +111,5 @@ public enum ArticleService {
 		oldFile.renameTo(newFile);
 		
 		return newFileName;
-	}
-
-	/**
-	 * 게시판 글 목록 검색기능 쿼리문
-	 * @param search
-	 * @return
-	 */
-	public String searchSqlQuery(String search) {
-		String query = "";
-		
-		if(search != null) {
-			query += "SELECT "
-					+ "	a.*, "
-					+ "	b.`nick` "
-					+ "	FROM `board_article` AS a"
-					+ "	JOIN `board_user` AS b ON a.`uid` = b.`uid`"
-					+ "	WHERE "
-					+ "	a.`cate` = 'free' "
-					+ " AND (a.`title` LIKE '%"+search+"%'"
-					+ "	OR b.`nick` LIKE '%"+search+"%')"
-					+ "	ORDER BY a.`no` DESC"
-					+ "	LIMIT ?, 10";
-		} else {
-			query = "SELECT "
-					+ "a.*,"
-					+ "b.`nick`"
-					+ " FROM `board_article` as a "
-					+ "JOIN `board_user` as b ON a.`uid` = b.`uid` "
-					+ "WHERE `cate`='free' "
-					+ "ORDER BY a.`no` DESC "
-					+ "LIMIT ?, 10";
-		}
-		
-		return query;
-	}
-	
-	/**
-	 * 게시판 글 갯수 검색기능 쿼리문
-	 * @param search
-	 * @return
-	 */
-	public String countSearchSqlQuery(String search) {
-		String query = "";
-		if(search != null) {
-			query += "SELECT COUNT(a.`no`) "
-					+ "	FROM `board_article` AS a"
-					+ "	JOIN `board_user` AS b ON a.`uid` = b.`uid`"
-					+ "	WHERE "
-					+ "	a.`cate` = 'free' "
-					+ " AND (a.`title` LIKE '%"+search+"%'"
-					+ "	OR b.`nick` LIKE '%"+search+"%')";
-		} else {
-			query = "SELECT COUNT(`no`) FROM `board_article` WHERE `cate`='free'";
-		}
-		return query;
 	}
 }

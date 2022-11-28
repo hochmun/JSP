@@ -72,20 +72,29 @@ public class Sql {
 			"SELECT MAX(`no`) FROM `board_article`";
 	public static final String SELECT_ARTICLE_LIST =
 			"SELECT "
-			+ "a.*,"
-			+ "b.`nick`"
-			+ " FROM `board_article` as a "
-			+ "JOIN `board_user` as b ON a.`uid` = b.`uid` "
-			+ "WHERE `cate`='free' "
-			+ "ORDER BY a.`no` DESC "
-			+ "LIMIT ?, 10";
+			+ "	a.*, "
+			+ "	b.`nick` "
+			+ "	FROM `board_article` AS a"
+			+ "	JOIN `board_user` AS b ON a.`uid` = b.`uid`"
+			+ "	WHERE "
+			+ "	a.`cate` = 'free' "
+			+ " AND (a.`title` LIKE ?"
+			+ "	OR b.`nick` LIKE ?)"
+			+ "	ORDER BY a.`no` DESC"
+			+ "	LIMIT ?, 10";
 	public static final String SELECT_ARTICLE =
 			"SELECT * "
 			+ " FROM `board_article` AS a "
 			+ " LEFT JOIN `board_file` AS b ON a.no = b.parent"
 			+ " WHERE `no`=?";
 	public static final String SELECT_COUNT_TOTAL_ARTICLE =
-			"SELECT COUNT(`no`) FROM `board_article` WHERE `cate`='free'";
+			"SELECT COUNT(a.`no`) "
+			+ "	FROM `board_article` AS a"
+			+ "	JOIN `board_user` AS b ON a.`uid` = b.`uid`"
+			+ "	WHERE "
+			+ "	a.`cate` = 'free' "
+			+ " AND (a.`title` LIKE ?"
+			+ "	OR b.`nick` LIKE ?)";
 	public static final String UPDATE_ARTICLE_HIT =
 			"UPDATE `board_article` set hit = hit+1"
 			+ " WHERE `no`=?";

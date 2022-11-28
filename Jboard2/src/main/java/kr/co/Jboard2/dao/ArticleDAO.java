@@ -94,13 +94,18 @@ public class ArticleDAO extends DBCP {
 	}
 	
 	// read
-	public List<articleVO> selectarticles(int limitStart, String query) {
+	public List<articleVO> selectarticles(int limitStart, String search) {
 		List<articleVO> lists = new ArrayList<>();
+		String word = "";
+		if (search != null) word = "%"+search+"%";
+		else word = "%%";
 		try {
 			logger.info("selectarticles...");
 			conn = getConnection();
-			psmt = conn.prepareStatement(query);
-			psmt.setInt(1, limitStart);
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE_LIST);
+			psmt.setString(1, word);
+			psmt.setString(2, word);
+			psmt.setInt(3, limitStart);
 			rs = psmt.executeQuery();
 			while(rs.next()) {
 				articleVO vo = new articleVO();
@@ -198,13 +203,18 @@ public class ArticleDAO extends DBCP {
 		return vos;
 	}
 	
-	public int selectCountArticles(String query) {
+	public int selectCountArticles(String search) {
 		int total = 0;
+		String word = "";
+		if (search != null) word = "%"+search+"%";
+		else word = "%%";
 		try {
 			logger.info("selectCountArticles...");
 			conn = getConnection();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(query);
+			psmt = conn.prepareStatement(Sql.SELECT_COUNT_TOTAL_ARTICLE);
+			psmt.setString(1, word);
+			psmt.setString(2, word);
+			rs = psmt.executeQuery();
 			if(rs.next()) {
 				total = rs.getInt(1);
 			}
