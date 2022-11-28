@@ -7,6 +7,8 @@ import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,6 +56,18 @@ public enum UserService {
 	public int checkNick(String nick) {
 		return dao.selectCountNick(nick);
 	}
+	/**
+	 * 이름 이메일 검사
+	 * @param name
+	 * @param email
+	 * @return
+	 */
+	public int selectCountUserName(String name, String email) {
+		return dao.selectCountUserName(name, email);
+	}
+	public int selectCountUserUid(String uid, String email) {
+		return dao.selectCountUserUid(uid, email);
+	}
 	
 	// upload
 	
@@ -80,7 +94,11 @@ public enum UserService {
 		uvo.setRegip(req.getRemoteAddr());
 		return uvo;
 	}
-
+	/**
+	 * 메일 보내기
+	 * @param receiver
+	 * @return
+	 */
 	public int[] sendEmailCode(String receiver) {
 		// 인증코드 생성
 		int code = ThreadLocalRandom.current().nextInt(100000, 1000000);
@@ -110,7 +128,19 @@ public enum UserService {
 		Message message = new MimeMessage(session);
 		int status = 0;
 		try {
-			
+			logger.debug("메일 시작...");
+			message.setFrom(new InternetAddress(sender, "관리자", "UTF-8"));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(receiver));
+			message.setSubject(title);
+			message.setContent(content, "text/html;charset=utf-8");
+			Transport.send(message);
+			status = 1;
+		} catch (Exception e) {
+			logger.error("메일전송 실패..."+e.getMessage());
 		}
+		logger.debug("메일 전송 성공...");
+		
+		int result [] = {status, code};
+		return result;
 	}
 }
