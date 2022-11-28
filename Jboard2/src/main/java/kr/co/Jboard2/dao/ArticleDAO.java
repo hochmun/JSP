@@ -198,13 +198,13 @@ public class ArticleDAO extends DBCP {
 		return vos;
 	}
 	
-	public int selectCountArticles() {
+	public int selectCountArticles(String query) {
 		int total = 0;
 		try {
 			logger.info("selectCountArticles...");
 			conn = getConnection();
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(Sql.SELECT_COUNT_TOTAL_ARTICLE);
+			rs = stmt.executeQuery(query);
 			if(rs.next()) {
 				total = rs.getInt(1);
 			}

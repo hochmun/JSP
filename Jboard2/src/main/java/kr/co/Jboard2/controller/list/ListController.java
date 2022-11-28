@@ -27,7 +27,7 @@ public class ListController extends HttpServlet {
 		
 		// 게시판 번호 관련 선언
 		int currentPage = 1; // 현제 페이지
-		int total = service.selectCountArticles(); // 총 게시물 갯수
+		int total = service.selectCountArticles(search); // 총 게시물 갯수
 		int lastPageNum = 0; // 마지막 페이지 번호
 		
 		// 페이지 마지막 번호 계산

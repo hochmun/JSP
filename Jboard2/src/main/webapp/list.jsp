@@ -31,13 +31,13 @@
 
         <div class="page">
         	<c:if test="${ pageGroupStart gt 1 }">
-            	<a href="/Jboard2/list.do?pg=${ pageGroupStart - 1 }" class="prev">이전</a>
+            	<a href="/Jboard2/list.do?pg=${ pageGroupStart - 1 }&search=${ param.search }" class="prev">이전</a>
             </c:if>
             <c:forEach var="i" begin="${ pageGroupStart }" end="${ pageGroupEnd }" step="1">
-            	<a href="/Jboard2/list.do?pg=${ i }" class="num ${ currentPage eq i ? 'current' : 'off' }">${ i }</a>
+            	<a href="/Jboard2/list.do?pg=${ i }&search=${ param.search }" class="num ${ currentPage eq i ? 'current' : 'off' }">${ i }</a>
             </c:forEach>
             <c:if test="${ pageGroupEnd lt lastPageNum }">
-            	<a href="/Jboard2/list.do?pg=${ pageGroupEnd+1 }" class="next">다음</a>
+            	<a href="/Jboard2/list.do?pg=${ pageGroupEnd+1 }&search=${ param.search }" class="next">다음</a>
             </c:if>
         </div>
 
