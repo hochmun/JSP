@@ -39,7 +39,10 @@ public enum ArticleService {
 	
 	// read
 	public List<articleVO> selectarticles(int limitStart, String search) {
-		return dao.selectarticles(limitStart, search);
+		List<articleVO> avos = dao.selectarticles(limitStart, search);
+		// 검색어 강조하기 기능 추가하기
+		
+		return avos;
 	}
 	
 	public int selectCountArticles(String search) {
