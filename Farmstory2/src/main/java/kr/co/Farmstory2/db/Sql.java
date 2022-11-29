@@ -15,6 +15,7 @@ public class Sql {
 			+ "`regip`=?, "
 			+ "`rdate`=NOW()";
 	
+	public static final String SELECT_USER = "";
 	public static final String SELECT_COUNT_UID = 
 			"SELECT COUNT(`uid`) FROM `board_user` WHERE `uid`=?";
 	public static final String SELECT_COUNT_NICK = 

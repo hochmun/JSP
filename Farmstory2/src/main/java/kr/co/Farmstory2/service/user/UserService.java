@@ -40,6 +40,10 @@ public enum UserService {
 		return dao.selectTerms();
 	}
 	
+	public void loginUser(String uid, String pass) {
+		return dao.selectUser(uid, pass);
+	}
+	
 	/**
 	 * 아이디 체크
 	 * @param uid

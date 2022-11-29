@@ -56,6 +56,18 @@ public class UserDAO extends DBCP {
 		return vo;
 	}
 	
+	public userVO selectUser(String uid, String pass) {
+		userVO vo = new userVO();
+		try {
+			logger.info("selectUser...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_USER);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vo;
+	}
+	
 	/**
 	 * 아이디 중복 검사
 	 * @param uid
