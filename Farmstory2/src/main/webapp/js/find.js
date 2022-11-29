@@ -46,7 +46,7 @@ $(()=>{
 		const uid = $('input[name=uid]').val();
 		
 		$.ajax({
-			url: '/Jboard2/user/emailAuth.do',
+			url: '/Farmstory2/user/emailAuth.do',
 			method: 'get',
 			data: {"name":name,"email":email,"uid":uid},
 			dataType: 'json',
@@ -101,9 +101,9 @@ $(()=>{
 		const uid = $('input[name=uid]').val(); 
 		
 		if (name != null) {
-			location.href = "/Jboard2/user/findIdResult.do?email="+email;
+			location.href = "/Farmstory2/user/findIdResult.do?email="+email;
 		} else if (uid != null) {
-			location.href = "/Jboard2/user/findPwChange.do?email="+email;
+			location.href = "/Farmstory2/user/findPwChange.do?email="+email;
 		}
 		
 		return false;

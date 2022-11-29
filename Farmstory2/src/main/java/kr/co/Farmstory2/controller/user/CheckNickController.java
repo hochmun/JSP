@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
 
-import kr.co.Farmstory2.service.user.UserService;
+import kr.co.Farmstory2.service.UserService;
 
 @WebServlet("/user/checkNick.do")
 public class CheckNickController extends HttpServlet {

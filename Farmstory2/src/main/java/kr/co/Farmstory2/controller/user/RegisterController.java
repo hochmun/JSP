@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.Farmstory2.service.user.UserService;
+import kr.co.Farmstory2.service.UserService;
 
 @WebServlet("/user/register.do")
 public class RegisterController extends HttpServlet {

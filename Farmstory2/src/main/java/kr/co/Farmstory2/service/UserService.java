@@ -1,4 +1,4 @@
-package kr.co.Farmstory2.service.user;
+package kr.co.Farmstory2.service;
 
 import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
@@ -10,7 +10,11 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,14 +40,25 @@ public enum UserService {
 	}
 	
 	// read
+	/**
+	 * 약관 불러오기
+	 * @return
+	 */
 	public termsVO selectTerms() {
 		return dao.selectTerms();
 	}
-	
-	public void loginUser(String uid, String pass) {
+	/**
+	 * 로그인 처리
+	 * @param uid
+	 * @param pass
+	 * @return
+	 */
+	public userVO loginUser(String uid, String pass) {
 		return dao.selectUser(uid, pass);
 	}
-	
+	public userVO selectUserBySessId(String sessId){
+		return dao.selectUserBySessId(sessId);
+	}
 	/**
 	 * 아이디 체크
 	 * @param uid
@@ -73,7 +88,45 @@ public enum UserService {
 		return dao.selectCountUserUid(uid, email);
 	}
 	
+	public userVO selectUserEmail(String email) {
+		return dao.selectUserEmail(email);
+	}
+	
 	// upload
+	/**
+	 * 자동 로그인 - 정보 입력
+	 * @param sessId
+	 * @param uid
+	 */
+	public void updateUserForSession(String sessId, String uid) {
+		dao.updateUserForSession(sessId, uid);
+	}
+	
+	/**
+	 * 자동 로그인 - 날짜 갱신
+	 * @param sessId
+	 */
+	public void updateUserForSessLimitDate(String sessId){
+		dao.updateUserForSessLimitDate(sessId);
+	}
+	
+	/**
+	 * 로그아웃 - 자동로그인 정보 제거
+	 * @param uid
+	 */
+	public void updateUserForSessionOut(String uid) {
+		dao.updateUserForSessionOut(uid);
+	}
+	
+	/**
+	 * 비밀번호 변경
+	 * @param uid
+	 * @param pass
+	 * @return
+	 */
+	public int updateUserPass(String uid, String pass) {
+		return dao.updateUserPass(uid, pass);
+	}
 	
 	// delete
 	
@@ -98,6 +151,7 @@ public enum UserService {
 		uvo.setRegip(req.getRemoteAddr());
 		return uvo;
 	}
+	
 	/**
 	 * 메일 보내기
 	 * @param receiver
@@ -147,4 +201,71 @@ public enum UserService {
 		int result [] = {status, code};
 		return result;
 	}
+	
+	/**
+	 * 자동 로그인 - 로그인 쿠키 생성
+	 * @param req
+	 * @param resp
+	 * @param vo
+	 */
+	public void CookieCreate(HttpServletRequest req, HttpServletResponse resp, userVO vo) {
+		HttpSession sess = req.getSession();
+		sess.setAttribute("sessUser", vo);
+		if(req.getParameter("auto") != null) {
+			String sessId = sess.getId();
+			// 쿠키 생성
+			Cookie cookie = new Cookie("SESSID", sessId);
+			cookie.setPath("/");
+			cookie.setMaxAge(60*60*24*3);
+			resp.addCookie(cookie);
+			// sessId 데이터베이스 저장
+			updateUserForSession(sessId, vo.getUid());
+		}
+	}
+
+	/**
+	 * 자동 로그인 - 쿠키 확인 및 자동 로그인
+	 * @param cookies
+	 * @param sess
+	 * @param arg1
+	 */
+	public void autoLoginCheck(Cookie[] cookies, HttpSession sess, ServletResponse arg1) {
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals("SESSID")) {
+					String sessId = cookie.getValue();
+					userVO vo = selectUserBySessId(sessId);
+					if(vo.getUid() != null) {
+						sess.setAttribute("sessUser", vo);
+						cookie.setPath("/");
+						cookie.setMaxAge(60*60*24*3);
+						((HttpServletResponse)arg1).addCookie(cookie);
+						updateUserForSessLimitDate(sessId);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * 로그아웃 기능
+	 * @param req
+	 * @param resp
+	 */
+	public void logout(HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession sess = req.getSession();
+		userVO vo = (userVO)sess.getAttribute("sessUser");
+		
+		sess.removeAttribute("sessUser");
+		sess.invalidate();
+		
+		Cookie cookie = new Cookie("SESSID", null);
+		cookie.setPath("/");
+		cookie.setMaxAge(0);
+		resp.addCookie(cookie);
+		
+		updateUserForSessionOut(vo.getUid());
+	}
+
+	
 }

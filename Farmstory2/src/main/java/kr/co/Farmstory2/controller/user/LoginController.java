@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kr.co.Farmstory2.service.user.UserService;
+import kr.co.Farmstory2.service.UserService;
+import kr.co.Farmstory2.vo.userVO;
 
 @WebServlet("/user/login.do")
 public class LoginController extends HttpServlet {
@@ -23,6 +24,14 @@ public class LoginController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		service.loginUser(req.getParameter("uid"), req.getParameter("pass"));
+		userVO vo = service.loginUser(req.getParameter("uid"), req.getParameter("pass"));
+		if(vo.getUid() != null) {
+			// 회원이 맞을경우
+			service.CookieCreate(req, resp, vo);
+			resp.sendRedirect("/Farmstory2/index.do");
+		} else {
+			// 회원이 아닐경우
+			resp.sendRedirect("/Farmstory2/user/login.do?success=100");
+		}
 	}
 }

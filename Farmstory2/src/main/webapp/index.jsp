@@ -17,7 +17,7 @@
 	<div class="quick">
 	    <a href="#">
 	        <img src="./img/main_banner_sub1_tit.png" 
-	        alt="오능릐 식단">
+	        alt="오늘의 식단">
 	    </a>
 	    <a href="#">
 	        <img src="./img/main_banner_sub2_tit.png" 

@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
   <display-name>Jboard2</display-name>
   <welcome-file-list>
-    <welcome-file>_index.jsp</welcome-file>
+    <welcome-file>index.do</welcome-file>
   </welcome-file-list>
   
   <!-- UTF-8 필터 설정 -->
@@ -30,12 +30,14 @@
   		<role-name>nobody</role-name>
   	</auth-constraint>
   </security-constraint>
-  
-  <!-- index 접속 허용 -->
-  <security-constraint>
-  	<web-resource-collection>
-  		<web-resource-name>free pages</web-resource-name>
-  		<url-pattern>/_index.jsp</url-pattern>
-  	</web-resource-collection>
-  </security-constraint>
+
+	<!-- 필터 설정 -->
+	<filter>
+		<filter-name>AutoLoginFilter</filter-name>
+		<filter-class>kr.co.Farmstory2.filter.AutoLoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AutoLoginFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
 </web-app>

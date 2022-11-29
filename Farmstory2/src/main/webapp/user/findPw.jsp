@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="../_header.jsp"></jsp:include>
+<script src="../js/find.js"></script>
 <main id="user">
     <section class="find findPw">
         <form action="#">
@@ -12,6 +13,7 @@
                 <tr>
                     <td>이메일</td>
                     <td>
+                    	<span id="message"></span>
                         <div>
                             <input type="email" name="email" placeholder="이메일 입력"/>
                             <button type="button" class="btnAuth">인증번호 받기</button>
