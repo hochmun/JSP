@@ -7,8 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.oreilly.servlet.MultipartRequest;
+
 import kr.co.Farmstory2.dao.ArticleDAO;
 import kr.co.Farmstory2.vo.articleVO;
+import kr.co.Farmstory2.vo.userVO;
 
 public enum BoardService {
 	INSTANCE;
@@ -20,6 +23,9 @@ public enum BoardService {
 	}
 	
 	// create
+	public void insertArticle(articleVO vo, String fileName, String saveDirectory) {
+		dao.insertArticle(vo, fileName, saveDirectory);
+	}
 	
 	// read
 	public List<articleVO> selectArticles(String cateName, int limitStart, String search) {
@@ -34,8 +40,8 @@ public enum BoardService {
 	 * @param cateName
 	 * @return
 	 */
-	public int selectCountArticles(String search, String cateName) {
-		return dao.selectCountArticles(search, cateName);
+	public int selectCountArticles(String search, String titName) {
+		return dao.selectCountArticles(search, titName);
 	}
 	
 	// upload
@@ -49,11 +55,11 @@ public enum BoardService {
 	 * @param cateName
 	 * @return
 	 */
-	public int boardPaging(HttpServletRequest req, String cateName, String search) {
+	public int boardPaging(HttpServletRequest req, String titName, String search) {
 		String pg = req.getParameter("pg");
 		
 		int currentPage = 1; // 현재 페이지
-		int total = selectCountArticles(search, cateName); // 총 게시물 갯수
+		int total = selectCountArticles(search, titName); // 총 게시물 갯수
 		int lastPageNum = 0; // 마지막 페이지 번호
 		
 		// 페이지 마지막 번호 계산
@@ -90,7 +96,6 @@ public enum BoardService {
 	 * @return
 	 */
 	public String titNameFormat(String cate, String tit) {
-		// TODO
 		String titName = "";
 		switch(cate) {
 			case "2":
@@ -110,35 +115,73 @@ public enum BoardService {
 				default:
 					titName = "-1";
 				}
+				break;
 			case "4":
 				titName = "event";
 				break;
 			case "5":
 				switch(tit) {
 				case "1":
-					titName = "";
+					titName = "notice";
 					break;
 				case "2":
-					titName = "";
+					titName = "menu";
 					break;
 				case "3":
-					titName = "";
+					titName = "chef";
 					break;
 				case "4":
-					titName = "";
+					titName = "qna";
 					break;
 				case "5":
-					titName = "";
+					titName = "faq";
 					break;
 				default:
 					titName = "-1";
 					break;
 				}
+				break;
 			default:
 				titName = "-1";
 				break;
 		}
+		logger.debug("tit : "+titName);
 		return titName;
 	}
 	
+	/**
+	 * 파일 업로드 처리
+	 * @param req
+	 * @param saveDirectory
+	 * @param maxPostSize
+	 * @return
+	 */
+	public MultipartRequest uploadFile(HttpServletRequest req, String saveDirectory, int maxPostSize) {
+		try {
+			// 파일 업로드
+			return new MultipartRequest(req, saveDirectory, maxPostSize, "UTF-8");
+		} catch (Exception e) {
+			// 업로드 실패
+			logger.error(e.getMessage());
+			return null;
+		}
+	}
+
+	/**
+	 * 글쓰기 - VO에 폼값 저장
+	 * @param req
+	 * @param mr
+	 * @return
+	 */
+	public articleVO saveVOFromForm(HttpServletRequest req, MultipartRequest mr) {
+		articleVO vo = new articleVO();
+		
+		vo.setTitle(mr.getParameter("title"));
+		vo.setContent(mr.getParameter("content"));
+		vo.setCate(titNameFormat(mr.getParameter("cate"), mr.getParameter("tit")));
+		vo.setRegip(req.getRemoteAddr());
+		vo.setUid(((userVO)req.getSession().getAttribute("sessUser")).getUid());
+		
+		return vo;
+	}
 }

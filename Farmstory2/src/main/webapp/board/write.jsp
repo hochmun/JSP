@@ -3,8 +3,10 @@
 <main id="board">
     <section class="write">
 
-        <form action="#">
-            <table border="0">
+        <form action="./write.do?" method="post" enctype="multipart/form-data">
+        	<input type="hidden" name="cate" value="${ param.cate }">
+        	<input type="hidden" name="tit" value="${ param.tit }">
+            <table>
                 <caption>글쓰기</caption>
                 <tr>
                     <th>제목</th>
@@ -25,7 +27,7 @@
             </table>
             
             <div>
-                <a href="./list.do" class="btn btnCancel">취소</a>
+                <a href="./list.do?cate=${ param.cate }&tit=${ param.tit }" class="btn btnCancel">취소</a>
                 <input type="submit" value="작성완료" class="btn btnComplete"/>
             </div>
         </form>

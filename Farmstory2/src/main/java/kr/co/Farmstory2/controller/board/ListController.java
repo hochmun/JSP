@@ -18,14 +18,14 @@ public class ListController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String cateName = service.titNameFormat(req.getParameter("cate"), req.getParameter("tit"));
+		String titName = service.titNameFormat(req.getParameter("cate"), req.getParameter("tit"));
 		String search = req.getParameter("search");
 		
 		// 게시물 페이징
-		int limitStart = service.boardPaging(req, cateName, search);
+		int limitStart = service.boardPaging(req, titName, search);
 		
 		// 게시물 불러오기
-		req.setAttribute("vos", service.selectArticles(cateName, limitStart, search));
+		req.setAttribute("vos", service.selectArticles(titName, limitStart, search));
 		req.getRequestDispatcher("/board/list.jsp").forward(req, resp);
 	}
 }
