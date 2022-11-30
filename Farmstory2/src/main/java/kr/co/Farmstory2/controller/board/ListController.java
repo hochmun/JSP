@@ -21,11 +21,16 @@ public class ListController extends HttpServlet {
 		String titName = service.titNameFormat(req.getParameter("cate"), req.getParameter("tit"));
 		String search = req.getParameter("search");
 		
-		// 게시물 페이징
-		int limitStart = service.boardPaging(req, titName, search);
-		
-		// 게시물 불러오기
-		req.setAttribute("vos", service.selectArticles(titName, limitStart, search));
-		req.getRequestDispatcher("/board/list.jsp").forward(req, resp);
+		if(titName.equals("-1")) {
+			// 보안 설정 - titName = -1 일때 /로 이동
+			resp.sendRedirect("/Farmstory2/");
+		} else {
+			// 게시물 페이징
+			int limitStart = service.boardPaging(req, titName, search);
+			
+			// 게시물 불러오기
+			req.setAttribute("vos", service.selectArticles(titName, limitStart, search));
+			req.getRequestDispatcher("/board/list.jsp").forward(req, resp);
+		}
 	}
 }

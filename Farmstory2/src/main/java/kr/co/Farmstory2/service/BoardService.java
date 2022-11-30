@@ -1,6 +1,7 @@
 package kr.co.Farmstory2.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +36,24 @@ public enum BoardService {
 	}
 	
 	/**
+	 * view - 글 정보 가져오기
+	 * @param no
+	 * @return
+	 */
+	public Map<String, Object> selectArticle(String no) {
+		return dao.selectArticle(no);
+	}
+	
+	/**
+	 * view - 댓글들 정보 가져오기
+	 * @param parent
+	 * @return
+	 */
+	public List<articleVO> selectArticleComment(String parent) {
+		return dao.selectArticleComment(parent);
+	}
+	
+	/**
 	 * 카테고리별 총 게시물 갯수
 	 * @param search
 	 * @param cateName
@@ -45,6 +64,13 @@ public enum BoardService {
 	}
 	
 	// upload
+	/**
+	 * view - 게시물 조회수 증가
+	 * @param no
+	 */
+	public void updateHitCount(String no) {
+		dao.updateHitCount(no);
+	}
 	
 	// delete
 	

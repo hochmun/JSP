@@ -84,6 +84,19 @@ public class Sql {
 			+ "OR b.`nick` LIKE ?) "
 			+ "ORDER BY a.`no` DESC "
 			+ "LIMIT ?, 10";
+	public static final String SELECT_ARTICLE = 
+			"SELECT * "
+			+ "FROM `board_article` AS a "
+			+ "LEFT JOIN `board_file` AS b ON a.no = b.parent "
+			+ "WHERE `no`=?";
+	public static final String SELECT_ARTICLE_COMMENTS = 
+			"SELECT "
+			+ "a.`no`, a.`parent`, a.`cate`, a.`content`, a.`uid`, a.`regip`, "
+			+ "a.`rdate`, u.`nick` "
+			+ "FROM `board_article` AS a "
+			+ "JOIN `board_user` AS u ON a.uid = u.uid "
+			+ "WHERE `parent`=? "
+			+ "ORDER BY `no` ASC";
 	public static final String SELECT_COUNT_ARTICLES = 
 			"SELECT COUNT(a.`no`) "
 			+ "FROM `board_article` AS a "
@@ -95,4 +108,6 @@ public class Sql {
 	public static final String SELECT_MAX_NO = 
 			"SELECT MAX(`no`) FROM `board_article`";
 	
+	public static final String UPDATE_ARTICLE_HIT_PLUS = 
+			"UPDATE `board_article` SET `hit` = `hit`+1 WHERE `no`=?";
 }

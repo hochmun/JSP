@@ -4,11 +4,14 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kr.co.Farmstory2.db.DBCP;
 import kr.co.Farmstory2.db.Sql;
 import kr.co.Farmstory2.service.FileService;
+import kr.co.Farmstory2.vo.FileVO;
 import kr.co.Farmstory2.vo.articleVO;
 
 public class ArticleDAO extends DBCP {
@@ -107,6 +110,80 @@ public class ArticleDAO extends DBCP {
 	}
 	
 	/**
+	 * view - 게시물 정보 불러오기 (글 정보, 파일 정보)
+	 * @param no
+	 * @return
+	 */
+	public Map<String, Object> selectArticle(String no) {
+		Map<String, Object> vos = new HashMap<>();
+		articleVO avo = new articleVO();
+		FileVO fvo = new FileVO();
+		try {
+			logger.info("selectArticle...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE);
+			psmt.setString(1, no);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				avo.setNo(rs.getInt(1));
+				avo.setParent(rs.getInt(2));
+				avo.setComment(rs.getInt(3));
+				avo.setCate(rs.getString(4));
+				avo.setTitle(rs.getString(5));
+				avo.setContent(rs.getString(6));
+				avo.setFile(rs.getInt(7));
+				avo.setHit(rs.getInt(8));
+				avo.setUid(rs.getString(9));
+				avo.setRegip(rs.getString(10));
+				avo.setRdate(rs.getString(11));
+				fvo.setFno(rs.getInt(12));
+				fvo.setParent(rs.getInt(13));
+				fvo.setNewName(rs.getString(14));
+				fvo.setOriName(rs.getString(15));
+				fvo.setDownload(rs.getInt(16));
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		vos.put("avo", avo);
+		vos.put("fvo", fvo);
+		return vos;
+	}
+	
+	/**
+	 * view - 댓글들 정보 불러오기
+	 * @param parent
+	 * @return
+	 */
+	public List<articleVO> selectArticleComment(String parent) {
+		List<articleVO> vos = new ArrayList<>();
+		try {
+			logger.info("selectArticleComment...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE_COMMENTS);
+			psmt.setString(1, parent);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				articleVO vo = new articleVO();
+				vo.setNo(rs.getInt("no"));
+				vo.setParent(rs.getInt("parent"));
+				vo.setCate(rs.getString("cate"));
+				vo.setContent(rs.getString("content"));
+				vo.setUid(rs.getString("uid"));
+				vo.setRegip(rs.getString("regip"));
+				vo.setRdate(rs.getString("rdate").substring(2, 10));
+				vo.setNick(rs.getString("nick"));
+				vos.add(vo);
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vos;
+	}
+	
+	/**
 	 * 카테고리별 전체 게시물 갯수 + 검색기능
 	 * @param search
 	 * @param cateName
@@ -136,6 +213,22 @@ public class ArticleDAO extends DBCP {
 	}
 	
 	// upload
+	/**
+	 * view - 게시물 조회수 증가
+	 * @param no
+	 */
+	public void updateHitCount(String no) {
+		try {
+			logger.info("updateHitCount...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_HIT_PLUS);
+			psmt.setString(1, no);
+			psmt.executeUpdate();
+			close();
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
 	
 	// delete
 	

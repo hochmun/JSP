@@ -1,48 +1,65 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../_header.jsp"></jsp:include>
 <main id="board">
     <section class="view">
         
-        <table border="0">
+        <table>
             <caption>글보기</caption>
             <tr>
                 <th>제목</th>
-                <td><input type="text" name="title" value="제목입니다." readonly/></td>
+                <td><input type="text" name="title" value="${ avo.title }" readonly/></td>
             </tr>
-            <tr>
-                <th>파일</th>
-                <td><a href="#">2020년 상반기 매출자료.xls</a>&nbsp;<span>7</span>회 다운로드</td>
-            </tr>
+            <c:if test="${ avo.file gt 0 }">
+	            <tr>
+	                <th>파일</th>
+	                <td><a href="#">${ fvo.oriName }</a>&nbsp;<span>${ fvo.download }</span>회 다운로드</td>
+	            </tr>
+            </c:if>
             <tr>
                 <th>내용</th>
                 <td>
-                    <textarea name="content" readonly>내용 샘플입니다.</textarea>
+                    <textarea name="content" readonly>${ avo.content }</textarea>
                 </td>
             </tr>                    
         </table>
         
         <div>
-            <a href="#" class="btn btnRemove">삭제</a>
-            <a href="./modify.do" class="btn btnModify">수정</a>
-            <a href="./list.do" class="btn btnList">목록</a>
+        	<c:if test="${ sessUser.uid eq avo.uid }">
+	            <a href="#" class="btn btnRemove">삭제</a>
+	            <a href="./modify.do" class="btn btnModify">수정</a>
+            </c:if>
+            <a href="./list.do?cate=${ param.cate }&tit=${ param.tit }&pg=${ param.pg }" class="btn btnList">목록</a>
         </div>
 
         <!-- 댓글목록 -->
         <section class="commentList">
             <h3>댓글목록</h3>                   
-
-            <article>
-                <span class="nick">길동이</span>
-                <span class="date">20-05-20</span>
-                <p class="content">댓글 샘플 입니다.</p>                        
-                <div>
-                    <a href="#" class="remove">삭제</a>
-                    <a href="#" class="modify">수정</a>
-                </div>
-            </article>
-
-            <p class="empty">등록된 댓글이 없습니다.</p>
-
+			<c:choose>
+				<c:when test="${ avo.comment gt 0 }">
+					<c:forEach var="vo" items="${ avo2 }">
+						<article>
+			                <span class="nick">${ vo.nick }</span>
+			                <span class="date">${ vo.rdate }</span>
+			                <p class="content">${ vo.content }</p>                        
+			                <div>
+			                	<c:choose>
+			                		<c:when test="${ sessUser.uid eq vo.uid }">
+					                    <a href="#" class="remove">삭제</a>
+					                    <a href="#" class="modify">수정</a>
+					            	</c:when>
+					            	<c:otherwise>
+					            		<a>&nbsp;</a>
+					            	</c:otherwise>
+			                    </c:choose>
+			                </div>
+            			</article>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<p class="empty">등록된 댓글이 없습니다.</p>
+				</c:otherwise>
+			</c:choose>
         </section>
 
         <!-- 댓글쓰기 -->
