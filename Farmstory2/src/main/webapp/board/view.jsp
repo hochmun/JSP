@@ -3,6 +3,71 @@
 <jsp:include page="../_header.jsp"></jsp:include>
 <script>
 	$(()=>{
+		// 글 삭제
+		$('.btnRemove').click(()=>{
+			const isDelete = confirm('정말 삭제 하시겠습니까?');
+			if(isDelete) return true;
+			else return false;
+		});
+		
+		// 댓글 삭제
+		$('.remove').click(function(e){
+			e.preventDefault();
+			const isDeleteOk = confirm('정말 삭제 하시겠습니까?');
+			
+			if(isDeleteOk) {
+				const article = $(this).closest('article');
+				const no = $(this).attr('data-no');
+				const parent = $(this).attr('data-parent');
+				const type = 3;
+				
+				$.ajax({
+					url: '/Farmstory2/board/view.do',
+					type: 'post',
+					data: {"no":no,"parent":parent,"type":type},
+					dataType: 'json',
+					success: (data)=>{
+						alert('댓글이 삭제 되었습니다.');
+						article.hide();
+					}
+				});
+			}
+		});
+		
+		// 댓글 수정
+		$(document).on('click','.modify', function(e){
+			e.preventDefault();
+			
+			const txt = $(this).text();
+			const p_tag = $(this).parent().prev();
+			
+			if(txt == '수정') {
+				// 수정 모드
+				$(this).text('수정완료');
+				p_tag.attr('contentEditable', true).focus();
+			} else {
+				// 수정 완료
+				$(this).text('수정');
+				
+				const no = $(this).attr('data-no');
+				const content = p_tag.text();
+				const type = 2;
+				
+				$.ajax({
+					url: '/Farmstory2/board/view.do',
+					type: 'post',
+					data: {"no":no,"content":content,"type":type},
+					dataType: 'json',
+					success: (data)=>{
+						if(data.result == 1) {
+							alert('댓글이 수정되었습니다.');
+							p_tag.attr('contentEditable', false);
+						}
+					}
+				});
+			}
+		});
+		
 		// 댓글 작성
 		$('.commentForm > form').submit(function(){
 			const content 	= $(this).children('textarea[name=content]').val();
@@ -86,8 +151,8 @@
 			                <div>
 			                	<c:choose>
 			                		<c:when test="${ sessUser.uid eq vo.uid }">
-					                    <a href="#" class="remove">삭제</a>
-					                    <a href="#" class="modify">수정</a>
+					                    <a href="#" class="remove" data-no="${ vo.no }" data-parent="${ param.no }">삭제</a>
+					                    <a href="#" class="modify" data-no="${ vo.no }">수정</a>
 					            	</c:when>
 					            	<c:otherwise>
 					            		<a>&nbsp;</a>
