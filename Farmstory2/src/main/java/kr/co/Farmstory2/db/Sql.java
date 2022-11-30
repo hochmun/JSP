@@ -71,6 +71,14 @@ public class Sql {
 			+ "`parent`=?, "
 			+ "`newName`=?, "
 			+ "`oriName`=?";
+	public static final String INSERT_COMMENT = 
+			"INSERT INTO `board_article` SET "
+			+ "`parent`=?, "
+			+ "`cate`='comment', "
+			+ "`content`=?, "
+			+ "`uid`=?, "
+			+ "`regip`=?, "
+			+ "`rdate`=NOW()";
 	
 	public static final String SELECT_ARTICLES = 
 			"SELECT "
@@ -97,6 +105,9 @@ public class Sql {
 			+ "JOIN `board_user` AS u ON a.uid = u.uid "
 			+ "WHERE `parent`=? "
 			+ "ORDER BY `no` ASC";
+	public static final String SELECT_ARTICLE_LAST_COMMENT_TIME = 
+			"SELECT `rdate`, `no` FROM `board_article` ORDER BY `rdate` DESC "
+			+ "LIMIT 1";
 	public static final String SELECT_COUNT_ARTICLES = 
 			"SELECT COUNT(a.`no`) "
 			+ "FROM `board_article` AS a "
@@ -110,4 +121,18 @@ public class Sql {
 	
 	public static final String UPDATE_ARTICLE_HIT_PLUS = 
 			"UPDATE `board_article` SET `hit` = `hit`+1 WHERE `no`=?";
+	public static final String UPDATE_ARTICLE_COMMENT_PLUS = 
+			"UPDATE `board_article` SET `comment` = `comment`+1 "
+			+ "WHERE `no`=?";
+	public static final String UPDATE_ARTICLE_COMMENT_MINUS = 
+			"UPDATE `board_article` SET `comment` = `comment`-1 "
+			+ "WHERE `no`=?";
+	public static final String UPDATE_COMMENT = 
+			"UPDATE `board_article` SET "
+			+ "`content`=?, "
+			+ "`rdate`=NOW() "
+			+ "WHERE `no`=?";
+	
+	public static final String DELETE_ARTICLE_COMMENT = 
+			"DELETE FROM `board_article` WHERE `no`=?";
 }

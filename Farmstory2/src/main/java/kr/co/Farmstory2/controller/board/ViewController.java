@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonObject;
+
 import kr.co.Farmstory2.service.BoardService;
 import kr.co.Farmstory2.vo.FileVO;
 import kr.co.Farmstory2.vo.articleVO;
@@ -37,5 +39,19 @@ public class ViewController extends HttpServlet {
 		req.setAttribute("fvo", (FileVO)vos.get("fvo")); // 파일 정보
 		
 		req.getRequestDispatcher("/board/view.jsp").forward(req, resp);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html;charset=UTF-8");
+		
+		// 작성한 댓글 정보 저장
+		articleVO vo = service.saveArticleVO(req);
+		
+		// type에 따라 작업 처리
+		JsonObject json = service.commentWorkForType(req.getParameter("type"), vo, req.getParameter("parent"));
+		
+		// 출력
+		resp.getWriter().print(json.toString());
 	}
 }

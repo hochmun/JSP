@@ -71,6 +71,29 @@ public class ArticleDAO extends DBCP {
 		}
 	}
 	
+	/**
+	 * 댓글작성 - 댓글 정보 저장
+	 * @param vo
+	 * @return
+	 */
+	public int insertComment(articleVO vo) {
+		int result = 0;
+		try {
+			logger.info("insertComment...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.INSERT_COMMENT);
+			psmt.setInt(1, vo.getParent());
+			psmt.setString(2, vo.getContent());
+			psmt.setString(3, vo.getUid());
+			psmt.setString(4, vo.getRegip());
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	
 	// read
 	public List<articleVO> selectArticles(String cateName, int limitStart, String search) {
 		List<articleVO> avos = new ArrayList<>();
@@ -230,6 +253,95 @@ public class ArticleDAO extends DBCP {
 		}
 	}
 	
+	/**
+	 * 댓글작성 - 댓글 갯수 증가, 마지막 댓글의 작성시간 and 등록 번호 return
+	 * @param no
+	 * @return
+	 */
+	public articleVO updateCommnetPlus(int no) {
+		articleVO vo = new articleVO();
+		try {
+			logger.info("updateCommnetPlus...");
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_PLUS);
+			psmt.setInt(1, no);
+			psmt.executeUpdate();
+			
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(Sql.SELECT_ARTICLE_LAST_COMMENT_TIME);
+			if(rs.next()) {
+				vo.setRdate(rs.getString("rdate"));
+				vo.setNo(rs.getInt("no"));
+			}
+			
+			conn.commit();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vo;
+	}
+	
+	/**
+	 * 댓글수정 - 댓글수정 기능
+	 * @param content
+	 * @param no
+	 * @return
+	 */
+	public int updateComment(String content, int no) {
+		int result = 0;
+		try {
+			logger.info("updateComment...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_COMMENT);
+			psmt.setString(1, content);
+			psmt.setInt(2, no);
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	
+	/**
+	 * 댓글삭제 - 댓글삭제시 댓글 갯수 감소 기능
+	 * @param parent
+	 */
+	public void uploadArticleCommentMinus(String parent) {
+		try {
+			logger.info("uploadArticleCommentMinus...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE_COMMENT_MINUS);
+			psmt.setString(1, parent);
+			psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
 	// delete
+	/**
+	 * 댓글삭제 - 댓글삭제 기능
+	 * @param no
+	 * @return
+	 */
+	public int deleteComment(int no) {
+		int result = 0;
+		try {
+			logger.info("deleteComment...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.DELETE_ARTICLE_COMMENT);
+			psmt.setInt(1, no);
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
 	
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.JsonObject;
 import com.oreilly.servlet.MultipartRequest;
 
 import kr.co.Farmstory2.dao.ArticleDAO;
@@ -26,6 +27,15 @@ public enum BoardService {
 	// create
 	public void insertArticle(articleVO vo, String fileName, String saveDirectory) {
 		dao.insertArticle(vo, fileName, saveDirectory);
+	}
+	
+	/**
+	 * 댓글작성 - 댓글 정보 저장
+	 * @param vo
+	 * @return
+	 */
+	public int insertComment(articleVO vo) {
+		return dao.insertComment(vo);
 	}
 	
 	// read
@@ -72,7 +82,42 @@ public enum BoardService {
 		dao.updateHitCount(no);
 	}
 	
+	/**
+	 * 댓글작성 - 댓글 갯수 증가, 마지막 댓글의 작성시간 and 등록 번호 return
+	 * @param no
+	 * @return
+	 */
+	public articleVO updateCommnetPlus(int no) {
+		return dao.updateCommnetPlus(no);
+	}
+	
+	/**
+	 * 댓글수정 - 댓글 수정기능
+	 * @param content
+	 * @param no
+	 * @return
+	 */
+	public int updateComment(String content, int no) {
+		return dao.updateComment(content, no);
+	}
+	
+	/**
+	 * 댓글삭제 - 댓글삭제시 댓글 갯수 감소 기능
+	 * @param parent
+	 */
+	public void uploadArticleCommentMinus(String parent) {
+		dao.uploadArticleCommentMinus(parent);
+	}
+	
 	// delete
+	/**
+	 * 댓글삭제 - 댓글삭제 기능
+	 * @param no
+	 * @return
+	 */
+	public int deleteComment(int no) {
+		return dao.deleteComment(no);
+	}
 	
 	// service
 	/**
@@ -209,5 +254,58 @@ public enum BoardService {
 		vo.setUid(((userVO)req.getSession().getAttribute("sessUser")).getUid());
 		
 		return vo;
+	}
+
+	/**
+	 * 댓글 작성 - VO에 정보 저장
+	 * @param req
+	 * @return
+	 */
+	public articleVO saveArticleVO(HttpServletRequest req) {
+		articleVO vo = new articleVO();
+		userVO uvo = (userVO)req.getSession().getAttribute("sessUser");
+		
+		vo.setParent(req.getParameter("no"));
+		vo.setContent(req.getParameter("content"));
+		vo.setRegip(req.getRemoteAddr());
+		vo.setUid(uvo.getUid());
+		vo.setNick(uvo.getNick());
+		
+		return vo;
+	}
+
+	/**
+	 * 댓글 기능들 - json으로 편집 후 반환
+	 * @param type
+	 * @param vo
+	 * @param parent
+	 * @return
+	 */
+	public JsonObject commentWorkForType(String type, articleVO vo, String parent) {
+		int result = 0;
+		JsonObject json = new JsonObject();
+		if(type.equals("1")) {
+			// 댓글 작성
+			result = insertComment(vo);
+			// 댓글 수 증가, 마지막 댓글 시간 등록 번호 리턴
+			articleVO vo2 = updateCommnetPlus(vo.getParent());
+			
+			json.addProperty("nick", vo.getNick());
+			json.addProperty("date", vo2.getRdate().substring(2, 10));
+			json.addProperty("content", vo.getContent());
+			json.addProperty("no", String.valueOf(vo2.getNo()));
+			json.addProperty("parent", vo.getParent());
+		} else if(type.equals("2")) {
+			// 댓글 수정
+			result = updateComment(vo.getContent(), vo.getParent());
+		} else if(type.equals("3")) {
+			// 댓글 삭제
+			uploadArticleCommentMinus(parent); // 댓글 삭제시 댓글 갯수 감소
+			result = deleteComment(vo.getParent()); // 댓글 삭제
+		}
+		
+		json.addProperty("result", result);
+		
+		return json;
 	}
 }

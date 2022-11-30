@@ -1,6 +1,47 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../_header.jsp"></jsp:include>
+<script>
+	$(()=>{
+		// 댓글 작성
+		$('.commentForm > form').submit(function(){
+			const content 	= $(this).children('textarea[name=content]').val();
+			const no		= $(this).children('input[name=no]').val();
+			const textarea	= $(this).children('textarea[name=content]');
+			const type 		= 1;
+			
+			if (content == '') {
+				alert('댓글을 작성하세요.');
+				return false;
+			}
+			
+			$.ajax({
+				url: "/Farmstory2/board/view.do",
+				method: "post",
+				data: {"no":no,"content":content,"type":type},
+				dataType: "json",
+				success: (data)=>{
+					if(data.result > 0) {
+						const article = "<article>"
+							+ "<span class='nick'>"+data.nick+"</span>&nbsp;"
+							+ "<span class='date'>"+data.date+"</span>"
+							+ "<p class='content'>"+data.content+"</p>"
+							+ "<div>"
+							+ "<a href='#' class='remove' data-no="+data.no+" data-parent="+data.parent+">삭제</a>&nbsp;"
+							+ "<a href='#' class='modify' data-no="+data.no+">수정</a>"
+							+ "</div>"
+							+ "</article>";
+							
+						$('.commentList .empty').hide();
+						$('.commentList').append(article);
+						textarea.val('');
+					}
+				}
+			});
+			return false;
+		});
+	});
+</script>
 <main id="board">
     <section class="view">
         
@@ -65,8 +106,9 @@
         <!-- 댓글쓰기 -->
         <section class="commentForm">
             <h3>댓글쓰기</h3>
-            <form action="#">
-                <textarea name="content">댓글내용 입력</textarea>
+            <form>
+            	<input type="hidden" name="no" value="${ avo.no }">
+                <textarea name="content" placeholder="댓글내용 입력"></textarea>
                 <div>
                     <a href="#" class="btn btnCancel">취소</a>
                     <input type="submit" value="작성완료" class="btn btnComplete"/>
