@@ -114,13 +114,16 @@ public class ArticleDAO extends DBCP {
 	 */
 	public int selectCountArticles(String search, String titName) {
 		int total = 0;
+		String word = "";
+		if (search != null) word = "%"+search+"%";
+		else word = "%%";
 		try {
 			logger.info("selectCountArticles...");
 			conn = getConnection();
 			psmt = conn.prepareStatement(Sql.SELECT_COUNT_ARTICLES);
 			psmt.setString(1, titName);
-			psmt.setString(2, search);
-			psmt.setString(3, search);
+			psmt.setString(2, word);
+			psmt.setString(3, word);
 			rs = psmt.executeQuery();
 			if(rs.next()) {
 				total = rs.getInt(1);
