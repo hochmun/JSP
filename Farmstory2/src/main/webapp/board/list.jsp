@@ -24,7 +24,7 @@
 	            <tr>
 	                <td>${ pageStartNum }</td>
 	                <c:set var="pageStartNum" value="${ pageStartNum - 1 }"/>
-	                <td><a href="./view.do?cate=${ param.cate }&tit=${ param.tit }&no=${ vo.no }&pg=${ currentPage }">${ vo.title }&nbsp;[${ vo.comment }]</a></td>
+	                <td><a href="./view.do?cate=${ param.cate }&tit=${ param.tit }&no=${ vo.no }&pg=${ currentPage }&search=${ param.search }">${ vo.title }&nbsp;[${ vo.comment }]</a></td>
 	                <td>${ vo.nick }</td>
 	                <td>${ vo.rdate }</td>
 	                <td>${ vo.hit }</td>

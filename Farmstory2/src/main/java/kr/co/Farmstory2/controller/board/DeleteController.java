@@ -19,7 +19,6 @@ public class DeleteController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		service.deleteArticle(req.getParameter("no"), req.getParameter("file"), req.getServletContext().getRealPath("/file"));
-		// TODO - 삭제 후 리스트로 바로 가지 않고 삭제 확인 JSP 페이지 만들어서 삭제완료 메세지 출력후 리스트 페이지로 이동 하게 만들기
-		resp.sendRedirect("/Farmstory2/board/list.do?cate="+req.getParameter("cate")+"&tit="+req.getParameter("tit")+"&pg="+req.getParameter("pg"));
+		resp.sendRedirect("/Farmstory2/board/deleteCheck.do?cate="+req.getParameter("cate")+"&tit="+req.getParameter("tit")+"&pg="+req.getParameter("pg")+"&search="+req.getParameter("search")+"&success=300");
 	}
 }

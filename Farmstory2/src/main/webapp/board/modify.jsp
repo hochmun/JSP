@@ -6,6 +6,7 @@
         <form action="./modify.do" method="post">
         	<input type="hidden" name="cate" value="${ param.cate }">
         	<input type="hidden" name="tit" value="${ param.tit }">
+        	<input type="hidden" name="search" value="${ param.search }">
         	<input type="hidden" name="pg" value="${ param.pg }">
         	<input type="hidden" name="no" value="${ param.no }">
             <table>
@@ -23,7 +24,7 @@
             </table>
             
             <div>
-                <a href="./view.do?cate=${ param.cate }&tit=${ param.tit }&pg=${ param.pg }&no=${ param.no }" class="btn btnCancel">취소</a>
+                <a href="./view.do?cate=${ param.cate }&tit=${ param.tit }&search=${ param.search }&pg=${ param.pg }&no=${ param.no }" class="btn btnCancel">취소</a>
                 <input type="submit" value="작성완료" class="btn btnComplete"/>
             </div>
         </form>
