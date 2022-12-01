@@ -123,7 +123,7 @@
             <c:if test="${ avo.file gt 0 }">
 	            <tr>
 	                <th>파일</th>
-	                <td><a href="#">${ fvo.oriName }</a>&nbsp;<span>${ fvo.download }</span>회 다운로드</td>
+	                <td><a href="./download.do?no=${ avo.no }">${ fvo.oriName }</a>&nbsp;<span>${ fvo.download }</span>회 다운로드</td>
 	            </tr>
             </c:if>
             <tr>

@@ -140,6 +140,9 @@ public class Sql {
 			+ "`content`=?, "
 			+ "`rdate`=NOW() "
 			+ "WHERE `no`=?";
+	public static final String UPDATE_FILE_DOWNLOAD_COUNT = 
+			"UPDATE `board_file` SET `download` = `download`+1 "
+			+ "WHERE `fno`=?";
 	
 	public static final String DELETE_ARTICLE = 
 			"DELETE FROM a, f "
