@@ -237,6 +237,27 @@ public class ArticleDAO extends DBCP {
 	
 	// upload
 	/**
+	 * modify - 게시글 수정
+	 * @param title
+	 * @param content
+	 * @param no
+	 */
+	public void updateArticle(String title, String content, String no) {
+		try {
+			logger.info("updateArticle...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_ARTICLE);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setString(3, no);
+			psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
+	/**
 	 * view - 게시물 조회수 증가
 	 * @param no
 	 */

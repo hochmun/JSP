@@ -3,29 +3,27 @@
 <main id="board">
     <section class="modify">
 
-        <form action="#">
-            <table border="0">
+        <form action="./modify.do" method="post">
+        	<input type="hidden" name="cate" value="${ param.cate }">
+        	<input type="hidden" name="tit" value="${ param.tit }">
+        	<input type="hidden" name="pg" value="${ param.pg }">
+        	<input type="hidden" name="no" value="${ param.no }">
+            <table>
                 <caption>글수정</caption>
                 <tr>
                     <th>제목</th>
-                    <td><input type="text" name="title" placeholder="제목을 입력하세요."/></td>
+                    <td><input type="text" name="title" value="${ avo.title }" placeholder="제목을 입력하세요" /></td>
                 </tr>
                 <tr>
                     <th>내용</th>
                     <td>
-                        <textarea name="content"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <th>파일</th>
-                    <td>
-                        <input type="file" name="file"/>
+                        <textarea name="content">${ avo.content }</textarea>
                     </td>
                 </tr>
             </table>
             
             <div>
-                <a href="./view.do" class="btn btnCancel">취소</a>
+                <a href="./view.do?cate=${ param.cate }&tit=${ param.tit }&pg=${ param.pg }&no=${ param.no }" class="btn btnCancel">취소</a>
                 <input type="submit" value="작성완료" class="btn btnComplete"/>
             </div>
         </form>

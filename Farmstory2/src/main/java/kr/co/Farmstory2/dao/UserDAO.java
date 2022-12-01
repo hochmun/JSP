@@ -222,6 +222,11 @@ public class UserDAO extends DBCP {
 		return result;
 	}
 	
+	/**
+	 * 이메일에 따른 유저 정보 불러오기
+	 * @param email
+	 * @return
+	 */
 	public userVO selectUserEmail(String email) {
 		userVO vo = new userVO();
 		try {
@@ -265,6 +270,7 @@ public class UserDAO extends DBCP {
 			logger.error(e.getMessage());
 		}
 	}
+
 	/**
 	 * 자동 로그인 - 날짜 갱신 업데이트
 	 * @param sessId
@@ -299,6 +305,12 @@ public class UserDAO extends DBCP {
 		}
 	}
 	
+	/**
+	 * 비밀번호 찾기 - 비밀번호 변경
+	 * @param uid
+	 * @param pass
+	 * @return
+	 */
 	public int updateUserPass(String uid, String pass) {
 		int result = 0;
 		try {

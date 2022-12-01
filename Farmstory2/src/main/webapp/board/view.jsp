@@ -106,6 +106,10 @@
 			return false;
 		});
 	});
+	const result = "${param.result}";
+	if(result == "201") {
+		alert('수정 되었습니다.');
+	}
 </script>
 <main id="board">
     <section class="view">

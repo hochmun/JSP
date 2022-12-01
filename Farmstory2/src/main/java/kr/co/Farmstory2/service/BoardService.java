@@ -75,6 +75,16 @@ public enum BoardService {
 	
 	// upload
 	/**
+	 * modify - 게시글 수정
+	 * @param title
+	 * @param content
+	 * @param no
+	 */
+	public void updateArticle(String title, String content, String no) {
+		dao.updateArticle(title, content, no);
+	}
+	
+	/**
 	 * view - 게시물 조회수 증가
 	 * @param no
 	 */

@@ -119,6 +119,12 @@ public class Sql {
 	public static final String SELECT_MAX_NO = 
 			"SELECT MAX(`no`) FROM `board_article`";
 	
+	public static final String UPDATE_ARTICLE = 
+			"UPDATE `board_article` SET "
+			+ "`title`=?, "
+			+ "`content`=?, "
+			+ "`rdate`=NOW() "
+			+ "WHERE `no`=?";
 	public static final String UPDATE_ARTICLE_HIT_PLUS = 
 			"UPDATE `board_article` SET `hit` = `hit`+1 WHERE `no`=?";
 	public static final String UPDATE_ARTICLE_COMMENT_PLUS = 
