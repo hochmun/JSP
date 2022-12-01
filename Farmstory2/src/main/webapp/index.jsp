@@ -1,5 +1,36 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="./_header.jsp"/>
+<script>
+	$(()=>{
+		// 공지사항 최신글 가져오기
+		// 기본으로 보여주는 탭
+		$.get('/Farmstory2/getLatests.do?cate=notice',(data)=>{
+			for(let latest of data) {
+				let url = "/Farmstory2/board/view.do?cate=5&tit=1&pg=1&no="+latest.no;
+				$('#tabs-1 > .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
+			}
+		});
+		
+		// 각 탭 클릭시 데이터 받기
+		$(document).one('click', '#tabs-2-click', function(){
+			$.get('/Farmstory2/getLatests.do?cate=qna',(data)=>{
+				for(let latest of data) {
+					let url = "/Farmstory2/board/view.do?cate=5&tit=4&pg=1&no="+latest.no;
+					$('#tabs-2 > .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
+				}
+			});
+		});
+		$(document).one('click', '#tabs-3-click', function(){
+			$.get('/Farmstory2/getLatests.do?cate=faq',(data)=>{
+				for(let latest of data) {
+					let url = "/Farmstory2/board/view.do?cate=5&tit=5&pg=1&no="+latest.no;
+					$('#tabs-3 > .txt').append("<li><a href='"+url+"'>"+latest.title+"</a></li>");
+				}
+			});
+		});
+	});
+</script>
 <main>
 	<div class="slider">
 		<ul>
@@ -15,143 +46,71 @@
 		</div>
 	</div>
 	<div class="quick">
-	    <a href="#">
+	    <a href="./board/list.do?cate=5&tit=2">
 	        <img src="./img/main_banner_sub1_tit.png" 
 	        alt="오늘의 식단">
 	    </a>
-	    <a href="#">
+	    <a href="./board/list.do?cate=5&tit=3">
 	        <img src="./img/main_banner_sub2_tit.png" 
 	        alt="나도 요리사">
 	    </a>
 	</div>
 	<div class="latest">
 		<div>
-			<a href="#">
+			<a href="./board/list.do?cate=3&tit=2">
 				<img src="./img/main_latest1_tit.png" alt="텃밭 가꾸기">
 			</a>
 	        <img src="./img/main_latest1_img.jpg" alt="이미지">
 	        <table>
-	            <tr>
-	                <td>></td>
-	                <td>
-	                    <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	                </td>
-	                <td>20-12-22</td>
-	            </tr>
-	            <tr>
-	                <td>></td>
-	                <td>
-	                    <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	                </td>
-	                <td>20-12-22</td>
-	            </tr>
-	            <tr>
-	                <td>></td>
-	                <td>
-	                    <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	                </td>
-	                <td>20-12-22</td>
-	            </tr>
-	            <tr>
-	                <td>></td>
-	                <td>
-	                    <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	                </td>
-	                <td>20-12-22</td>
-	            </tr>
-				<tr>
-					<td>></td>
-					<td>
-						<a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-					</td>
-					<td>20-12-22</td>
-				</tr>
+	        	<c:forEach var="vo" items="${ vos }">
+	        		<c:if test="${ vo.cate eq 'grow' }">
+			            <tr>
+			                <td>></td>
+			                <td>
+			                    <a href="./board/view.do?cate=3&tit=2&pg=1&no=${ vo.no }">${ vo.title }</a>
+			                </td>
+			                <td>${ vo.rdate }</td>
+			            </tr>
+		            </c:if>
+	            </c:forEach>
 			</table>
 		</div>
 		<div>
-	    <a href="#">
+	    <a href="./board/list.do?cate=3&tit=3">
 	        <img src="./img/main_latest2_tit.png" alt="귀농학교">
 	    </a>
 	    <img src="./img/main_latest2_img.jpg" alt="이미지">
 	    <table>
-	        <tr>
-	            <td>></td>
-	            <td>
-	                <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	            </td>
-	            <td>20-12-22</td>
-	        </tr>
-	        <tr>
-	            <td>></td>
-	            <td>
-	                <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	            </td>
-	            <td>20-12-22</td>
-	        </tr>
-	        <tr>
-	            <td>></td>
-	            <td>
-	                <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	            </td>
-	            <td>20-12-22</td>
-	        </tr>
-	        <tr>
-	            <td>></td>
-	            <td>
-	                <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	            </td>
-	            <td>20-12-22</td>
-	        </tr>
-	        <tr>
-	            <td>></td>
-	            <td>
-	                <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	            </td>
-	            <td>20-12-22</td>
-	        </tr>
+	        <c:forEach var="vo" items="${ vos }">
+        		<c:if test="${ vo.cate eq 'school' }">
+		            <tr>
+		                <td>></td>
+		                <td>
+		                    <a href="./board/view.do?cate=3&tit=3&pg=1&no=${ vo.no }">${ vo.title }</a>
+		                </td>
+		                <td>${ vo.rdate }</td>
+		            </tr>
+	            </c:if>
+            </c:forEach>
 	    </table>
 	</div>
 	    <div>
-	        <a href="#">
+	        <a href="./board/list.do?cate=3&tit=1">
 	            <img src="./img/main_latest3_tit.png" alt="농작물이야기">
 	        </a>
 	        <img src="./img/main_latest3_img.jpg" alt="이미지">
 	        <table>
-	            <tr>
-	                <td>></td>
-	                <td>
-	                    <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	                </td>
-	                <td>20-12-22</td>
-	            </tr>
-	            <tr>
-	                <td>></td>
-	                <td>
-	                    <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	                </td>
-	                <td>20-12-22</td>
-	            </tr>
-	            <tr>
-	                <td>></td>
-	                <td>
-	                    <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	                </td>
-	                <td>20-12-22</td>
-	            </tr>
-	            <tr>
-	                <td>></td>
-	                <td>
-	                    <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	                </td>
-	                <td>20-12-22</td>
-	            </tr>
-	            <tr>
-	                <td>></td>
-	                <td>
-	                    <a href="#">토마토! 건강하게 길러서 안심하고 먹자</a>
-	                </td>
-	                <td>20-12-22</td>
-	            </tr>
+	            <c:forEach var="vo" items="${ vos }">
+	        		<c:if test="${ vo.cate eq 'story' }">
+			            <tr>
+			                <td>></td>
+			                <td>
+			                    <a href="./board/view.do?cate=3&tit=1&pg=1&no=${ vo.no }">${ vo.title }</a>
+			                </td>
+			                <td>${ vo.rdate }</td>
+			            </tr>
+		            </c:if>
+            	</c:forEach>
 	        </table>
 	    </div>
 	</div>
@@ -168,10 +127,10 @@
                   </p>
               </div>
               <div class="btns">
-                  <a href="./community/qna.html">
+                  <a href="./board/list.do?cate=5&tit=4">
                       <img src="./img/main_sub2_cs_bt1.png" alt="1:1 고객문의">
                   </a>
-                  <a href="./community/faq.html">
+                  <a href="./board/list.do?cate=5&tit=5">
                       <img src="./img/main_sub2_cs_bt2.png" alt="자주묻는질문">
                   </a>
                   <a href="#">
@@ -198,23 +157,14 @@
             </ul>
             <div id="tabs-1">
                 <ul class="txt">
-                	<li><a>1</a></li>
-                	<li><a>2</a></li>
-                	<li><a>3</a></li>
                 </ul>
             </div>
             <div id="tabs-2">
                 <ul class="txt">
-                	<li><a>4</a></li>
-                	<li><a>5</a></li>
-                	<li><a>6</a></li>
                 </ul>
             </div>
             <div id="tabs-3">
                 <ul class="txt">
-                	<li><a>7</a></li>
-                	<li><a>8</a></li>
-                	<li><a>9</a></li>
                 </ul>
             </div>
       		</div>

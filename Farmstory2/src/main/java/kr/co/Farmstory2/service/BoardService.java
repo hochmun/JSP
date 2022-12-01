@@ -55,6 +55,26 @@ public enum BoardService {
 	}
 	
 	/**
+	 * index - latests 게시물 정보 가져오기
+	 * @param cate1
+	 * @param cate2
+	 * @param cate3
+	 * @return
+	 */
+	public List<articleVO> selectArticleLatests(String cate1, String cate2, String cate3) {
+		return dao.selectArticleLatests(cate1, cate2, cate3);
+	}
+	
+	/**
+	 * index - latest 게시물 정보 가져오기
+	 * @param cate
+	 * @return
+	 */
+	public List<articleVO> selectarticlelatest(String cate) {
+		return dao.selectarticlelatest(cate);
+	}
+	
+	/**
 	 * view - 댓글들 정보 가져오기
 	 * @param parent
 	 * @return

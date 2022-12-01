@@ -97,6 +97,14 @@ public class Sql {
 			+ "FROM `board_article` AS a "
 			+ "LEFT JOIN `board_file` AS b ON a.no = b.parent "
 			+ "WHERE `no`=?";
+	public static final String SELECT_ARTICLE_LATEST = 
+			"SELECT `no`, `cate`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 3";
+	public static final String SELECT_ARTICLE_LATESTS = 
+			"(SELECT `no`, `cate`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5) "
+			+ "UNION "
+			+ "(SELECT `no`, `cate`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5) "
+			+ "UNION "
+			+ "(SELECT `no`, `cate`, `title`, `rdate` FROM `board_article` WHERE `cate`=? ORDER BY `no` DESC LIMIT 5)";
 	public static final String SELECT_FILE = 
 			"SELECT * FROM `board_file` WHERE `parent`=?";
 	public static final String SELECT_ARTICLE_COMMENTS = 

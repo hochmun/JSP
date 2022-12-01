@@ -175,6 +175,65 @@ public class ArticleDAO extends DBCP {
 	}
 	
 	/**
+	 * index - latests 게시물 정보 불러오기
+	 * @param cate1
+	 * @param cate2
+	 * @param cate3
+	 * @return
+	 */
+	public List<articleVO> selectArticleLatests(String cate1, String cate2, String cate3) {
+		List<articleVO> vos = new ArrayList<>();
+		try {
+			logger.info("selectArticleLatests...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE_LATESTS);
+			psmt.setString(1, cate1);
+			psmt.setString(2, cate2);
+			psmt.setString(3, cate3);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				articleVO vo = new articleVO();
+				vo.setNo(rs.getInt("no"));
+				vo.setCate(rs.getString("cate"));
+				vo.setTitle(rs.getString("title"));
+				vo.setRdate(rs.getString("rdate").substring(2, 10));
+				vos.add(vo);
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vos;
+	}
+	
+	/**
+	 * index - latest 게시물 정보 불러오기
+	 * @param cate
+	 * @return
+	 */
+	public List<articleVO> selectarticlelatest(String cate) {
+		List<articleVO> vos = new ArrayList<>();
+		try {
+			logger.info("selectarticlelatest...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_ARTICLE_LATEST);
+			psmt.setString(1, cate);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				articleVO vo = new articleVO();
+				vo.setNo(rs.getInt("no"));
+				vo.setTitle(rs.getString("title"));
+				vo.setRdate(rs.getString("rdate").substring(2, 10));
+				vos.add(vo);
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return vos;
+	}
+	
+	/**
 	 * view - 댓글들 정보 불러오기
 	 * @param parent
 	 * @return
