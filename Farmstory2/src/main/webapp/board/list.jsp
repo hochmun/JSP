@@ -24,7 +24,7 @@
 	            <tr>
 	                <td>${ pageStartNum }</td>
 	                <c:set var="pageStartNum" value="${ pageStartNum - 1 }"/>
-	                <td><a href="./view.do?cate=${ param.cate }&tit=${ param.tit }&no=${ vo.no }&pg=${ currentPage }&search=${ param.search }">${ vo.title }&nbsp;[${ vo.comment }]</a></td>
+	                <td><a href="/Farmstory2/board/view.do?cate=${ param.cate }&tit=${ param.tit }&no=${ vo.no }&pg=${ currentPage }&search=${ param.search }">${ vo.title }&nbsp;[${ vo.comment }]</a></td>
 	                <td>${ vo.nick }</td>
 	                <td>${ vo.rdate }</td>
 	                <td>${ vo.hit }</td>
@@ -34,17 +34,17 @@
 
         <div class="page">
         	<c:if test="${ pageGroupStart gt 1 }">
-            	<a href="./list.do?cate=${ param.cate }&tit=${ param.tit }&pg=${ pageGroupStart - 1 }&search=${ param.search }" class="prev">이전</a>
+            	<a href="/Farmstory2/board/list.do?cate=${ param.cate }&tit=${ param.tit }&pg=${ pageGroupStart - 1 }&search=${ param.search }" class="prev">이전</a>
             </c:if>
             <c:forEach var="i" begin="${ pageGroupStart }" end="${ pageGroupEnd }" step="1">
-            	<a href="./list.do?cate=${ param.cate }&tit=${ param.tit }&pg=${ i }&search=${ param.search }" class="num ${ currentPage eq i ? 'current' : 'off' }">${ i }</a>
+            	<a href="/Farmstory2/board/list.do?cate=${ param.cate }&tit=${ param.tit }&pg=${ i }&search=${ param.search }" class="num ${ currentPage eq i ? 'current' : 'off' }">${ i }</a>
             </c:forEach>
             <c:if test="${ pageGroupEnd lt lastPageNum }">
-            	<a href="./list.do?cate=${ param.cate }$tit=${ param.tit }&pg=${ pageGroupEnd+1 }&search=${ param.search }" class="next">다음</a>
+            	<a href="/Farmstory2/board/list.do?cate=${ param.cate }$tit=${ param.tit }&pg=${ pageGroupEnd+1 }&search=${ param.search }" class="next">다음</a>
             </c:if>
         </div>
 
-        <a href="./write.do?cate=${ param.cate }&tit=${ param.tit }" class="btn btnWrite">글쓰기</a>
+        <a href="/Farmstory2/board/write.do?cate=${ param.cate }&tit=${ param.tit }" class="btn btnWrite">글쓰기</a>
         
     </section>
 </article>

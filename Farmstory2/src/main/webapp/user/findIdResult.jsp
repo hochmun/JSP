@@ -29,8 +29,8 @@
         </p>
 
         <div>
-            <a href="./login.do" class="btn btnCancel">로그인</a>
-            <a href="./findPw.do" class="btn btnNext">비밀번호 찾기</a>
+            <a href="/Farmstory2/user/login.do" class="btn btnCancel">로그인</a>
+            <a href="/Farmstory2/user/findPw.do" class="btn btnNext">비밀번호 찾기</a>
         </div>
     </section>
 </main>

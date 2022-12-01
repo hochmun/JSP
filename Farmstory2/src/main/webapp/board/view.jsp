@@ -123,7 +123,7 @@
             <c:if test="${ avo.file gt 0 }">
 	            <tr>
 	                <th>파일</th>
-	                <td><a href="./download.do?no=${ avo.no }">${ fvo.oriName }</a>&nbsp;<span>${ fvo.download }</span>회 다운로드</td>
+	                <td><a href="/Farmstory2/board/download.do?no=${ avo.no }">${ fvo.oriName }</a>&nbsp;<span>${ fvo.download }</span>회 다운로드</td>
 	            </tr>
             </c:if>
             <tr>
@@ -136,10 +136,10 @@
         
         <div>
         	<c:if test="${ sessUser.uid eq avo.uid }">
-	            <a href="./delete.do?cate=${ param.cate }&tit=${ param.tit }&search=${ param.search }&pg=${ param.pg }&no=${ param.no }&file=${ avo.file }" class="btn btnRemove">삭제</a>
-	            <a href="./modify.do?cate=${ param.cate }&tit=${ param.tit }&search=${ param.search }&pg=${ param.pg }&no=${ param.no }" class="btn btnModify">수정</a>
+	            <a href="/Farmstory2/board/delete.do?cate=${ param.cate }&tit=${ param.tit }&search=${ param.search }&pg=${ param.pg }&no=${ param.no }&file=${ avo.file }" class="btn btnRemove">삭제</a>
+	            <a href="/Farmstory2/board/modify.do?cate=${ param.cate }&tit=${ param.tit }&search=${ param.search }&pg=${ param.pg }&no=${ param.no }" class="btn btnModify">수정</a>
             </c:if>
-            <a href="./list.do?cate=${ param.cate }&tit=${ param.tit }&search=${ param.search }&pg=${ param.pg }" class="btn btnList">목록</a>
+            <a href="/Farmstory2/board/list.do?cate=${ param.cate }&tit=${ param.tit }&search=${ param.search }&pg=${ param.pg }" class="btn btnList">목록</a>
         </div>
 
         <!-- 댓글목록 -->

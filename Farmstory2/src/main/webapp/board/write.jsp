@@ -3,7 +3,7 @@
 <main id="board">
     <section class="write">
 
-        <form action="./write.do?" method="post" enctype="multipart/form-data">
+        <form action="/Farmstory2/user/write.do?" method="post" enctype="multipart/form-data">
         	<input type="hidden" name="cate" value="${ param.cate }">
         	<input type="hidden" name="tit" value="${ param.tit }">
             <table>
@@ -27,7 +27,7 @@
             </table>
             
             <div>
-                <a href="./list.do?cate=${ param.cate }&tit=${ param.tit }" class="btn btnCancel">취소</a>
+                <a href="/Farmstory2/user/list.do?cate=${ param.cate }&tit=${ param.tit }" class="btn btnCancel">취소</a>
                 <input type="submit" value="작성완료" class="btn btnComplete"/>
             </div>
         </form>

@@ -3,7 +3,7 @@
 <script src="../js/find.js"></script>
 <main id="user">
     <section class="find findId">
-        <form action="./findIdResult.do" method="get">
+        <form action="/Farmstory2/user/findIdResult.do" method="get">
             <table>
                 <caption>아이디 찾기</caption>
                 <tr>
@@ -33,8 +33,8 @@
         </p>
 
         <div>
-            <a href="./login.do" class="btn btnCancel">취소</a>
-            <a href="./findIdResult.do" class="btn btnNext">다음</a>
+            <a href="/Farmstory2/user/login.do" class="btn btnCancel">취소</a>
+            <a href="/Farmstory2/user/findIdResult.do" class="btn btnNext">다음</a>
         </div>
     </section>
 </main>

@@ -25,7 +25,7 @@ public class ModifyController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Map<String, Object> vos = service.selectArticle(req.getParameter("no"));
 		req.setAttribute("avo", vos.get("avo"));
-		req.getRequestDispatcher("/board/modify.jsp").forward(req, resp);
+		req.getRequestDispatcher("/Farmstory2/board/modify.jsp").forward(req, resp);
 	}
 	
 	@Override

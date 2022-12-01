@@ -8,11 +8,11 @@
         <aside>
             <img src="/Farmstory2/img/sub_aside_cate5_tit.png" alt="커뮤니티">
             <ul class="lnb">
-                <li class="${ param.tit eq 1 ? 'on' : 'off' }"><a href="./list.do?cate=5&tit=1">공지사항</a></li>
-                <li class="${ param.tit eq 2 ? 'on' : 'off' }"><a href="./list.do?cate=5&tit=2">오늘의식단</a></li>
-                <li class="${ param.tit eq 3 ? 'on' : 'off' }"><a href="./list.do?cate=5&tit=3">나도요리사</a></li>
-                <li class="${ param.tit eq 4 ? 'on' : 'off' }"><a href="./list.do?cate=5&tit=4">1:1고객문의</a></li>
-                <li class="${ param.tit eq 5 ? 'on' : 'off' }"><a href="./list.do?cate=5&tit=5">자주묻는질문</a></li>
+                <li class="${ param.tit eq 1 ? 'on' : 'off' }"><a href="/Farmstory2/board/list.do?cate=5&tit=1">공지사항</a></li>
+                <li class="${ param.tit eq 2 ? 'on' : 'off' }"><a href="/Farmstory2/board/list.do?cate=5&tit=2">오늘의식단</a></li>
+                <li class="${ param.tit eq 3 ? 'on' : 'off' }"><a href="/Farmstory2/board/list.do?cate=5&tit=3">나도요리사</a></li>
+                <li class="${ param.tit eq 4 ? 'on' : 'off' }"><a href="/Farmstory2/board/list.do?cate=5&tit=4">1:1고객문의</a></li>
+                <li class="${ param.tit eq 5 ? 'on' : 'off' }"><a href="/Farmstory2/board/list.do?cate=5&tit=5">자주묻는질문</a></li>
             </ul>
         </aside>
         <article>

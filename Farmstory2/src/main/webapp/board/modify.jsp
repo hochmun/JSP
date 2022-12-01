@@ -3,7 +3,7 @@
 <main id="board">
     <section class="modify">
 
-        <form action="./modify.do" method="post">
+        <form action="/Farmstory2/board/modify.do" method="post">
         	<input type="hidden" name="cate" value="${ param.cate }">
         	<input type="hidden" name="tit" value="${ param.tit }">
         	<input type="hidden" name="search" value="${ param.search }">
@@ -24,7 +24,7 @@
             </table>
             
             <div>
-                <a href="./view.do?cate=${ param.cate }&tit=${ param.tit }&search=${ param.search }&pg=${ param.pg }&no=${ param.no }" class="btn btnCancel">취소</a>
+                <a href="/Farmstory2/board/view.do?cate=${ param.cate }&tit=${ param.tit }&search=${ param.search }&pg=${ param.pg }&no=${ param.no }" class="btn btnCancel">취소</a>
                 <input type="submit" value="작성완료" class="btn btnComplete"/>
             </div>
         </form>

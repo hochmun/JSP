@@ -15,6 +15,6 @@ public class FindIdController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/user/findId.jsp").forward(req, resp);
+		req.getRequestDispatcher("/Farmstory2/user/findId.jsp").forward(req, resp);
 	}
 }

@@ -38,7 +38,7 @@ public class ViewController extends HttpServlet {
 		req.setAttribute("avo2", service.selectArticleComment(no)); // 댓글 불러오기
 		req.setAttribute("fvo", (FileVO)vos.get("fvo")); // 파일 정보
 		
-		req.getRequestDispatcher("/board/view.jsp").forward(req, resp);
+		req.getRequestDispatcher("/Farmstory2/board/view.jsp").forward(req, resp);
 	}
 	
 	@Override
