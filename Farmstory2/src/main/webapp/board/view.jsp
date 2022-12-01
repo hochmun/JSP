@@ -136,7 +136,7 @@
         
         <div>
         	<c:if test="${ sessUser.uid eq avo.uid }">
-	            <a href="./delete.do?cate=${ param.cate }&tit=${ parma.tit }&pg=${ parma.pg }" class="btn btnRemove">삭제</a>
+	            <a href="./delete.do?cate=${ param.cate }&tit=${ param.tit }&pg=${ param.pg }&no=${ param.no }&file=${ avo.file }" class="btn btnRemove">삭제</a>
 	            <a href="./modify.do?cate=${ param.cate }&tit=${ param.tit }&pg=${ param.pg }&no=${ param.no }" class="btn btnModify">수정</a>
             </c:if>
             <a href="./list.do?cate=${ param.cate }&tit=${ param.tit }&pg=${ param.pg }" class="btn btnList">목록</a>

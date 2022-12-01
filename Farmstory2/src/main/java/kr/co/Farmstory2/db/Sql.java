@@ -97,6 +97,8 @@ public class Sql {
 			+ "FROM `board_article` AS a "
 			+ "LEFT JOIN `board_file` AS b ON a.no = b.parent "
 			+ "WHERE `no`=?";
+	public static final String SELECT_FILE = 
+			"SELECT * FROM `board_file` WHERE `parent`=?";
 	public static final String SELECT_ARTICLE_COMMENTS = 
 			"SELECT "
 			+ "a.`no`, a.`parent`, a.`cate`, a.`content`, a.`uid`, a.`regip`, "
@@ -139,6 +141,12 @@ public class Sql {
 			+ "`rdate`=NOW() "
 			+ "WHERE `no`=?";
 	
+	public static final String DELETE_ARTICLE = 
+			"DELETE FROM a, f "
+			+ "USING `board_article` AS a "
+			+ "LEFT JOIN `board_file` AS f "
+			+ "ON a.`no` = f.`parent` "
+			+ "WHERE a.`no` = ? OR a.`parent`=? OR f.`parent`=?";
 	public static final String DELETE_ARTICLE_COMMENT = 
 			"DELETE FROM `board_article` WHERE `no`=?";
 }

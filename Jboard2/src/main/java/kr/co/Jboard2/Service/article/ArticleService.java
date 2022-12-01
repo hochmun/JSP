@@ -6,9 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import kr.co.Jboard2.dao.ArticleDAO;
 import kr.co.Jboard2.vo.articleVO;
 
@@ -16,7 +13,7 @@ public enum ArticleService {
 	
 	INSTANCE;
 	private ArticleDAO dao;
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	//private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private ArticleService() {
 		dao = new ArticleDAO();

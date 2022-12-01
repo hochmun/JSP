@@ -129,6 +129,10 @@ public enum BoardService {
 		return dao.deleteComment(no);
 	}
 	
+	public void deleteArticle(String no, String file, String path) {
+		dao.deleteArticle(no, Integer.parseInt(file), path);
+	}
+	
 	// service
 	/**
 	 * 게시물 페이징 기능
@@ -178,6 +182,7 @@ public enum BoardService {
 	 */
 	public String titNameFormat(String cate, String tit) {
 		String titName = "";
+		logger.debug("cate : "+cate+", tit : "+tit);
 		switch(cate) {
 			case "2":
 				titName = "market";

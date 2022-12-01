@@ -365,4 +365,45 @@ public class ArticleDAO extends DBCP {
 		return result;
 	}
 	
+	/**
+	 * 게시물 삭제 - 게시물, 댓글, 파일 삭제 기능
+	 * @param no
+	 * @param fileCheck
+	 * @param path
+	 */
+	public void deleteArticle(String no, int fileCheck, String path) {
+		try {
+			logger.info("deleteArticle...");
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			String fileName = null;
+			
+			if(fileCheck > 0) {
+				psmt = conn.prepareStatement(Sql.SELECT_FILE);
+				psmt.setString(1, no);
+				rs = psmt.executeQuery();
+				if(rs.next()) {
+					fileName = rs.getString("newName");
+				}
+				if(fileName != null) {
+					File file = new File(path, fileName);
+					if(file.exists()) {
+						file.delete();
+					}
+				}
+			}
+			
+			psmt = conn.prepareStatement(Sql.DELETE_ARTICLE);
+			psmt.setString(1, no);
+			psmt.setString(2, no);
+			psmt.setString(3, no);
+			psmt.executeUpdate();
+			conn.commit();
+			
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+	}
+	
 }
