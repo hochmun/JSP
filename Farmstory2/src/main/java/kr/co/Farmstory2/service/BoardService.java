@@ -39,9 +39,26 @@ public enum BoardService {
 	}
 	
 	// read
+	/**
+	 * list - 게시물 불러오기 + 검색어 강조 기능
+	 * @param cateName
+	 * @param limitStart
+	 * @param search
+	 * @return
+	 */
 	public List<articleVO> selectArticles(String cateName, int limitStart, String search) {
 		List<articleVO> avos = dao.selectArticles(cateName, limitStart, search);
-		// TODO - 검색어 강조하기 기능 추가하기
+		
+		// 검색어 강조 기능
+		if(search != null) {
+			for (int i = 0; i < avos.size(); i++) {
+				articleVO vo = avos.get(i);
+				vo.setTitle(vo.getTitle().replace(search, "<em style='background-color : yellow;'>"+search+"</em>"));
+				vo.setNick(vo.getNick().replace(search, "<em style='background-color : yellow;'>"+search+"</em>"));
+				avos.set(i, vo);
+			}
+		}
+		
 		return avos;
 	}
 	
