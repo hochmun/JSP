@@ -19,6 +19,7 @@ public class DeleteController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		service.deleteArticle(req.getParameter("no"), req.getParameter("file"), req.getServletContext().getRealPath("/file"));
+		// TODO - delete 부분 search 한글 깨짐 session 으로 보내기
 		resp.sendRedirect("/Farmstory3/LoadingPage.do?cate="+req.getParameter("cate")+"&tit="+req.getParameter("tit")+"&pg="+req.getParameter("pg")+"&search="+req.getParameter("search")+"&success=200");
 	}
 }
