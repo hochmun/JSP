@@ -15,6 +15,6 @@ public class HelloController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/Farmstory2/introduction/hello.jsp").forward(req, resp);
+		req.getRequestDispatcher("/introduction/hello.jsp").forward(req, resp);
 	}
 }

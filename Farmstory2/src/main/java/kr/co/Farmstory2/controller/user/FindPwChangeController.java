@@ -21,7 +21,7 @@ public class FindPwChangeController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setAttribute("vo", service.selectUserEmail(req.getParameter("email")));
-		req.getRequestDispatcher("/Farmstory2/user/findPwChange.jsp").forward(req, resp);
+		req.getRequestDispatcher("/user/findPwChange.jsp").forward(req, resp);
 	}
 	
 	@Override

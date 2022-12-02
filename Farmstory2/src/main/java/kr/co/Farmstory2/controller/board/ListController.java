@@ -30,7 +30,7 @@ public class ListController extends HttpServlet {
 			
 			// 게시물 불러오기
 			req.setAttribute("vos", service.selectArticles(titName, limitStart, search));
-			req.getRequestDispatcher("/Farmstory2/board/list.jsp").forward(req, resp);
+			req.getRequestDispatcher("/board/list.jsp").forward(req, resp);
 		}
 	}
 }

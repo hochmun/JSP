@@ -15,6 +15,6 @@ public class FindPwController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/Farmstory2/user/findPw.jsp").forward(req, resp);
+		req.getRequestDispatcher("/user/findPw.jsp").forward(req, resp);
 	}
 }

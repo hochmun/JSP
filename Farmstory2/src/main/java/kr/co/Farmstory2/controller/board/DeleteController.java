@@ -19,6 +19,6 @@ public class DeleteController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		service.deleteArticle(req.getParameter("no"), req.getParameter("file"), req.getServletContext().getRealPath("/file"));
-		resp.sendRedirect("/Farmstory2/board/deleteCheck.do?cate="+req.getParameter("cate")+"&tit="+req.getParameter("tit")+"&pg="+req.getParameter("pg")+"&search="+req.getParameter("search")+"&success=300");
+		resp.sendRedirect("/board/deleteCheck.do?cate="+req.getParameter("cate")+"&tit="+req.getParameter("tit")+"&pg="+req.getParameter("pg")+"&search="+req.getParameter("search")+"&success=300");
 	}
 }

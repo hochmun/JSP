@@ -25,13 +25,12 @@ public class ModifyController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Map<String, Object> vos = service.selectArticle(req.getParameter("no"));
 		req.setAttribute("avo", vos.get("avo"));
-		req.getRequestDispatcher("/Farmstory2/board/modify.jsp").forward(req, resp);
+		req.getRequestDispatcher("/board/modify.jsp").forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		service.updateArticle(req.getParameter("title"), req.getParameter("content"), req.getParameter("no"));
-		// TODO - search 넘길때 한글이 깨짐 -> view.do로 바로 보내면 윈도우창의 한글은 처리가 안됨 -> 중간 페이지나 컨트롤러 또는 필터를 넣어서 get에서 get방식으로 보내기
 		resp.sendRedirect("/Farmstory2/board/view.do?cate="+req.getParameter("cate")+"&tit="+req.getParameter("tit")+"&pg="+req.getParameter("pg")+"&no="+req.getParameter("no")+"&result=201");
 	}
 }

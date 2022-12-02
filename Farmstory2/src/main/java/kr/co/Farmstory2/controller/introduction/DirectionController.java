@@ -15,6 +15,6 @@ public class DirectionController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/Farmstory2/introduction/direction.jsp").forward(req, resp);
+		req.getRequestDispatcher("/introduction/direction.jsp").forward(req, resp);
 	}
 }
