@@ -47,12 +47,13 @@ public enum LoadingService {
 	 * @throws IOException
 	 */
 	public void deleteArticle(Writer out, HttpServletRequest req) throws IOException {
+		String search = (String) req.getSession().getAttribute("search");
 		out.write("<script>alert('게시물이 삭제 되었습니다.');"
 				+ "location.href='/Farmstory3/board/list.do?"
 				+ "cate="+req.getParameter("cate")
 				+ "&tit="+req.getParameter("tit")
 				+ "&pg="+req.getParameter("pg")
-				+ "&search="+req.getParameter("search")+"';</script>");
+				+ "&search="+search+"';</script>");
 	}
 
 	/**

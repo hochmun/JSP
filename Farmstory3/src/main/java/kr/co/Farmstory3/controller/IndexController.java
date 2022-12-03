@@ -13,6 +13,8 @@ import kr.co.Farmstory3.service.BoardService;
 @WebServlet("/index.do")
 public class IndexController extends HttpServlet {
 
+	// TODO - 메인 페이지 표시 되는 게시물 없을 시 표시할 게시물 없음 표시 띄우기
+	
 	private static final long serialVersionUID = 1L;
 	private BoardService service = BoardService.INSTANCE;
 

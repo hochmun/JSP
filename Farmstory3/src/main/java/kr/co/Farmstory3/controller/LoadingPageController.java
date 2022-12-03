@@ -17,6 +17,8 @@ import kr.co.Farmstory3.service.LoadingService;
 @WebServlet("/LoadingPage.do")
 public class LoadingPageController extends HttpServlet {
 
+	// TODO - success 코드 전송 할때 세션으로 넣어서 숨기기 (보안)
+	
 	private static final long serialVersionUID = 1L;
 	//private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private LoadingService service = LoadingService.INSTANCE;
