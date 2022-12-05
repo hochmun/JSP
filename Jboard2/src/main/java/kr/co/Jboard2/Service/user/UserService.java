@@ -102,6 +102,16 @@ public enum UserService {
 	
 	public void selectUsers() {}
 	
+	/**
+	 * 회원정보 접근 - 아이디 비밀번호 체크
+	 * @param uid
+	 * @param pass
+	 * @return
+	 */
+	public int selectUserCheck(String uid, String pass) {
+		return dao.selectUserCheck(uid, pass);
+	}
+	
 	// 아이디 중복검색
 	public int selectCountUserUid(String uid) {
 		return dao.selectCountUserUid(uid);
@@ -128,7 +138,22 @@ public enum UserService {
 	}
 	
 	// upload
-	public void updateUser() {}
+	/**
+	 * 유저 정보 갱신
+	 * @param vo
+	 */
+	public int updateUser(userVO vo) {
+		return dao.updateUser(vo);
+	}
+	
+	/**
+	 * 비밀 번호 변경 안함
+	 * @param vo
+	 * @return
+	 */
+	public int updateUserNotPass(userVO vo) {
+		return dao.updateUserNotPass(vo);
+	}
 	
 	public int updateUserPass(String uid, String pass) {
 		return dao.updateUserPass(uid, pass);
@@ -147,6 +172,13 @@ public enum UserService {
 	}
 	
 	// delete
-	public void deleteUser() {}
+	/**
+	 * 유저 정보 삭제
+	 * @param uid
+	 * @return
+	 */
+	public int deleteUser(String uid) {
+		return dao.deleteUser(uid);
+	}
 	
 }

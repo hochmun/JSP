@@ -19,7 +19,6 @@ public class DeleteController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		service.deleteArticle(req.getParameter("no"), req.getParameter("file"), req.getServletContext().getRealPath("/file"));
-		// TODO - delete 부분 search 한글 깨짐 session 으로 보내기
 		String search = req.getParameter("search");
 		req.getSession().setAttribute("search", search);
 		resp.sendRedirect("/Farmstory3/LoadingPage.do?"

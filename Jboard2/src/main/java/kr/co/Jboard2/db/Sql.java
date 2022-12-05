@@ -30,6 +30,8 @@ public class Sql {
 			+ " `rdate` "
 			+ " FROM `board_user` WHERE `email`=?";
 	public static final String SELECT_USER_BY_SESSID = "SELECT * FROM `board_user` WHERE `sessId`=? AND `sesslimitdate` > NOW()";
+	public static final String SELECT_USER_COUNT_CHECK = 
+			"SELECT COUNT(`uid`) FROM `board_user` WHERE `uid`=? AND `pass`=SHA2(?,256)";
 	public static final String SELECT_COUNT_USER_UID = 
 			"select count(`uid`) from `board_user` where `uid`=?";
 	public static final String SELECT_COUNT_USER_NICK = 
@@ -41,12 +43,51 @@ public class Sql {
 	public static final String SELECT_TERMS =
 			"select * from `board_terms`";
 	
+	public static final String UPDATE_USER = 
+			"UPDATE `board_user` SET "
+			+ "`pass` = SHA2(?, 256), "
+			+ "`name` = ?, "
+			+ "`nick` = ?, "
+			+ "`email` = ?, "
+			+ "`hp` = ?, "
+			+ "`zip` = ?, "
+			+ "`addr1` = ?, "
+			+ "`addr2` = ? "
+			+ "WHERE `uid` = ?";
+	public static final String UPDATE_USER_NOT_PASS = 
+			"UPDATE `board_user` SET "
+					+ "`name` = ?, "
+					+ "`nick` = ?, "
+					+ "`email` = ?, "
+					+ "`hp` = ?, "
+					+ "`zip` = ?, "
+					+ "`addr1` = ?, "
+					+ "`addr2` = ? "
+					+ "WHERE `uid` = ?";
 	public static final String UPDATE_USER_PASS = 
 			"UPDATE `board_user` SET `pass` = SHA2(?, 256) WHERE `uid`=?";
 	public static final String UPDATE_USER_FOR_SESSION =
 			"UPDATE `board_user` SET `sessId` = ? , `sessLimitDate` = DATE_ADD(NOW(), INTERVAL 3 DAY) WHERE `uid` = ?";
 	public static final String UPDATE_USER_FOR_SESS_LIMIT_DATE = "UPDATE `board_user` SET `sessLimitDate` = DATE_ADD(NOW(), INTERVAL 3 DAY) WHERE `sessId` = ?";
 	public static final String UPDATE_USER_FOR_SESSION_OUT = "UPDATE `board_user` SET `sessId` = null , `sessLimitDate` = null WHERE `uid` = ?";
+	
+	public static final String DELETE_USER = 
+			"UPDATE `board_user` SET "
+			+ "	`pass` = NULL,"
+			+ "	`name` = NULL,"
+			+ " `nick` = NULL, "
+			+ " `email` = NULL, "
+			+ " `hp` = NULL, "
+			+ "	`grade` = 0,"
+			+ "	`zip` = NULL, "
+			+ "	`addr1` = NULL, "
+			+ "	`addr2` = NULL,"
+			+ "	`regip` = '',"
+			+ "	`rdate` = '1999-01-01 00:00:10',"
+			+ "	`sessId` = NULL,"
+			+ "	`sessLimitDate` = NULL,"
+			+ "	`wdate` = NOW()"
+			+ "WHERE `uid`=?";
 	
 	// board
 	public static final String INSERT_ARTICLE = 

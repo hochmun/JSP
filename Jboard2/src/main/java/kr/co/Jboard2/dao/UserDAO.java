@@ -133,6 +133,31 @@ public class UserDAO extends DBCP {
 		return vo;
 	}
 	
+	/**
+	 * 회원정보 접근 - 아이디 비밀번호 체크
+	 * @param uid
+	 * @param pass
+	 * @return
+	 */
+	public int selectUserCheck(String uid, String pass) {
+		int result = 0;
+		try {
+			logger.info("selectUserCheck...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_USER_COUNT_CHECK);
+			psmt.setString(1, uid);
+			psmt.setString(2, pass);
+			rs = psmt.executeQuery();
+			if(rs.next())  {
+				result = rs.getInt(1);
+			}
+			close();
+		} catch(Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	
 	public void selectUsers() {}
 	
 	/**
@@ -268,6 +293,63 @@ public class UserDAO extends DBCP {
 	
 	// upload
 	/**
+	 * 유저 회원 정보 갱신
+	 * @param vo
+	 * @return
+	 */
+	public int updateUser(userVO vo) {
+		int result = 0;
+		try {
+			logger.info("updateUser...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_USER);
+			psmt.setString(1, vo.getPass());
+			psmt.setString(2, vo.getName());
+			psmt.setString(3, vo.getNick());
+			psmt.setString(4, vo.getEmail());
+			psmt.setString(5, vo.getHp());
+			psmt.setString(6, vo.getZip());
+			psmt.setString(7, vo.getAddr1());
+			psmt.setString(8, vo.getAddr2());
+			psmt.setString(9, vo.getUid());
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		logger.debug("updateUser result : "+result);
+		return result;
+	}
+	
+	/**
+	 * 유저 회원 정보 갱신 - 비밀번호 변경 안함
+	 * @param vo
+	 * @return
+	 */
+	public int updateUserNotPass(userVO vo) {
+		int result = 0;
+		try {
+			logger.info("updateUserNotPass...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.UPDATE_USER_NOT_PASS);
+			psmt.setString(1, vo.getName());
+			psmt.setString(2, vo.getNick());
+			psmt.setString(3, vo.getEmail());
+			psmt.setString(4, vo.getHp());
+			psmt.setString(5, vo.getZip());
+			psmt.setString(6, vo.getAddr1());
+			psmt.setString(7, vo.getAddr2());
+			psmt.setString(8, vo.getUid());
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		logger.debug("updateUserNotPass result : "+result);
+		return result;
+	}
+	
+	/**
 	 * 유저 비밀번호 변경
 	 * @param uid
 	 * @param pass
@@ -334,4 +416,24 @@ public class UserDAO extends DBCP {
 		}
 	}
 	// delete
+	/**
+	 * 유저 정보 삭제
+	 * @param uid
+	 * @return
+	 */
+	public int deleteUser(String uid) {
+		int result = 0;
+		try {
+			logger.info("deleteUser...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.DELETE_USER);
+			psmt.setString(1, uid);
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	
 }
