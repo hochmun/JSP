@@ -48,6 +48,7 @@ public enum UserService {
 	public termsVO selectTerms() {
 		return dao.selectTerms();
 	}
+	
 	/**
 	 * 로그인 처리
 	 * @param uid
@@ -57,9 +58,11 @@ public enum UserService {
 	public userVO loginUser(String uid, String pass) {
 		return dao.selectUser(uid, pass);
 	}
+	
 	public userVO selectUserBySessId(String sessId){
 		return dao.selectUserBySessId(sessId);
 	}
+	
 	/**
 	 * 아이디 체크
 	 * @param uid
@@ -68,6 +71,7 @@ public enum UserService {
 		logger.info("checkUid...");
 		return dao.selectCountUid(uid);
 	}
+	
 	/**
 	 * 닉네임 중복 체크
 	 * @param nick
@@ -76,8 +80,18 @@ public enum UserService {
 	public int checkNick(String nick) {
 		return dao.selectCountNick(nick);
 	}
+	
 	/**
-	 * 이름 이메일 검사
+	 * 이메일 중복 검사
+	 * @param email
+	 * @return
+	 */
+	public int selectCountUserEmail(String email) {
+		return dao.selectCountUserEmail(email);
+	}
+	
+	/**
+	 * 이름 이메일 매칭 검사
 	 * @param name
 	 * @param email
 	 * @return
@@ -85,10 +99,22 @@ public enum UserService {
 	public int selectCountUserName(String name, String email) {
 		return dao.selectCountUserName(name, email);
 	}
+	
+	/**
+	 * 아이디 이메일 매칭 검사
+	 * @param uid
+	 * @param email
+	 * @return
+	 */
 	public int selectCountUserUid(String uid, String email) {
 		return dao.selectCountUserUid(uid, email);
 	}
 	
+	/**
+	 * 이메일에 따른 유저 정보 불러오기
+	 * @param email
+	 * @return
+	 */
 	public userVO selectUserEmail(String email) {
 		return dao.selectUserEmail(email);
 	}

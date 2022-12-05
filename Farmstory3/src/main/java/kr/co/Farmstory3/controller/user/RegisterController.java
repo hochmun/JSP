@@ -24,6 +24,7 @@ public class RegisterController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		service.insertUser(service.inputUserVO(req));
-		resp.sendRedirect("/Farmstory3/LoadingPage.do?success=102");
+		req.getSession().setAttribute("success", "102");
+		resp.sendRedirect("/Farmstory3/LoadingPage.do");
 	}
 }

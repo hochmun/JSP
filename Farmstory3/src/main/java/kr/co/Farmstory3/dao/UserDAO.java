@@ -173,6 +173,32 @@ public class UserDAO extends DBCP {
 	}
 	
 	/**
+	 * 이메일 중복 검사
+	 * @param email
+	 * @return
+	 */
+	public int selectCountUserEmail(String email) {
+		int result = 0;
+		try {
+			logger.info("selectCountUserEmail...");
+			conn = getConnection();
+			psmt = conn.prepareStatement(Sql.SELECT_COUNT_USER_EMAIL);
+			psmt.setString(1, email);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			close();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		if(result > 0) result = -1;
+		
+		return result;
+	}
+	
+	/**
 	 * 유저 이름 이메일 검사
 	 * @param name
 	 * @param email

@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.Farmstory3.service.BoardService;
 
@@ -20,11 +21,12 @@ public class DeleteController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		service.deleteArticle(req.getParameter("no"), req.getParameter("file"), req.getServletContext().getRealPath("/file"));
 		String search = req.getParameter("search");
-		req.getSession().setAttribute("search", search);
+		HttpSession sess = req.getSession();
+		sess.setAttribute("search", search);
+		sess.setAttribute("success", "200");
 		resp.sendRedirect("/Farmstory3/LoadingPage.do?"
 				+ "cate="+req.getParameter("cate")
 				+ "&tit="+req.getParameter("tit")
-				+ "&pg="+req.getParameter("pg")
-				+ "&success=200");
+				+ "&pg="+req.getParameter("pg"));
 	}
 }

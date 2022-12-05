@@ -18,8 +18,6 @@ import kr.co.Farmstory3.service.UserService;
 @WebServlet("/user/emailAuth.do")
 public class EmailAuthController extends HttpServlet {
 
-	// TODO - 유저 등록 중 이메일 검사 전 이메일 중복 검사 필요
-	
 	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.INSTANCE;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -32,6 +30,8 @@ public class EmailAuthController extends HttpServlet {
 		String name = req.getParameter("name");
 		String uid = req.getParameter("uid");
 		
+		logger.debug("name : "+name+", uid : "+uid);
+		
 		int result2 = 1;
 		
 		// 보안 - 이름 값과 아이디 값이 동시에 들어올때 또는 이메일 값이 없을 때
@@ -40,14 +40,19 @@ public class EmailAuthController extends HttpServlet {
 			return;
 		}
 		
-		// 이름 값이 있을 경우 이름 이메일 중복 검사
+		// 이름 값이 있을 경우 이름 이메일 매칭 검사
 		if (name != null) result2 = service.selectCountUserName(name, receiverEmail);
-		// 아이디 값이 있을 경우 아이디 이메일 중복 검사
+		// 아이디 값이 있을 경우 아이디 이메일 매칭 검사
 		if (uid != null) result2 = service.selectCountUserUid(uid, receiverEmail);
+		// 아이디 값이 없고 이름 값이 없을 경우 이메일 중복 검사
+		if (uid == null && name == null) result2 = service.selectCountUserEmail(receiverEmail);
 		
 		int [] result = new int [2];
-		if (result2 == 1) result = service.sendEmailCode(receiverEmail);
-		else {
+		if (result2 > 0) result = service.sendEmailCode(receiverEmail);
+		else if(result2 == -1) { // 이메일 중복일때
+			result[0] = -1;
+			result[1] = 0;
+		} else { // 아이디 또는 이름 이메일 매칭 실패 일때
 			result[0] = 0;
 			result[1] = 0;
 		}

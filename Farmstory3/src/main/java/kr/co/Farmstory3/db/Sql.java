@@ -33,6 +33,8 @@ public class Sql {
 			"SELECT COUNT(`uid`) FROM `board_user` WHERE `uid`=?";
 	public static final String SELECT_COUNT_NICK = 
 			"SELECT COUNT(`nick`) FROM `board_user` WHERE `nick`=?";
+	public static final String SELECT_COUNT_USER_EMAIL = 
+			"SELECT COUNT(`email`) FROM `board_user` WHERE `email`=?";
 	public static final String SELECT_COUNT_USER_NAME_EMAIL = 
 			"SELECT COUNT(`name`) FROM `board_user` WHERE `name`=? AND `email`=?";
 	public static final String SELECT_COUNT_USER_UID_EMAIL =

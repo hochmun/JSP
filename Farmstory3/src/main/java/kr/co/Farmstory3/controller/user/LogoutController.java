@@ -19,6 +19,7 @@ public class LogoutController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		service.logout(req, resp);
-		resp.sendRedirect("/Farmstory3/LoadingPage.do?success=101");
+		req.getSession().setAttribute("success", "101");
+		resp.sendRedirect("/Farmstory3/LoadingPage.do");
 	}
 }

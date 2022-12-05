@@ -31,7 +31,8 @@ public class LoginController extends HttpServlet {
 			resp.sendRedirect("/Farmstory3/index.do");
 		} else {
 			// 회원이 아닐경우
-			resp.sendRedirect("/Farmstory3/LoadingPage.do?success=100");
+			req.getSession().setAttribute("success", "100");
+			resp.sendRedirect("/Farmstory3/LoadingPage.do");
 		}
 	}
 }

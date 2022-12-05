@@ -195,6 +195,10 @@ $(function(){
 						$('input[name=email]').attr('readonly', false); // 이메일 수정 가능
 						$('.emailResult').css('color','green').text('인증코드를 전송 했습니다. 이메일을 확인 하세요.');
 						$('.auth').show();
+					} else if(data.status == -1) {
+						emailChecking = false;
+						$('input[name=email]').attr('readonly', false);
+						$('.emailResult').css('color','red').text('이미 사용중인 이메일 입니다.');
 					} else {
 						// 메일 발송 실패
 						emailChecking = false; // 검사 진행 끝

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,13 +34,15 @@ public class ModifyController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		service.updateArticle(req.getParameter("title"), req.getParameter("content"), req.getParameter("no"));
-		String search = req.getParameter("search");
-		req.getSession().setAttribute("search", search);
+		
+		HttpSession sess = req.getSession();
+		sess.setAttribute("search", req.getParameter("search"));
+		sess.setAttribute("success", "201");
+		
 		resp.sendRedirect("/Farmstory3/LoadingPage.do?cate="
 				+req.getParameter("cate")
 				+"&tit="+req.getParameter("tit")
 				+"&pg="+req.getParameter("pg")
-				+"&no="+req.getParameter("no")
-				+"&success=201");
+				+"&no="+req.getParameter("no"));
 	}
 }

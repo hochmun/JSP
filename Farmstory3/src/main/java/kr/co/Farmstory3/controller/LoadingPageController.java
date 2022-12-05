@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -17,8 +18,6 @@ import kr.co.Farmstory3.service.LoadingService;
 @WebServlet("/LoadingPage.do")
 public class LoadingPageController extends HttpServlet {
 
-	// TODO - success 코드 전송 할때 세션으로 넣어서 숨기기 (보안)
-	
 	private static final long serialVersionUID = 1L;
 	//private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private LoadingService service = LoadingService.INSTANCE;
@@ -28,8 +27,10 @@ public class LoadingPageController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html;charset=UTF-8");
 		Writer out = resp.getWriter();
-		String success = req.getParameter("success");
 		
+		HttpSession sess = req.getSession();
+		String success = (String) sess.getAttribute("success");
+		sess.removeAttribute("success");
 		
 		if(success == null || success == "") resp.sendRedirect("/Farmstory3/");
 		else {
