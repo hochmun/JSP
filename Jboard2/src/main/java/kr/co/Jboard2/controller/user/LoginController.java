@@ -19,7 +19,7 @@ import kr.co.Jboard2.vo.userVO;
 @WebServlet("/user/login.do")
 public class LoginController extends HttpServlet {
 
-	// TODO - Jboard2 - 유저 로그인 grade 조건 넣기 => 비밀번호 값이 null값인 경우 접속이 불가능함 => 로그인 시 비밀번호 ''로 입력 SHA2에서 String 값으로 바뀌면서 NULL이 불가능
+	// 유저 로그인 grade 조건 넣기 => 비밀번호 값이 null값인 경우 접속이 불가능함 => 로그인 시 비밀번호 ''로 입력 SHA2에서 String 값으로 바뀌면서 NULL이 불가능
 	
 	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.INSTANCE;

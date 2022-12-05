@@ -13,6 +13,8 @@ import kr.co.Farmstory3.service.UserService;
 @WebServlet("/user/register.do")
 public class RegisterController extends HttpServlet {
 
+	// TODO - 휴대폰 중복 검사 필요 => 중복 검사 버튼 추가 (error)
+	
 	private static final long serialVersionUID = 1L;
 	private UserService service = UserService.INSTANCE;
 
