@@ -19,8 +19,6 @@ import kr.co.Farmstory3.vo.userVO;
 @WebServlet("/board/view.do")
 public class ViewController extends HttpServlet {
 
-	// TODO - 댓글 작성시 로그인 검사 기능 추가 하기 (error)
-	
 	private static final long serialVersionUID = 1L;
 	private BoardService service = BoardService.INSTANCE;
 	//private Logger logger = LoggerFactory.getLogger(this.getClass());
